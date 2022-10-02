@@ -1,0 +1,141 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--body-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  color: var(--dark-100)
+}
+
+h1 {
+  font-size: 68px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 42px;
+  font-weight: 700;
+  ;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+p {
+  font-size: 16px;
+}
+
+ul,
+li {
+  /* remove dots */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:hover,
+a:focus {
+  /* remove underline */
+  text-decoration: none;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--brand-color);
+}
+
+button,
+button:focus,
+input:focus,
+textarea:focus,
+select,
+select:focus,
+a:focus {
+  outline: 0px !important;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  button:disabled {
+    pointer-events: none;
+  }
+}
+
+select {
+  border: none;
+}
+
+input:required,
+input:invalid {
+  box-shadow: none;
+}
+
+label {
+  color: var(--dark-80);
+  font-size: 14px;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--dark-60);
+  opacity: 1;
+  background-color: transparent;
+  /* Firefox adds a lower opacity to the placeholder,
+    so use opacity: 1 to fix this. */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--dark-60);
+  background-color: transparent;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--dark-60);
+  background-color: transparent;
+}
