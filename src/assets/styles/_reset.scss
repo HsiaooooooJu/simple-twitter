@@ -70,13 +70,6 @@ li {
   padding: 0;
 }
 
-a,
-a:hover,
-a:focus {
-  /* remove underline */
-  text-decoration: none;
-}
-
 a {
   color: var(--primary-color);
 }
@@ -114,6 +107,15 @@ input:invalid {
   box-shadow: none;
 }
 
+%input-style {
+  height: 35px;
+  // border-bottom: 2px solid var(--default);
+  border: none;
+  font-size: 0.7rem;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+
 label {
   color: var(--dark-80);
   font-size: 14px;
@@ -126,16 +128,19 @@ label {
   background-color: transparent;
   /* Firefox adds a lower opacity to the placeholder,
     so use opacity: 1 to fix this. */
+  font-size: 16px;
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: var(--dark-60);
   background-color: transparent;
+  font-size: 16px;
 }
 
 ::-ms-input-placeholder {
   /* Microsoft Edge */
   color: var(--dark-60);
   background-color: transparent;
+  font-size: 16px;
 }

@@ -1,0 +1,48 @@
+.signin__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+
+  &__brand-logo {
+    margin: 64px auto 0;
+    img {
+      width: 50px;
+    }
+  }
+
+  &__title {
+    margin: 40px auto;
+  }
+
+  &__form-row {
+    margin: 0 auto 32px auto;
+    padding: 4px 10px 0;
+    width: 35%;
+    border-bottom: 2px solid var(--default);
+    border-radius: 2px;
+    background-color: var(--placeholder-bg);
+  }
+
+  &__form-row>input {
+    @extend %input-style;
+  }
+
+  &__btn {
+    margin: 0 auto;
+    width: 35%;
+    height: 46px;
+    border-radius: 50px;
+    color: var(--dark-0);
+    background-color: var(--brand-color);
+    font-size: 20px;
+  }
+
+  &__link {
+    margin: 22px auto 0 auto;
+
+    &__span {
+      margin: 0 12px;
+    }
+  }
+}
