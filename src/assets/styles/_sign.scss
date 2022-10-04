@@ -39,7 +39,13 @@
   }
 
   &__link {
+    width: 35%;
     margin: 22px auto 0 auto;
+    
+    &__wrapper {
+      display: flex;
+      justify-content: flex-end;
+    }
 
     &__span {
       margin: 0 12px;

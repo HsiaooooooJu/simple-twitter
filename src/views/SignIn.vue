@@ -15,9 +15,11 @@
       </div>
       <button class="signin__container__btn">登入</button>
       <div class="signin__container__link">
-        <router-link to="#"> 註冊 </router-link>
-        <span class="signin__container__link__span">・</span>
-        <router-link to="#"> 後台登入 </router-link>
+        <div class="signin__container__link__wrapper">
+          <router-link to="#"> 註冊 </router-link>
+          <div class="signin__container__link__span">・</div>
+          <router-link to="#"> 後台登入 </router-link>
+        </div>
       </div>
     </div>
   </div>
