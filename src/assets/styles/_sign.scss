@@ -5,14 +5,15 @@
   margin: 0 auto;
 
   &__brand-logo {
-    margin: 64px auto 0;
+    margin: 64px auto 24px;
+
     img {
       width: 50px;
     }
   }
 
   &__title {
-    margin: 40px auto;
+    margin: 0 auto 40px;
   }
 
   &__form-row {
@@ -41,7 +42,7 @@
   &__link {
     width: 35%;
     margin: 22px auto 0 auto;
-    
+
     &__wrapper {
       display: flex;
       justify-content: flex-end;
