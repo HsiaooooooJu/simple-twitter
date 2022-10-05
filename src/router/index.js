@@ -1,6 +1,6 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
-import Home from "../views/Home.vue"
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
@@ -10,8 +10,8 @@ const routes = [
     // 有登入根目錄是 home
     // 未登入 redirect: user-signin
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'root',
+    redirect: '/users/signin'
   },
   {
     path: '/users/signin',
@@ -24,6 +24,16 @@ const routes = [
     component: () => import('../views/AdminSignIn')
   },
   {
+    path: '/home',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/admin/tweets',
+    name: 'admin-tweets',
+    component: () => import('../views/AdminTweetList')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: NotFound
@@ -31,6 +41,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  linkExactActiveClass: 'active',
   routes
 })
 
