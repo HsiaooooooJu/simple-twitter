@@ -1,5 +1,5 @@
 <template>
-  <form action="">
+  <form @submit.stop.prevent="handleSubmit">
     <div class="sign__container__form-row d-flex flex-column">
       <label for="account">帳號</label>
       <input
@@ -50,12 +50,21 @@
         required
       />
     </div>
+    <button :disabled="isProcessing" class="sign__container__btn" type="submit">
+      註冊
+    </button>
   </form>
 </template>
 
 <script>
 export default {
   name: 'AccountForm',
+  props: {
+    isProcessing: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       account: '',
@@ -63,6 +72,13 @@ export default {
       email: '',
       password: '',
       checkPassword: ''
+    }
+  },
+  methods: {
+    handleSubmit(e) {
+      const form = e.target
+      const formData = new FormData(form)
+      this.$emit('after-submit', formData)
     }
   }
 }
