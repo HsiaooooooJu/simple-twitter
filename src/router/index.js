@@ -9,12 +9,17 @@ const routes = [
   {
     path: '/',
     name: 'root',
-    redirect: '/signin'
+    redirect: '/users/signin'
   },
   {
     path: '/home',
     name: 'home',
     component: Home,
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('../views/Settings')
   },
   {
     path: '/users/signin',
