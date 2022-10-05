@@ -32,7 +32,7 @@
     background-color: var(--placeholder-bg);
   }
 
-  &__form-row>input {
+  &__form-row > input {
     @extend %input-style;
   }
 

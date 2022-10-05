@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SettingForm from '../components/SettingForm.vue';
+import SettingForm from '../components/SettingForm.vue'
 export default {
   name: 'Settings',
   components: {
