@@ -7,6 +7,12 @@ export default {
       password
     })
   },
+  adminSignIn({ account, password }) {
+    return apiHelper.post('/admin/signin', {
+      account,
+      password
+    })
+  },
   signUp(formData) {
     return apiHelper.post('/users', formData)
   }

@@ -16,7 +16,7 @@
         v-model="password"
         id="password"
         placeholder="請輸入密碼"
-        type="text"
+        type="password"
         required
       />
     </div>
