@@ -31,7 +31,7 @@
     background-color: var(--placeholder-bg);
   }
 
-  &__form-row > input {
+  &__form-row>input {
     @extend %input-style;
   }
 
@@ -43,6 +43,10 @@
     color: var(--dark-0);
     background-color: var(--brand-color);
     font-size: 20px;
+  }
+
+  &__btn:disabled {
+    filter: grayscale(100%) brightness(150%);
   }
 
   &__link {
