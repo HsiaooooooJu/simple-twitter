@@ -17,6 +17,7 @@
 
 <script>
 import SignInForm from '../components/SignInForm.vue'
+
 export default {
   name: 'AdminSignIn',
   components: {
