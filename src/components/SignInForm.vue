@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent.stop="handleSubmit" action="">
+  <form @submit.prevent.stop="userSignIn">
     <div class="sign__container__form-row d-flex flex-column">
       <label for="account">帳號</label>
       <input
@@ -16,7 +16,7 @@
         v-model="password"
         id="password"
         placeholder="請輸入密碼"
-        type="password"
+        type="text"
         required
       />
     </div>
@@ -35,8 +35,10 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      console.log('token back')
+    userSignIn(e) {
+      const form = e.target
+      const formData = new FormData(form)
+      this.$emit('after-user-signin', formData)
     }
   }
 }
