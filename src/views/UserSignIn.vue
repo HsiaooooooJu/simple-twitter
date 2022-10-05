@@ -8,7 +8,7 @@
       <SignInForm />
       <div class="sign__container__link">
         <div class="sign__container__link__wrapper">
-          <router-link to="/signup"> 註冊 </router-link>
+          <router-link to="/users/signup"> 註冊 </router-link>
           <div class="sign__container__link__span">・</div>
           <router-link to="/admin/signin"> 後台登入 </router-link>
         </div>
