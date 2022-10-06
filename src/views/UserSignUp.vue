@@ -16,7 +16,8 @@
 <script>
 /* eslint-disable */
 import SignUpForm from '../components/SignUpForm.vue'
-import authorizationAPI from '../apis/authorization'
+// import authorizationAPI from '../apis/authorization'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: 'SignUp',
@@ -36,12 +37,18 @@ export default {
   methods: {
     async afterSubmit(formData) {
       try {
-        this.isProcessing = true
         const { data } = await authorizationAPI.signUp(formData)
+
         if (data.status === 'error') {
           throw new Error(data.message)
         }
-        console.log(data)
+
+        Toast.fire({
+          icon: 'success',
+          title: '成功註冊！'
+        })
+
+        this.$router.push('/users/signin')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

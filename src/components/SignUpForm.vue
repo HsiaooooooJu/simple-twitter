@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { Toast } from './../utils/helpers'
+
 export default {
   name: 'SignUpForm',
   props: {
@@ -76,6 +78,27 @@ export default {
   },
   methods: {
     handleSubmit(e) {
+      this.isProcessing = true
+
+      if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
+        Toast.fire({
+          icon: 'warning',
+          title: '請填寫所有欄位'
+        })
+        this.isProcessing = false
+        return
+      }
+
+      if (this.password !== this.checkPassword) {
+        Toast.fire({
+          icon: 'warning',
+          title: '兩次輸入的密碼不同'
+        })
+        this.isProcessing = false
+        this.checkPassword = ''
+        return
+      }
+      
       const form = e.target
       const formData = new FormData(form)
       this.$emit('after-submit', formData)
