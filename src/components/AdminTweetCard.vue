@@ -34,9 +34,7 @@
           </div>
         </div>
         <div class="admin__tweet__container__tweets__description__content">
-          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-          reprehenderit elit laborum.
+          {{ description | setEllipsis }}
         </div>
       </div>
     </div>
@@ -45,6 +43,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      description: '12345678901234567890123456789012345678012345678901234567890'
+    }
+  },
   filters: {
     setEllipsis(value) {
       const len = 50

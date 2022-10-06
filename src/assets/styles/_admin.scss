@@ -1,14 +1,14 @@
 .admin__tweet__container {
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
   margin: 0;
   padding: 0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 
   &__title {
+    padding: 24px 20px;
+    border-bottom: 1px solid #e6ecf0;
     font-size: 24px;
     font-weight: 700;
-    border-bottom: 1px solid #e6ecf0;
-    padding: 24px 20px;
   }
 
   &__tweets {
@@ -16,9 +16,11 @@
     border-bottom: 1px solid #e6ecf0;
 
     &__description {
+      width: 100%;
+
       &__name {
-        font-weight: 700;
         margin-right: 8px;
+        font-weight: 700;
       }
 
       &__account,

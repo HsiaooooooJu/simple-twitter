@@ -10,92 +10,81 @@
     <div
       class="sidebar__container__buttons d-flex flex-column justify-content-between"
     >
-      <ul
-        v-if="currentUser.role === 'user'"
-        class="sidebar__container__buttons__list"
-      >
-        <li class="sidebar__container__buttons__list__button">
+      <ul v-if="currentUser.role === 'user'">
+        <li class="sidebar__container__buttons__list">
           <router-link class="d-flex" to="/home">
             <span>
               <img
-                class="sidebar__container__buttons__list__button__img"
+                class="sidebar__container__buttons__list__img"
                 src="../assets/images/home.svg"
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__button__name">
-              首頁</span
-            >
+            <span class="sidebar__container__buttons__list__name"> 首頁</span>
           </router-link>
         </li>
-        <li class="sidebar__container__buttons__list__button">
+        <li class="sidebar__container__buttons__list">
           <router-link
             class="d-flex"
             :to="{ name: 'profile', params: { id: currentUser.id } }"
           >
             <span>
               <img
-                class="sidebar__container__buttons__list__button__img"
+                class="sidebar__container__buttons__list__img"
                 src="../assets/images/profile.svg"
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__button__name">
+            <span class="sidebar__container__buttons__list__name">
               個人資料</span
             >
           </router-link>
         </li>
-        <li class="sidebar__container__buttons__list__button">
-          <router-link class="d-flex" to="/setting">
+        <li class="sidebar__container__buttons__list">
+          <router-link class="d-flex" to="/settings">
             <span>
               <img
-                class="sidebar__container__buttons__list__button__img"
+                class="sidebar__container__buttons__list__img"
                 src="../assets/images/setting-01.svg"
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__button__name">
-              設定</span
-            >
+            <span class="sidebar__container__buttons__list__name"> 設定</span>
           </router-link>
         </li>
-        <button class="sidebar__container__buttons__list__button__tweet">
-          推文
-        </button>
+        <button class="sidebar__container__buttons__list__tweet">推文</button>
       </ul>
-      <ul v-else class="sidebar__container__buttons__list">
+      <ul v-else>
         <li
           v-for="adminTab in adminTabs"
           :key="adminTab.id"
-          class="sidebar__container__buttons__list__button"
+          class="sidebar__container__buttons__list"
         >
           <router-link class="d-flex" :to="adminTab.path">
             <span>
               <img
-                class="sidebar__container__buttons__list__button__img"
+                class="sidebar__container__buttons__list__img"
                 :src="adminTab.image"
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__button__name">{{
+            <span class="sidebar__container__buttons__list__name">{{
               adminTab.title
             }}</span>
           </router-link>
         </li>
       </ul>
-      <div class="sidebar__container__buttons__logout">
-        <button class="sidebar__container__buttons__logout__button">
+      <div>
+        <button class="sidebar__container__buttons__logout">
           <router-link class="d-flex" to="/users/signin">
             <span>
               <img
-                class="sidebar__container__buttons__logout__button__img"
+                class="sidebar__container__buttons__logout__img"
                 src="../assets/images/logout.svg"
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__logout__button__name"
-              >登出</span
-            >
+            <span class="sidebar__container__buttons__logout__name">登出</span>
           </router-link>
         </button>
       </div>
@@ -107,7 +96,7 @@
 const dummyUser = {
   currentUser: {
     id: 1,
-    role: 'admin'
+    role: 'user'
   }
 }
 
