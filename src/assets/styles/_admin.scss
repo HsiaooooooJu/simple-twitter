@@ -1,12 +1,8 @@
 .admin__tweet__container {
-  overflow-y: scroll;
   margin: 0;
   padding: 0;
   border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &__title {
     padding: 24px 20px;
@@ -42,7 +38,6 @@
       width: 50px;
       height: 50px;
       margin-right: 8px;
-      border-radius: 50%;
     }
     &__delete {
       color: #696974;
