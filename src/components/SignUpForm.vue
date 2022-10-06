@@ -78,7 +78,13 @@ export default {
   },
   methods: {
     handleSubmit(e) {
-      if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
+      if (
+        !this.account ||
+        !this.name ||
+        !this.email ||
+        !this.password ||
+        !this.checkPassword
+      ) {
         Toast.fire({
           icon: 'warning',
           title: '請填寫所有欄位'
@@ -94,7 +100,7 @@ export default {
         this.checkPassword = ''
         return
       }
-      
+
       const form = e.target
       const formData = new FormData(form)
       this.$emit('after-submit', formData)
