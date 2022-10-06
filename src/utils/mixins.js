@@ -15,3 +15,11 @@ export const emptyImageFilter = {
     }
   }
 }
+
+export const atAccountFilter = {
+  filters: {
+    AtAccount(account) {
+      return '@' + account
+    }
+  }
+}
