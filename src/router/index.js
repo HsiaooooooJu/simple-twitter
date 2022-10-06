@@ -37,6 +37,11 @@ const routes = [
     component: () => import('../views/UserSignUp')
   },
   {
+    path: '/admin/tweets',
+    name: 'admin-tweets',
+    component: () => import('../views/AdminTweetList')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: NotFound
@@ -44,6 +49,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  linkExactActiveClass: 'active',
   routes
 })
 
