@@ -28,7 +28,7 @@
             <span
               class="admin__tweet__container__tweets__description__createdAt"
             >
-              {{ tweet.createdAt | fromNowFilter }}
+              {{ tweet.createdAt | fromNow }}
             </span>
           </div>
           <div
@@ -48,7 +48,7 @@
 
 <script>
 import adminAPI from '../apis/admin'
-import { emptyImageFilter, fromNowFilter } from '../utils/helpers'
+import { emptyImageFilter, fromNowFilter } from '../utils/mixins'
 
 export default {
   name: 'AdminTweetCard',
