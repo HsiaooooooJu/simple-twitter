@@ -11,7 +11,7 @@ export const fromNowFilter = {
 export const emptyImageFilter = {
   filters: {
     emptyImage(src) {
-      return src || require('../assets/images/avatar/svg')
+      return src || require('../assets/images/avatar.svg')
     }
   }
 }
