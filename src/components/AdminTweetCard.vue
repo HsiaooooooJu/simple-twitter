@@ -1,45 +1,49 @@
 <template>
   <div class="admin__tweet__container">
     <div class="admin__tweet__container__title">推文清單</div>
-    <div
-      v-for="tweet in tweets"
-      :key="tweet.id"
-      class="admin__tweet__container__tweets d-flex"
-    >
-      <img
-        class="admin__tweet__container__tweets__image cursor-pointer"
-        :src="tweet.User.avatar | emptyImage"
-        alt=""
-      />
-      <div class="admin__tweet__container__tweets__description">
-        <div class="d-flex justify-content-between">
-          <div>
-            <span
-              class="admin__tweet__container__tweets__description__name cursor-pointer"
+    <div class="scrollbar">
+      <div
+        v-for="tweet in tweets"
+        :key="tweet.id"
+        class="admin__tweet__container__tweets d-flex"
+      >
+        <img
+          class="admin__tweet__container__tweets__image cursor-pointer"
+          :src="tweet.User.avatar | emptyImage"
+          alt=""
+        />
+        <div class="admin__tweet__container__tweets__description">
+          <div class="d-flex justify-content-between">
+            <div>
+              <span
+                class="admin__tweet__container__tweets__description__name cursor-pointer"
+              >
+                {{ tweet.User.name }}
+              </span>
+              <span
+                class="admin__tweet__container__tweets__description__account"
+              >
+                {{ tweet.User.account | setAccount }}
+              </span>
+              <span class="admin__tweet__container__tweets__description__dot"
+                >・</span
+              >
+              <span
+                class="admin__tweet__container__tweets__description__createdAt"
+              >
+                {{ tweet.createdAt | fromNow }}
+              </span>
+            </div>
+            <div
+              class="admin__tweet__container__tweets__description__delete cursor-pointer"
+              @click.stop.prevent="deleteTweet(tweet.id)"
             >
-              {{ tweet.User.name }}
-            </span>
-            <span class="admin__tweet__container__tweets__description__account">
-              {{ tweet.User.account | setAccount }}
-            </span>
-            <span class="admin__tweet__container__tweets__description__dot"
-              >・</span
-            >
-            <span
-              class="admin__tweet__container__tweets__description__createdAt"
-            >
-              {{ tweet.createdAt | fromNow }}
-            </span>
+              ×
+            </div>
           </div>
-          <div
-            class="admin__tweet__container__tweets__description__delete cursor-pointer"
-            @click.stop.prevent="deleteTweet(tweet.id)"
-          >
-            ×
+          <div class="admin__tweet__container__tweets__description__content">
+            {{ tweet.description | setEllipsis }}
           </div>
-        </div>
-        <div class="admin__tweet__container__tweets__description__content">
-          {{ tweet.description | setEllipsis }}
         </div>
       </div>
     </div>
