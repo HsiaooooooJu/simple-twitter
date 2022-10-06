@@ -7,11 +7,19 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    // 有登入根目錄是 home
-    // 未登入 redirect: user-signin
     path: '/',
     name: 'root',
     redirect: '/users/signin'
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('../views/Settings')
   },
   {
     path: '/users/signin',
@@ -24,9 +32,9 @@ const routes = [
     component: () => import('../views/AdminSignIn')
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home
+    path: '/users/signup',
+    name: 'users-signup',
+    component: () => import('../views/UserSignUp')
   },
   {
     path: '/admin/tweets',
