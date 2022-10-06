@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="admin__tweet__container__tweets__description__content">
-          {{ description | setEllipsis }}
+          {{ tweet.description | setEllipsis }}
         </div>
       </div>
     </div>
