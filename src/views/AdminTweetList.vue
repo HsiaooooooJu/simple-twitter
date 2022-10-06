@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AdminTweetCard from '../components/AdminTweetCard.vue'
 import Sidebar from '../components/Sidebar.vue'
+import AdminTweetCard from '../components/AdminTweetCard.vue'
 
 export default {
   name: 'AdminTweetList',

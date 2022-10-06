@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import authorizationAPI from '../apis/authorization'
 import { Toast } from './../utils/helpers'
 
 export default {
@@ -77,27 +78,57 @@ export default {
     }
   },
   methods: {
-    handleSubmit(e) {
-      if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
-        Toast.fire({
-          icon: 'warning',
-          title: '請填寫所有欄位'
-        })
-        return
-      }
+    async handleSubmit() {
+      try {
+        if (
+          !this.account ||
+          !this.name ||
+          !this.email ||
+          !this.password ||
+          !this.checkPassword
+        ) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請填寫所有欄位'
+          })
+          return
+        }
 
-      if (this.password !== this.checkPassword) {
-        Toast.fire({
-          icon: 'warning',
-          title: '兩次輸入的密碼不同'
+        if (this.password !== this.checkPassword) {
+          Toast.fire({
+            icon: 'warning',
+            title: '兩次輸入的密碼不同'
+          })
+          this.checkPassword = ''
+          return
+        }
+
+        const { data } = await authorizationAPI.signUp({
+          account: this.account,
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          checkPassword: this.checkPassword
         })
-        this.checkPassword = ''
-        return
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        Toast.fire({
+          icon: 'success',
+          title: '註冊成功'
+        })
+
+        this.$router.push('/users/signin')
+      } catch (error) {
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '帳號已存在'
+        })
       }
-      
-      const form = e.target
-      const formData = new FormData(form)
-      this.$emit('after-submit', formData)
     }
   }
 }
