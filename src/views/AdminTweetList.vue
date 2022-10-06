@@ -12,6 +12,7 @@ import AdminTweetCard from '../components/AdminTweetCard.vue'
 import Sidebar from '../components/Sidebar.vue'
 
 export default {
+  name: 'AdminTweetList',
   components: {
     AdminTweetCard,
     Sidebar
