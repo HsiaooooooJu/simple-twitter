@@ -16,7 +16,7 @@
 <script>
 /* eslint-disable */
 import SignUpForm from '../components/SignUpForm.vue'
-// import authorizationAPI from '../apis/authorization'
+import authorizationAPI from '../apis/authorization'
 import { Toast } from './../utils/helpers'
 
 export default {
@@ -37,6 +37,7 @@ export default {
   methods: {
     async afterSubmit(formData) {
       try {
+        this.isProcessing = true
         const { data } = await authorizationAPI.signUp(formData)
 
         if (data.status === 'error') {

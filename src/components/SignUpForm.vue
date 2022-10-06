@@ -78,14 +78,11 @@ export default {
   },
   methods: {
     handleSubmit(e) {
-      this.isProcessing = true
-
       if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
         Toast.fire({
           icon: 'warning',
           title: '請填寫所有欄位'
         })
-        this.isProcessing = false
         return
       }
 
@@ -94,7 +91,6 @@ export default {
           icon: 'warning',
           title: '兩次輸入的密碼不同'
         })
-        this.isProcessing = false
         this.checkPassword = ''
         return
       }
