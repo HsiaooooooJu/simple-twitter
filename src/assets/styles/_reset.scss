@@ -108,11 +108,25 @@ input:invalid {
 
 %input-style {
   height: 35px;
-  // border-bottom: 2px solid var(--default);
   border: none;
   font-size: 0.7rem;
   background-color: transparent;
+  letter-spacing: 1px;
   -webkit-appearance: none;
+}
+
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 label {
@@ -128,6 +142,7 @@ label {
   /* Firefox adds a lower opacity to the placeholder,
     so use opacity: 1 to fix this. */
   font-size: 16px;
+  letter-spacing: 0;
 }
 
 :-ms-input-placeholder {
@@ -135,6 +150,7 @@ label {
   color: var(--dark-60);
   background-color: transparent;
   font-size: 16px;
+  letter-spacing: 0;
 }
 
 ::-ms-input-placeholder {
@@ -142,4 +158,5 @@ label {
   color: var(--dark-60);
   background-color: transparent;
   font-size: 16px;
+  letter-spacing: 0;
 }
