@@ -15,6 +15,7 @@ import Sidebar from '../components/Sidebar.vue'
 import HomeTweet from '../components/HomeTweet.vue'
 import Spinner from '../components/Spinner.vue'
 import tweetAPI from '../apis/tweets'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
@@ -46,7 +47,10 @@ export default {
         this.isLoading = false
         console.error
       }
-    },
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
   }
 }
 </script>

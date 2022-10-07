@@ -82,12 +82,6 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  // 使用 dispatch 呼叫 Vuex 內的 actions
-  store.dispatch('fetchCurrentUser')
-  next()
-})
-
 router.beforeEach(async (to, from, next) => {
   const tokenInLocalStorage = localStorage.getItem('token')
   const tokenInStore = store.state.token
