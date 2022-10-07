@@ -2,19 +2,19 @@
   <div class="container">
     <div class="admin__container row flex-nowrap">
       <Sidebar class="col-2" />
-      <AdminTweetCard class="col-10" />
+      <AdminUserCard class="col-10" />
     </div>
   </div>
 </template>
 
 <script>
 import Sidebar from '../components/Sidebar.vue'
-import AdminTweetCard from '../components/AdminTweetCard.vue'
+import AdminUserCard from '../components/AdminUserCard.vue'
 
 export default {
   name: 'AdminTweetList',
   components: {
-    AdminTweetCard,
+    AdminUserCard,
     Sidebar
   }
 }

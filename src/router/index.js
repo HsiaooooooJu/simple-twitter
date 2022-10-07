@@ -42,6 +42,11 @@ const routes = [
     component: () => import('../views/AdminTweetList')
   },
   {
+    path: '/admin/users',
+    name: 'admin-uses',
+    component: () => import('../views/AdminUserList')
+  },
+  {
     path: '*',
     name: 'not-found',
     component: NotFound
