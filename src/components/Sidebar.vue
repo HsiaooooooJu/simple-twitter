@@ -96,7 +96,7 @@
 const dummyUser = {
   currentUser: {
     id: 1,
-    role: 'user'
+    role: 'admin'
   }
 }
 
