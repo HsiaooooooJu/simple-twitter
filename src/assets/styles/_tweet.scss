@@ -6,15 +6,12 @@
   border-right: 1px solid var(--border);
 
   &__title {
-    height: 10vh;
     padding: 24px 20px;
     border-bottom: 1px solid var(--border);
     font-weight: 700;
   }
 
   &__tweet-box {
-    position: relative;
-    height: 15vh;
 
     &__img {
       margin: 16px 10px auto 24px;
@@ -23,7 +20,8 @@
 
     &__input {
       width: 100%;
-      padding: 25px 25px 70px 0;
+      height: 135px;
+      padding: 25px 25px 0 0;
       border: none;
       font-size: 18px;
       resize: none;
@@ -38,7 +36,7 @@
         font-size: 18px;
         font-weight: 700;
       }
-    
+
       &:-ms-input-placeholder {
         /* Internet Explorer 10-11 */
         background-color: transparent;
@@ -46,7 +44,7 @@
         font-size: 18px;
         font-weight: 700;
       }
-    
+
       &::-ms-input-placeholder {
         /* Microsoft Edge */
         background-color: transparent;
@@ -57,11 +55,9 @@
     }
 
     &__btn {
-      position: absolute;
-      right: 24px;
-      bottom: 16px;
       width: 64px;
       height: 40px;
+      margin: 100px 24px 16px 0;
       border-radius: 50px;
       color: var(--dark-0);
       background-color: var(--brand-color);
@@ -87,7 +83,6 @@
         margin-top: 16px;
 
         .tweet-list__tweet__title {
-
           &__name {
             margin-right: 8px;
             color: var(--dark-100);
@@ -97,13 +92,13 @@
 
           &__account,
           &__createdAt,
-          &__seperator {
+          &__separator {
             padding-top: 1px;
             color: var(--secondary-color);
             font-size: 14px;
           }
 
-          &__seperator {
+          &__separator {
             padding: 4px 0;
           }
         }
@@ -117,7 +112,6 @@
 
           &__reply,
           &__like {
-
             &__icon {
               width: 14px;
               margin-right: 8px;

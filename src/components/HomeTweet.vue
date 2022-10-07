@@ -37,7 +37,7 @@
             <div class="tweet-list__tweet__title__account">
               {{ tweet.User.account | atAccount }}
             </div>
-            <span class="tweet-list__tweet__title__seperator">・</span>
+            <span class="tweet-list__tweet__title__separator">・</span>
             <div class="tweet-list__tweet__title__createdAt">
               {{ tweet.createdAt | fromNow }}
             </div>
@@ -51,7 +51,7 @@
             <div class="tweet-list__tweet__action__reply d-flex">
               <img
                 src="../assets/images/reply.svg"
-                class="tweet-list__tweet__action__reply__icon"
+                class="tweet-list__tweet__action__reply__icon cursor-pointer"
                 alt=""
               />
               <div class="tweet-list__tweet__action__reply__count num-font">
@@ -62,7 +62,7 @@
               <img
                 src="../assets/images/unlike.svg"
                 alt=""
-                class="tweet-list__tweet__action__like__icon"
+                class="tweet-list__tweet__action__like__icon cursor-pointer"
               />
               <div class="tweet-list__tweet__action__like__count num-font">
                 {{ tweet.likeCount }}
