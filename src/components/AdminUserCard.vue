@@ -1,57 +1,77 @@
 <template>
   <div class="admin__user__container">
     <div class="admin__user__container__title">使用者列表</div>
-    <div class="scrollbar d-flex">
-      <div class="admin__user__container__users">
+    <Spinner v-if="isLoading" />
+    <div v-else class="scrollbar d-flex">
+      <div
+        v-for="user in users"
+        :key="user.id"
+        class="admin__user__container__users"
+      >
         <div>
           <img
             class="admin__user__container__users__cover"
-            src="https://static.popdaily.com.tw/wp-content/uploads/2020/07/dm8zfj74l1c0480g48ww0wo8gqqke3o-1000x625.png"
+            :src="user.cover | emptyCover"
             alt=""
           />
         </div>
-        <div class="text-center">
+        <div class="admin__user__container__users__description text-center">
           <div>
             <img
               class="admin__user__container__users__img"
-              src="../assets/images/avatar.svg"
+              :src="user.avatar | emptyImage"
               alt=""
             />
           </div>
           <div class="admin__user__container__users__name__account">
-            <div class="admin__user__container__users__name">John Doe</div>
-            <div class="admin__user__container__users__account">@heyJohn</div>
+            <div class="admin__user__container__users__name">
+              {{ user.name }}
+            </div>
+            <div class="admin__user__container__users__account">
+              {{ user.account | atAccount }}
+            </div>
           </div>
-          <div  class="admin__user__container__users__tweets__likes">
-            <span
-              ><img
-                class="admin__user__container__users__tweets"
-                src=""
-                alt=""
-              /><span class="admin__user__container__users__tweets__count"
-                >1.5k</span
-              ></span
-            >
-            <span
-              ><img
-                class="admin__user__container__users__likes"
-                src=""
-                alt=""
-              /><span class="admin__user__container__users__likes__count"
-                >20k</span
-              ></span
-            >
+          <div class="admin__user__container__users__tweets__likes">
+            <span class="admin__user__container__users__tweets">
+              <span>
+                <img
+                  class="admin__user__container__users__tweets__img"
+                  src="../assets/images/tweets.svg"
+                  alt=""
+                />
+              </span>
+              <span class="admin__user__container__users__tweets__count">
+                {{ user.tweetCount }}
+              </span>
+            </span>
+            <span class="admin__user__container__users__likes">
+              <span>
+                <img
+                  class="admin__user__container__users__likes__img"
+                  src="../assets/images/unlike.svg"
+                  alt=""
+                />
+              </span>
+              <span class="admin__user__container__users__likes__count">
+                {{ user.likeCount }}
+              </span>
+            </span>
           </div>
-          <div  class="admin__user__container__users__followings__followers">
-            <span class="admin__user__container__users__followings"
-              ><span class="admin__user__container__users__followings__count"
-                >34個</span
-              >跟隨中</span
-            ><span class="admin__user__container__users__followers"
-              ><span class="admin__user__container__users__followers__count"
-                >59位</span
-              >跟隨者</span
-            >
+          <div class="admin__user__container__users__followings__followers">
+            <span class="admin__user__container__users__followings">
+              <span class="admin__user__container__users__followings__count">
+                {{ user.followingCount }} 個</span
+              ><span class="admin__user__container__users__followings__name"
+                >跟隨中
+              </span>
+            </span>
+            <span class="admin__user__container__users__followers">
+              <span class="admin__user__container__users__followers__count">
+                {{ user.followerCount }} 位</span
+              ><span class="admin__user__container__users__followers__name"
+                >跟隨者
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -59,60 +79,55 @@
   </div>
 </template>
 
-<style scoped>
-.admin__user__container {
-  margin: 0;
-  padding: 0;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-}
+<script>
+import {
+  emptyImageFilter,
+  emptyCoverFilter,
+  atAccountFilter
+} from '../utils/mixins'
+import { Toast } from '../utils/helpers'
+import Spinner from '../components/Spinner.vue'
+import adminAPI from '../apis/admin'
 
-.admin__user__container__title {
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--border);
-  font-size: 24px;
-  font-weight: 700;
-}
-.admin__user__container__users {
-  position: relative;
-  margin: 16px 8px 0 8px;
-  background: #f6f7f8;
-  height: 315px;
-}
-.admin__user__container__users__cover {
-  width: 250px;
-  height: 140px;
-  border-radius: 10px 10px 0 0;
-}
-.scrollbar {
-  flex-wrap: wrap;
-}
-.admin__user__container__users__img {
-  position: absolute;
-  transform: translateX(-50%);
-  top: 23%;
-  width: 100px;
-  height: 100px;
-  border: 4px solid white;
-  border-radius: 50%;
-}
-.admin__user__container__users__name {
-  margin-top: 32px;
-}
+export default {
+  name: 'AdminUserCard',
+  mixins: [emptyImageFilter, emptyCoverFilter, atAccountFilter],
+  components: {
+    Spinner
+  },
+  data() {
+    return {
+      users: [],
+      isLoading: false
+    }
+  },
+  created() {
+    this.fetchUsers()
+  },
+  methods: {
+    async fetchUsers() {
+      try {
+        this.isLoading = true
 
-.admin__user__container__users__tweets__likes {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
+        const { data } = await adminAPI.users.get()
 
-.admin__user__container__users__tweets__likes {
-  margin-top: 21.5px;
-}
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
 
-.admin__user__container__users__tweets__count {
-  margin-right: 18px;
+        this.users = data
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得使用者資料，請稍後再試'
+        })
+      }
+    }
+  }
 }
-.admin__user__container__users__followings {
-  margin-right: 8px;
-}
-</style>
+</script>

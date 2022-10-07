@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="admin__container row">
-      <Sidebar class="col-3" />
-      <AdminTweetCard class="col-9" />
+      <Sidebar class="col-2" />
+      <AdminTweetCard class="col-10" />
     </div>
   </div>
 </template>

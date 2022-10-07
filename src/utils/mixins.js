@@ -15,3 +15,19 @@ export const emptyImageFilter = {
     }
   }
 }
+
+export const emptyCoverFilter = {
+  filters: {
+    emptyCover(src) {
+      return src || require('../assets/images/cover-img.jpg')
+    }
+  }
+}
+
+export const atAccountFilter = {
+  filters: {
+    atAccount(account) {
+      return '@' + account
+    }
+  }
+}

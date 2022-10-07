@@ -45,7 +45,7 @@
             <span>
               <img
                 class="sidebar__container__buttons__list__img"
-                src="../assets/images/setting-01.svg"
+                src="../assets/images/setting.svg"
                 alt=""
               />
             </span>
