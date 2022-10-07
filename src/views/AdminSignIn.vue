@@ -77,6 +77,8 @@ export default {
 
         localStorage.setItem('token', data.token)
 
+        this.$store.commit('setCurrentUser', data.user)
+
         this.$router.push('/admin/tweets')
         this.isProcessing = false
       } catch (error) {
