@@ -82,6 +82,8 @@ import {
   atAccountFilter
 } from '../utils/mixins'
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'HomeTweet',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
@@ -96,6 +98,9 @@ export default {
       tweets: this.initialTweets,
       isLoading: false
     }
+  },
+  computed: {
+    ...mapState(['currentUser'])
   }
 }
 </script>

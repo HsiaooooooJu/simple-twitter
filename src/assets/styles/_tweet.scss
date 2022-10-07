@@ -1,10 +1,12 @@
 .home-tweet__container {
+  height: 100vh;
   margin: 0;
   padding: 0;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
 
   &__title {
+    height: 10vh;
     padding: 24px 20px;
     border-bottom: 1px solid var(--border);
     font-weight: 700;
@@ -12,6 +14,7 @@
 
   &__tweet-box {
     position: relative;
+    height: 15vh;
 
     &__img {
       margin: 16px 10px auto 24px;
@@ -67,6 +70,7 @@
   }
 
   &__tweet-list {
+    height: 75vh;
     border-top: 10px solid var(--border);
 
     &__tweet {

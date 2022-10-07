@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Spinner v-if="isLoading" />
-    <div v-else class="home__container row">
+    <div v-else class="home__container row flex-nowrap">
       <Sidebar class="col-2" />
       <HomeTweet :initial-tweets="tweets" class="col-8" />
       <!-- component: PopularUsers -->
