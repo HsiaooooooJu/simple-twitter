@@ -24,10 +24,7 @@
           </router-link>
         </li>
         <li class="sidebar__container__buttons__list">
-          <router-link
-            class="d-flex"
-            :to="{ name: 'profile', params: { id: currentUser.id } }"
-          >
+          <router-link class="d-flex" to="#">
             <span>
               <img
                 class="sidebar__container__buttons__list__img"
@@ -75,7 +72,7 @@
         </li>
       </ul>
       <div>
-        <button class="sidebar__container__buttons__logout">
+        <button class="sidebar__container__buttons__logout" @click="logout">
           <router-link class="d-flex" to="/users/signin">
             <span>
               <img
@@ -93,18 +90,12 @@
 </template>
 
 <script>
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    role: 'admin'
-  }
-}
+import { mapState } from 'vuex'
 
 export default {
   name: 'Sidebar',
   data() {
     return {
-      currentUser: dummyUser.currentUser,
       adminTabs: [
         {
           id: 1,
@@ -120,6 +111,15 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    logout() {
+      this.$store.commit('revokeAuthentication')
+      this.$router.push('/users/signin')
+    }
+  },
+  computed: {
+    ...mapState(['currentUser', 'isAuthenticated'])
   }
 }
 </script>

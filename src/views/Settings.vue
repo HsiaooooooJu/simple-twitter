@@ -1,16 +1,22 @@
 <template>
-  <div class="settings__container">
-    <h4 class="settings__container__title">帳戶設定</h4>
-    <SettingForm @after-update-settings="afterUpdateSettings" />
+  <div class="container">
+    <div class="settings__container row">
+      <Sidebar class="col-2" />
+      <SettingForm class="col-8" />
+      <div class="col-2"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import SettingForm from '../components/SettingForm.vue'
+import Sidebar from '../components/Sidebar.vue'
+
 export default {
   name: 'Settings',
   components: {
-    SettingForm
+    SettingForm,
+    Sidebar
   },
   data() {
     return {
