@@ -40,7 +40,9 @@
                   alt=""
                 />
               </span>
-              <span class="admin__user__container__users__tweets__count">
+              <span
+                class="admin__user__container__users__tweets__count num-font"
+              >
                 {{ user.tweetCount }}
               </span>
             </span>
@@ -52,22 +54,33 @@
                   alt=""
                 />
               </span>
-              <span class="admin__user__container__users__likes__count">
+              <span
+                class="admin__user__container__users__likes__count num-font"
+              >
                 {{ user.likeCount }}
               </span>
             </span>
           </div>
           <div class="admin__user__container__users__followings__followers">
             <span class="admin__user__container__users__followings">
-              <span class="admin__user__container__users__followings__count">
-                {{ user.followingCount }} 個</span
+              <span
+                class="admin__user__container__users__followings__count num-font"
+              >
+                {{ user.followingCount }}</span
+              ><span class="admin__user__container__users__followings__count">
+                個</span
               ><span class="admin__user__container__users__followings__name"
                 >跟隨中
               </span>
             </span>
             <span class="admin__user__container__users__followers">
+              <span
+                class="admin__user__container__users__followers__count num-font"
+              >
+                {{ user.followerCount }}</span
+              >
               <span class="admin__user__container__users__followers__count">
-                {{ user.followerCount }} 位</span
+                位</span
               ><span class="admin__user__container__users__followers__name"
                 >跟隨者
               </span>

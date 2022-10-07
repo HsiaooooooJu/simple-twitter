@@ -9,16 +9,14 @@
         class="admin__tweet__container__tweets d-flex"
       >
         <img
-          class="admin__tweet__container__tweets__image cursor-pointer"
+          class="admin__tweet__container__tweets__image"
           :src="tweet.User.avatar | emptyImage"
           alt=""
         />
         <div class="admin__tweet__container__tweets__description">
           <div class="d-flex justify-content-between">
             <div>
-              <span
-                class="admin__tweet__container__tweets__description__name cursor-pointer"
-              >
+              <span class="admin__tweet__container__tweets__description__name">
                 {{ tweet.User.name }}
               </span>
               <span
@@ -36,7 +34,7 @@
               </span>
             </div>
             <button
-              class="admin__tweet__container__tweets__description__delete cursor-pointer"
+              class="admin__tweet__container__tweets__description__delete"
               :disabled="isProcessing"
               @click.stop.prevent="deleteTweet(tweet.id)"
             >

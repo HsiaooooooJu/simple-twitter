@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="admin__container row">
+    <div class="admin__container row flex-nowrap">
       <Sidebar class="col-2" />
       <AdminUserCard class="col-10" />
     </div>
