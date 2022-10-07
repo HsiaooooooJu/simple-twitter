@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <div class="home__container row">
-      <Sidebar class="col-3" />
-      <HomeTweet class="col-6" />
+    <Spinner v-if="isLoading" />
+    <div v-else class="home__container row">
+      <Sidebar class="col-2" />
+      <HomeTweet :initial-tweets="tweets" class="col-8" />
       <!-- component: PopularUsers -->
-      <div class="col-3" />
+      <div class="col-2" />
     </div>
   </div>
 </template>
@@ -12,8 +13,40 @@
 <script>
 import Sidebar from '../components/Sidebar.vue'
 import HomeTweet from '../components/HomeTweet.vue'
+import Spinner from '../components/Spinner.vue'
+import tweetAPI from '../apis/tweets'
+
 export default {
-  components: { Sidebar, HomeTweet },
-  name: 'Home'
+  name: 'Home',
+  components: { Sidebar, HomeTweet, Spinner },
+  data() {
+    return {
+      tweets: [],
+      isProcessing: false,
+      isLoading: false
+    }
+  },
+  created() {
+    this.fetchTweets()
+  },
+  methods: {
+    async fetchTweets() {
+      try {
+        this.isLoading = true
+
+        const { data } = await tweetAPI.getAll()
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweets = data
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.error
+      }
+    },
+  }
 }
 </script>
