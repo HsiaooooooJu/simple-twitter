@@ -116,6 +116,13 @@ export default {
           return
         }
 
+        if(this.name.length > 50) {
+          Toast.fire({
+            icon: 'warning',
+            title: '名稱不可超過 50 字'
+          })
+        }
+
         if (!this.email.includes('@') || !this.email.includes('.')) {
           this.emailError = 'Email 格式錯誤'
           this.isProcessing = false
@@ -152,12 +159,20 @@ export default {
         })
         this.$router.push('/users/signin')
       } catch (error) {
-        console.log(error)
         this.isProcessing = false
-        Toast.fire({
-          icon: 'error',
-          title: '帳號已存在'
-        })
+        const e = error.response.data.message
+        if ( e === 'Account already exists.') {
+          Toast.fire({
+            icon: 'error',
+            title: 'Account 已重複註冊！'
+          })
+        }
+        if( e === 'Email already exists.') {
+          Toast.fire({
+            icon: 'error',
+            title: 'Email 已重複註冊！'
+          })
+        }
       }
     }
   }

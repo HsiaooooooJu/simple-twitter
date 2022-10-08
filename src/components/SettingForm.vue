@@ -175,12 +175,20 @@ export default {
         this.isProcessing = false
         this.$router.push('/home')
       } catch (error) {
-        console.log(error)
         this.isProcessing = false
-        Toast.fire({
-          icon: 'error',
-          title: '儲存失敗'
-        })
+        const e = error.response.data.message
+        if ( e === 'Account already exists.') {
+          Toast.fire({
+            icon: 'error',
+            title: 'Account 已重複註冊！'
+          })
+        }
+        if( e === 'Email already exists.') {
+          Toast.fire({
+            icon: 'error',
+            title: 'Email 已重複註冊！'
+          })
+        }
       }
     }
   },
