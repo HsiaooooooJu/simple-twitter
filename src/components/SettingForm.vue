@@ -5,7 +5,7 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="account">帳號</label>
         <input
-          v-model="account"
+          v-model="currentUser.account"
           id="account"
           placeholder="請輸入帳號"
           type="text"
@@ -15,7 +15,7 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="name">名稱</label>
         <input
-          v-model="name"
+          v-model="currentUser.name"
           id="name"
           placeholder="請輸入名稱"
           type="text"
@@ -25,7 +25,7 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="email">Email</label>
         <input
-          v-model="email"
+          v-model="currentUser.email"
           id="email"
           placeholder="請輸入 Email"
           type="email"
@@ -35,21 +35,19 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="password">密碼</label>
         <input
-          v-model="password"
+          v-model="currentUser.password"
           id="password"
           placeholder="請輸入密碼"
           type="password"
-          required
         />
       </div>
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="checkPassword">密碼確認</label>
         <input
-          v-model="checkPassword"
+          v-model="currentUser.checkPassword"
           id="checkPassword"
           placeholder="請再次輸入密碼"
           type="password"
-          required
         />
       </div>
       <button
@@ -64,54 +62,71 @@
 </template>
 
 <script>
-import { Toast } from './../utils/helpers'
+// import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
+import usersAPI from '../apis/users'
 
 export default {
   name: 'SettingForm',
-  props: {
-    isProcessing: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
-      account: '',
-      name: '',
-      email: '',
-      password: '',
-      checkPassword: ''
+      user: {
+        id: 0,
+        account: '',
+        name: '',
+        email: '',
+        password: '',
+        checkPassword: ''
+      },
+      isProcessing: false
     }
   },
+  created() {
+    const { id } = this.$route.params
+    this.setUser(id)
+  },
   methods: {
+    setUser() {
+      this.user = this.currentUser
+    },
     async updateSettings() {
       try {
-        // const { data } = await authorizationAPI.signUp({
-        //   account: this.account,
-        //   name: this.name,
-        //   email: this.email,
-        //   password: this.password,
-        //   checkPassword: this.checkPassword
-        // })
-
-        // if (data.status === 'error') {
-        //   throw new Error(data.message)
-        // }
-
-        Toast.fire({
-          icon: 'success',
-          title: '儲存成功'
+        //todo
+        // 錯誤處理
+        this.isProcessing = true
+        const { data } = await usersAPI.setProfile({
+          userId: this.user.id,
+          account: this.user.account,
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+          checkPassword: this.user.checkPassword
         })
 
-        // this.$router.push('/users/signin')
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.isProcessing = false
+
+        this.$router.push('/home')
       } catch (error) {
         console.log(error)
-
-        Toast.fire({
-          icon: 'error',
-          title: '帳號已存在'
-        })
+        this.isProcessing = false
+        // Toast.fire({
+        //   icon: 'error',
+        //   title: '帳號已存在'
+        // })
       }
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  },
+  watch: {
+    currentUser() {
+      if (!this.user.id) return
+      const { id } = this.$route.params
+      this.setUser(id)
     }
   }
 }

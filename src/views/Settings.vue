@@ -11,6 +11,7 @@
 <script>
 import SettingForm from '../components/SettingForm.vue'
 import Sidebar from '../components/Sidebar.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Settings',
@@ -18,17 +19,8 @@ export default {
     SettingForm,
     Sidebar
   },
-  data() {
-    return {
-      isProcessing: false
-    }
-  },
-  methods: {
-    afterUpdateSettings() {
-      // todo
-      // integrate usersAPI
-      console.log('yes')
-    }
+  computed: {
+    ...mapState(['currentUser'])
   }
 }
 </script>
