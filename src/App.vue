@@ -1,12 +1,24 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div id="app" class="container">
+    <div class="app__container row flex-nowrap">
+      <Sidebar v-if="isAuthenticated" class="col-2" />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
+import Sidebar from './components/Sidebar.vue'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
+import { mapState } from 'vuex'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Sidebar
+  },
+  computed: {
+    ...mapState(['isAuthenticated'])
+  }
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="container">
     <Spinner v-if="isLoading" />
     <div v-else class="home__container row flex-nowrap">
-      <Sidebar class="col-2" />
+      <!-- <Sidebar class="col-2" /> -->
       <HomeTweet :initial-tweets="tweets" class="col-8" />
       <!-- component: PopularUsers -->
       <div class="col-2" />
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar.vue'
+// import Sidebar from '../components/Sidebar.vue'
 import HomeTweet from '../components/HomeTweet.vue'
 import Spinner from '../components/Spinner.vue'
 import tweetAPI from '../apis/tweets'
@@ -19,7 +19,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
-  components: { Sidebar, HomeTweet, Spinner },
+  components: { HomeTweet, Spinner },
   data() {
     return {
       tweets: [],
