@@ -10,6 +10,17 @@ export default {
     return apiHelper.put(`/users/${userId}`), formData
   },
 
+  // 編輯自己的帳戶設定
+  setProfile({ userId, account, name, email, password, checkPassword }) {
+    return apiHelper.put(`/users/${userId}/setting`, {
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    })
+  },
+
   // 顯示跟隨者數量排列前 10 的使用者
   topFollowers() {
     return apiHelper.get(`/users/top_followers`)
@@ -45,5 +56,5 @@ export default {
     followers(userId) {
       return apiHelper.get(`/users/${userId}/followers`)
     }
-  }
+  },
 }

@@ -95,8 +95,7 @@ export default {
   },
   data() {
     return {
-      tweets: this.initialTweets,
-      isLoading: false
+      tweets: this.initialTweets
     }
   },
   computed: {
