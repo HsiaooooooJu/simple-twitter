@@ -2,8 +2,8 @@
   <div class="container">
     <div class="settings__container row">
       <Sidebar class="col-2" />
-      <SettingForm class="col-8" />
-      <div class="col-2"></div>
+      <SettingForm class="col-7" />
+      <div class="col-3"></div>
     </div>
   </div>
 </template>

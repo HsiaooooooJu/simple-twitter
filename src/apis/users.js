@@ -5,6 +5,16 @@ export default {
     return apiHelper.get('/current_user')
   },
 
+  // 使用者編輯自己的 profile
+  update({ userId, formData }) {
+    return apiHelper.put(`/users/${userId}`), formData
+  },
+
+  // 顯示跟隨者數量排列前 10 的使用者
+  topFollowers() {
+    return apiHelper.get(`/users/top_followers`)
+  },
+
   get: {
     // 顯示指定用戶的 profile
     profile(userId) {
@@ -35,15 +45,5 @@ export default {
     followers(userId) {
       return apiHelper.get(`/users/${userId}/followers`)
     }
-  },
-
-  // 使用者編輯自己的 profile
-  update({ userId, formData }) {
-    return apiHelper.put(`/users/${userId}`), formData
-  },
-
-  // 顯示跟隨者數量排列前 10 的使用者
-  topFollowers() {
-    return apiHelper.get(`/users/top_followers`)
   }
 }
