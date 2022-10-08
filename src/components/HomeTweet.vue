@@ -3,7 +3,7 @@
     <h4 class="home-tweet__container__title">首頁</h4>
     <div class="home-tweet__container__tweet-box d-flex">
       <img
-        src="../assets/images/avatar.svg"
+        :src="currentUser.avatar | emptyImage"
         class="home-tweet__container__tweet-box__img"
         alt=""
       />
