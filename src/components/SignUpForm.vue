@@ -1,6 +1,6 @@
 <template>
   <form @submit.stop.prevent="handleSubmit">
-    <div class="sign__container__form-row d-flex flex-column form-row-margin">
+    <div class="sign__container__form-row d-flex flex-column">
       <label for="account">帳號</label>
       <input
         v-model="account"
@@ -50,7 +50,7 @@
       emailError
     }}</span>
 
-    <div class="sign__container__form-row d-flex flex-column form-row-margin">
+    <div class="sign__container__form-row d-flex flex-column">
       <label for="password">密碼</label>
       <input
         v-model="password"
@@ -93,7 +93,6 @@ export default {
       password: '',
       checkPassword: '',
       isProcessing: false,
-      nameError: '',
       emailError: ''
     }
   },

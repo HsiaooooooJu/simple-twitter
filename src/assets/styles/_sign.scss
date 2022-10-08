@@ -1,13 +1,8 @@
 .sign__container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
 
   &__error {
     height: 10px;
-    margin: 6px auto 20px;
+    margin: -26px auto 20px;
     margin-left: calc((100% - 35%) / 2);
     color: var(--error);
     font-size: 12px;
@@ -42,7 +37,7 @@
   }
 
   &__form-row {
-    margin: 0 auto;
+    margin: 0 auto 32px auto;
     padding: 4px 10px 0;
     width: 35%;
     min-width: 250px;
@@ -55,14 +50,10 @@
     @extend %input-style;
   }
 
-  .form-row-margin {
-    margin: 0 auto 32px;
-  }
-
   &__btn {
-    margin: 40px auto 0;
     width: 35%;
     height: 46px;
+    margin: 8px auto 0;
     border-radius: 50px;
     color: var(--dark-0);
     background-color: var(--brand-color);
