@@ -41,7 +41,8 @@
           v-model="currentUser.email"
           id="email"
           placeholder="請輸入 Email"
-          type=""
+          type="email"
+          required
           @keydown.space.prevent
         />
       </div>
@@ -118,7 +119,16 @@ export default {
         if (!this.user.account || !this.user.name || !this.user.email) {
           Toast.fire({
             icon: 'warning',
-            title: '帳號、名稱、Email 不可為空白！'
+            title: '帳號、名稱、Email 不可為空白'
+          })
+          this.isProcessing = false
+          return
+        }
+
+        if (this.user.name.length > 50) {
+          Toast.fire({
+            icon: 'warning',
+            title: '名稱不可超過 50 字'
           })
           this.isProcessing = false
           return
@@ -128,6 +138,15 @@ export default {
           Toast.fire({
             icon: 'warning',
             title: 'Email 格式錯誤'
+          })
+          this.isProcessing = false
+          return
+        }
+
+        if (this.user.password !== this.user.checkPassword) {
+          Toast.fire({
+            icon: 'warning',
+            title: '兩次輸入密碼不同'
           })
           this.isProcessing = false
           return
