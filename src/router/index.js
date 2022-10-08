@@ -39,7 +39,7 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
-    path: '/settings',
+    path: '/settings/:id',
     name: 'settings',
     component: () => import('../views/Settings'),
     beforeEnter: authorizeIsUser

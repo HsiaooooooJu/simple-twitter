@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <div class="sign__container">
+    <div class="sign__container d-flex flex-column">
       <div class="sign__container__brand-logo">
         <img src="../assets/images/ac-logo.svg" alt="" />
       </div>
       <h3 class="sign__container__title">建立你的帳號</h3>
-      <SignUpForm :is-processing="isProcessing" />
+      <SignUpForm />
       <div class="sign__container__link d-flex justify-content-center">
         <router-link to="/users/signin">取消</router-link>
       </div>
@@ -20,16 +20,6 @@ export default {
   name: 'SignUp',
   components: {
     SignUpForm
-  },
-  data() {
-    return {
-      account: '',
-      name: '',
-      email: '',
-      password: '',
-      checkPassword: '',
-      isProcessing: false
-    }
   }
 }
 </script>

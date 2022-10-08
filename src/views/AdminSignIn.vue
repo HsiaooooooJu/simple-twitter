@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="sign__container">
+    <div class="sign__container d-flex flex-column">
       <div class="sign__container__brand-logo">
         <img src="../assets/images/ac-logo.svg" alt="" />
       </div>

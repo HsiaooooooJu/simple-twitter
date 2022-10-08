@@ -1,8 +1,27 @@
 .settings__container__form {
   margin: 0 auto;
   padding: 0;
+  height: 100vh;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
+
+  &__error {
+    height: 10px;
+    margin: -26px auto 20px;
+    margin-left: calc((100% - 95%) / 2);
+    color: var(--error);
+    font-size: 12px;
+  }
+
+  &__letter-count {
+    height: 10px;
+    margin-right: calc((100% - 95%) / 2);
+    margin-top: -32px;
+    margin-bottom: 22px;
+    color: var(--dark-80);
+    font-size: 12px;
+    text-align: right;
+  }
 
   &__title {
     padding: 24px 20px;
