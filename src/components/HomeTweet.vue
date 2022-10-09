@@ -32,7 +32,7 @@
         >
           <div class="tweet-list__tweet__title d-flex">
             <div class="tweet-list__tweet__title__name">
-              {{ tweet.User.name }}
+              <router-link to="/home">{{ tweet.User.name }}</router-link>
             </div>
             <div class="tweet-list__tweet__title__account">
               {{ tweet.User.account | atAccount }}
@@ -43,7 +43,8 @@
             </div>
           </div>
           <div
-            class="home-tweet__container__tweet-list__tweet__text__description"
+            class="home-tweet__container__tweet-list__tweet__text__description cursor-pointer"
+            @click="checkTweetReplies(tweet.id)"
           >
             {{ tweet.description }}
           </div>
@@ -96,6 +97,14 @@ export default {
   data() {
     return {
       tweets: this.initialTweets
+    }
+  },
+  methods: {
+    checkTweetReplies(id) {
+      this.$router.push({
+        name: 'tweets',
+        params: { id }
+      })
     }
   },
   computed: {

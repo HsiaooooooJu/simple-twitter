@@ -1,6 +1,6 @@
 <template>
   <div class="home-tweet__container d-flex flex-column">
-    <div class="home-tweet__container__title d-flex">
+    <div class="home-tweet__container__title d-flex cursor-pointer" @click="$router.push('/home')">
       <img
         src="../assets/images/back.svg"
         alt=""
@@ -12,30 +12,30 @@
     <div class="home-tweet__container__tweet d-flex flex-column">
       <div class="home-tweet__container__tweet__title d-flex">
         <img
-          src="../assets/images/avatar.svg"
+          :src="tweet.user.avatar | emptyImage"
           alt=""
           class="home-tweet__container__tweet__title__img"
         />
         <div class="home-tweet__container__tweet__title__box">
-          <div class="home-tweet__container__tweet__title__box__name">name</div>
+          <div class="home-tweet__container__tweet__title__box__name">{{ tweet.user.name}}</div>
           <div class="home-tweet__container__tweet__title__box__account">
-            account
+            {{ tweet.user.account | atAccount }}
           </div>
         </div>
       </div>
-      <div class="home-tweet__container__tweet__description">description</div>
-      <div class="home-tweet__container__tweet__createdAt">{time}・{date}</div>
+      <div class="home-tweet__container__tweet__description">{{tweet.description}}</div>
+      <div class="home-tweet__container__tweet__createdAt">{{ tweet.createdAt | fromNow  }}</div>
     </div>
     <div class="home-tweet__container__tweet__num d-flex">
       <div class="home-tweet__container__tweet__num__box">
         <span class="home-tweet__container__tweet__num__box__count num-font"
-          >34</span
+          >{{ tweet.replyCount }}</span
         >
         <span class="home-tweet__container__tweet__num__box__unit">回覆</span>
       </div>
       <div class="home-tweet__container__tweet__num__box">
         <span class="home-tweet__container__tweet__num__box__count num-font"
-          >808</span
+          >{{ tweet.likeCount }}</span
         >
         <span class="home-tweet__container__tweet__num__box__unit"
           >喜歡次數</span
@@ -55,10 +55,11 @@
       </button>
     </div>
 
-    <div class="home-tweet__container__tweet-list scrollbar">
-      <div class="home-tweet__container__tweet-list__tweet d-flex">
+    <div class="home-tweet__container__reply-list scrollbar">
+      <div v-if="!replies.length" class="home-tweet__container__tweet-list__blank">目前沒有回覆</div>
+      <div v-else v-for="reply in replies" :key="reply.id" class="home-tweet__container__tweet-list__tweet d-flex">
         <img
-          src="../assets/images/avatar.svg"
+          :src="reply.User.avatar | emptyImage"
           class="home-tweet__container__tweet-list__tweet__avatar"
           alt=""
         />
@@ -67,31 +68,27 @@
         >
           <div class="tweet-list__tweet__title d-flex">
             <div class="tweet-list__tweet__title__name">
-              <!-- {{ tweet.User.name }} -->
-              name
+              {{ reply.User.name }}
             </div>
             <div class="tweet-list__tweet__title__account">
-              <!-- {{ tweet.User.account | atAccount }} -->
-              account
+              {{ reply.Tweet.User.account | atAccount }}            
             </div>
             <span class="tweet-list__tweet__title__separator">・</span>
             <div class="tweet-list__tweet__title__createdAt">
-              <!-- {{ tweet.createdAt | fromNow }} -->
-              time
+              {{ reply.createdAt | fromNow }}              
             </div>
           </div>
           <div
             class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
           >
             <span class="tweet-list__tweet__reply">回覆</span>
-            <span class="tweet-list__tweet__reply-to"> @apple </span>
+            <span class="tweet-list__tweet__reply-to">{{reply.Tweet.User.account | atAccount }}</span>
           </div>
 
           <div
             class="home-tweet__container__tweet-list__tweet__text__description"
           >
-            <!-- {{ tweet.description }} -->
-            lores isump
+            {{ reply.comment }}
           </div>
         </div>
       </div>
@@ -111,13 +108,28 @@ import { mapState } from 'vuex'
 export default {
   name: 'TweetDetail',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
+  props: {
+    initialTweet: {
+      type: Object,
+      required: true
+    },
+    initialReplies: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
+      tweet: this.initialTweet,
+      replies: this.initialReplies,
       isLiked: false
     }
   },
+  created() {
+    console.log(this.replies)
+  },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser']),
   }
 }
 </script>

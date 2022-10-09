@@ -69,6 +69,11 @@
     height: 75vh;
     border-top: 10px solid var(--border);
 
+    &__blank {
+      margin: 24px auto;
+      text-align: center;
+    }
+
     &__tweet {
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
@@ -82,13 +87,15 @@
 
       &__text {
         margin-top: 16px;
+        width: 100%;
 
         .tweet-list__tweet__title {
-          &__name {
+          &__name > a {
             margin-right: 8px;
             color: var(--dark-100);
             font-size: 16px;
             font-weight: 700;
+            text-decoration: none;
           }
 
           &__account,
@@ -211,9 +218,12 @@
       width: 120px;
     }
   }
+  &__reply-list {
+    border-top: 1px solid var(--border);
+  }
 }
 
-.tweet-list__tweet {
+.reply-list__tweet {
   &__reply {
     margin-top: 2px;
     margin-right: 5px;
