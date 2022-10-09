@@ -4,13 +4,18 @@
       <label for="account">帳號</label>
       <input
         v-model="account"
+        :class="{ error: hasError }"
         id="account"
         placeholder="請輸入帳號"
         type="text"
-        required
         @keydown.space.prevent
+        @blur="checkForm"
+        @click="checkForm"
       />
     </div>
+    <span class="sign__container__error">{{
+      !account.length ? '帳號不可為空白' : ''
+    }}</span>
 
     <div class="sign__container__form-row d-flex flex-column">
       <label for="name">名稱</label>
@@ -19,36 +24,30 @@
         id="name"
         placeholder="請輸入名稱"
         type="text"
-        required
         @keydown.space.prevent
       />
     </div>
     <span class="sign__container__error">{{
       name.length > 50 ? '名稱不可超過 50 字' : ''
     }}</span>
+    <span class="sign__container__error">{{
+      !name.length ? '名稱不可為空白' : ''
+    }}</span>
     <span class="sign__container__letter-count">{{ name.length }}/50</span>
 
-    <div
-      :class="[
-        'sign__container__form-row',
-        'd-flex',
-        'flex-column',
-        { error: emailError.length }
-      ]"
-    >
+    <div class="sign__container__form-row d-flex flex-column">
       <label for="email">Email</label>
       <input
         v-model="email"
         id="email"
         placeholder="請輸入 Email"
-        type="email"
-        required
+        type=""
         @keydown.space.prevent
       />
     </div>
-    <span class="sign__container__error d-flex flex-column">{{
-      emailError
-    }}</span>
+    <span class="sign__container__error d-flex flex-column">
+      {{ email.length ? 'Email 不可為空白' : '' }}</span
+    >
 
     <div class="sign__container__form-row d-flex flex-column">
       <label for="password">密碼</label>
@@ -57,7 +56,6 @@
         id="password"
         placeholder="請輸入密碼"
         type="password"
-        required
         @keydown.space.prevent
       />
     </div>
@@ -69,7 +67,6 @@
         id="checkPassword"
         placeholder="請再次輸入密碼"
         type="password"
-        required
         @keydown.space.prevent
       />
     </div>
@@ -93,10 +90,16 @@ export default {
       password: '',
       checkPassword: '',
       isProcessing: false,
-      emailError: ''
+      hasError: false,
+      isFocus: false
     }
   },
   methods: {
+    // checkForm() {
+    //   if (this.account) {
+    //     this.hasError = false
+    //   }
+    // },
     async handleSubmit() {
       try {
         this.isProcessing = true
@@ -116,18 +119,18 @@ export default {
           return
         }
 
-        if(this.name.length > 50) {
+        if (this.name.length > 50) {
           Toast.fire({
             icon: 'warning',
             title: '名稱不可超過 50 字'
           })
         }
 
-        if (!this.email.includes('@') || !this.email.includes('.')) {
-          this.emailError = 'Email 格式錯誤'
-          this.isProcessing = false
-          return
-        }
+        // if (!this.email.includes('@') || !this.email.includes('.')) {
+        //   this.emailError = 'Email 格式錯誤'
+        //   this.isProcessing = false
+        //   return
+        // }
 
         if (this.password !== this.checkPassword) {
           Toast.fire({
@@ -161,18 +164,29 @@ export default {
       } catch (error) {
         this.isProcessing = false
         const e = error.response.data.message
-        if ( e === 'Account already exists.') {
+        if (e === 'Account already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Account 已重複註冊！'
           })
         }
-        if( e === 'Email already exists.') {
+        if (e === 'Email already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Email 已重複註冊！'
           })
         }
+      }
+    }
+  },
+  watch: {
+    account: {
+      handler: function () {
+        if (this.account === 0) {
+          this.hasError = true
+          return
+        }
+        this.hasError = false
       }
     }
   }
