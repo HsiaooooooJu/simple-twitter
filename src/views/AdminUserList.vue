@@ -12,7 +12,7 @@ import AdminUserCard from '../components/AdminUserCard.vue'
 export default {
   name: 'AdminTweetList',
   components: {
-    AdminUserCard,
+    AdminUserCard
   }
 }
 </script>

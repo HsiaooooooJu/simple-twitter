@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="app__container row flex-nowrap">
-      <Sidebar v-if="isAuthenticated" :class="['col-2', {'d-none': $route.path === '/not-found'}]" />
+      <Sidebar v-if="isAuthenticated" class="col-2" />
       <router-view />
     </div>
   </div>

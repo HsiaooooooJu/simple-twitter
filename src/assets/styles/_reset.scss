@@ -85,6 +85,7 @@ select,
 select:focus,
 a:focus {
   outline: 0px !important;
+  -webkit-appearance: none;
 }
 
 button {
