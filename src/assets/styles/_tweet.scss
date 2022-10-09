@@ -129,3 +129,26 @@
     }
   }
 }
+
+.home-tweet__container {
+  &__title {
+    h4 {
+      font-weight: 700;
+    }
+
+    &__img {
+      width: 18px;
+      margin-right: 18px;
+    }
+  }
+
+  &__tweet {
+    &__icon {
+      width: 25px;
+    }
+
+    &__num__box__count {
+      width: 120px;
+    }
+  }
+}

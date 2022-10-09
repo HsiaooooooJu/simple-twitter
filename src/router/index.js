@@ -60,6 +60,12 @@ const routes = [
     component: () => import('../views/UserSignUp')
   },
   {
+    path: '/tweets/:id',
+    name: 'tweets',
+    component: () => import('../views/Tweet'),
+    beforeEnter: authorizeIsUser
+  },
+  {
     path: '/admin/tweets',
     name: 'admin-tweets',
     component: () => import('../views/AdminTweetList'),
