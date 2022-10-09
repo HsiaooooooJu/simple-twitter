@@ -11,9 +11,9 @@
 <script>
 import PopularUsers from '../components/PopularUsers.vue'
 import Spinner from '../components/Spinner.vue'
+import TweetDetail from '../components/TweetDetail.vue'
 import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
-import TweetDetail from '../components/TweetDetail.vue'
 import { Toast } from '../utils/helpers'
 
 export default {
@@ -28,28 +28,10 @@ export default {
         createdAt: '',
         replyCount: 0,
         likeCount: 0,
-        isLike: 0,
+        isLiked: 0,
         user: {},
       },
       replies: [],
-      // reply: {
-      //   id: 0,
-      //   comment: '',
-      //   createdAt: '',
-      //   User: {
-      //     id: 0,
-      //     name: '',
-      //     account: '',
-      //     avatar: ''
-      //   },
-      //   Tweet: {
-      //     id: 0,
-      //     User: {
-      //       id: 0,
-      //       account: ''
-      //     }
-      //   }
-      // },
       isProcessing: false,
       isLoading: false
     }
@@ -75,7 +57,7 @@ export default {
         this.tweet.description = data.description
         this.tweet.likeCount = data.likeCount
         this.tweet.replyCount = data.replyCount
-        this.tweet.isLike = data.isLike
+        this.tweet.isLiked = data.isLiked
 
         this.tweet.user = data.User
 
@@ -98,14 +80,13 @@ export default {
 
         this.replies = data
         this.isLoading = false
-        // console.log(data)
 
       } catch (error) {
 
         this.isLoading = false
         console.log(error)
       }
-    }
+    },
   },
   computed: {
     ...mapState(['currentUser'])

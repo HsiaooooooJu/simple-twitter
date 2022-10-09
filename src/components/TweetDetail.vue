@@ -47,10 +47,10 @@
       <button class="home-tweet__container__tweet__icon">
         <img src="../assets/images/reply.svg" alt="" />
       </button>
-      <button v-if="!isLiked" class="home-tweet__container__tweet__icon">
+      <button v-if="!tweet.isLiked" @click.prevent.stop="like(tweet.id)" class="home-tweet__container__tweet__icon">
         <img src="../assets/images/unlike.svg" alt="" />
       </button>
-      <button v-else class="home-tweet__container__tweet__icon">
+      <button v-else @click.prevent.stop="unlike(tweet.id)" class="home-tweet__container__tweet__icon">
         <img src="../assets/images/like.svg" alt="" />
       </button>
     </div>
@@ -104,6 +104,9 @@ import {
 } from '../utils/mixins'
 
 import { mapState } from 'vuex'
+import { Toast } from '../utils/helpers'
+
+import usersAPI from '../apis/users'
 
 export default {
   name: 'TweetDetail',
@@ -122,11 +125,62 @@ export default {
     return {
       tweet: this.initialTweet,
       replies: this.initialReplies,
-      isLiked: false
+      isLiked: this.initialTweet.isLiked
     }
   },
   created() {
-    console.log(this.replies)
+    console.log(this.tweet)
+  },
+  methods: {
+    async like(id) {
+      try {
+        const {data} = await usersAPI.like({id})
+
+        if(data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweet = {
+          ...this.tweet,
+          isLiked: 1
+        }
+
+        Toast.fire({
+          icon: 'success',
+          title: '按讚成功！你真是個好人～'
+        })
+      } catch(error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法按讚，請稍後再試'
+        })
+      }
+    },
+    async unlike(id) {
+      try {
+        const {data} = await usersAPI.unlike({id})
+
+        if(data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweet = {
+          ...this.tweet,
+          isLiked: 0
+        }
+
+        Toast.fire({
+          icon: 'success',
+          title: '不要取消嘛～～～'
+        })
+
+      } catch(error) {
+        Toast.fire({
+          icon:'error',
+          title: '無法取消喜歡，請稍後再試'
+        })
+      }
+    }
   },
   computed: {
     ...mapState(['currentUser']),

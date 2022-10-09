@@ -26,6 +26,16 @@ export default {
     return apiHelper.get(`/users/top_followers`)
   },
 
+  // 對指定推文按 like
+  like({id}) {
+    return apiHelper.post(`/tweets/${id}/like`, null)
+  },
+
+  // 對指定推文按 like
+  unlike({id}) {
+    return apiHelper.post(`/tweets/${id}/unlike`, null)
+  },
+
   get: {
     // 顯示指定用戶的 profile
     profile(userId) {
