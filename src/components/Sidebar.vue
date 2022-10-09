@@ -52,7 +52,13 @@
             <span class="sidebar__container__buttons__list__name"> 設定</span>
           </router-link>
         </li>
-        <button class="sidebar__container__buttons__list__tweet">推文</button>
+        <button
+          class="sidebar__container__buttons__list__tweet"
+          @click="showModal = true"
+        >
+          推文
+        </button>
+        <TweetModal v-show="showModal" @close-modal="showModal = false" />
       </ul>
       <ul v-else>
         <li
@@ -94,9 +100,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import TweetModal from '../components/TweetModal.vue'
 
 export default {
   name: 'Sidebar',
+  components: { TweetModal },
   data() {
     return {
       adminTabs: [
@@ -112,7 +120,8 @@ export default {
           image: require('../assets/images/profile.svg'),
           path: '/admin/users'
         }
-      ]
+      ],
+      showModal: false
     }
   },
   methods: {

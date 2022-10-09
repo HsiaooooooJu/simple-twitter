@@ -2,8 +2,8 @@ import { apiHelper } from '../utils/helpers'
 
 export default {
   // User 新增一則貼文
-  create(formData) {
-    return apiHelper.post('/api/tweets', formData)
+  create({ description }) {
+    return apiHelper.post('/tweets', { description })
   },
 
   // 刪除 User 自己的指定推文

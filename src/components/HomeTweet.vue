@@ -48,7 +48,10 @@
             {{ tweet.description }}
           </div>
           <div class="tweet-list__tweet__action d-flex">
-            <div class="tweet-list__tweet__action__reply d-flex">
+            <div
+              class="tweet-list__tweet__action__reply d-flex"
+              @click="showModal = true"
+            >
               <img
                 src="../assets/images/reply.svg"
                 class="tweet-list__tweet__action__reply__icon cursor-pointer"
@@ -72,6 +75,7 @@
         </div>
       </div>
     </div>
+    <ReplyModal v-show="showModal" @close-modal="showModal = false" />
   </div>
 </template>
 
@@ -81,12 +85,13 @@ import {
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-
+import ReplyModal from '../components/ReplyModal.vue'
 import { mapState } from 'vuex'
 
 export default {
   name: 'HomeTweet',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
+  components: { ReplyModal },
   props: {
     initialTweets: {
       type: Array,
@@ -95,7 +100,8 @@ export default {
   },
   data() {
     return {
-      tweets: this.initialTweets
+      tweets: this.initialTweets,
+      showModal: false
     }
   },
   computed: {
