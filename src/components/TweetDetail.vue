@@ -17,18 +17,14 @@
           class="home-tweet__container__tweet__title__img"
         />
         <div class="home-tweet__container__tweet__title__box">
-          <div class="ome-tweet__container__tweet__title__box__name">name</div>
+          <div class="home-tweet__container__tweet__title__box__name">name</div>
           <div class="home-tweet__container__tweet__title__box__account">
             account
           </div>
         </div>
       </div>
       <div class="home-tweet__container__tweet__description">description</div>
-      <div class="home-tweet__container__tweet__fromNow">
-        <div class="home-tweet__container__tweet__fromNow__time">
-          {time}・{date}
-        </div>
-      </div>
+      <div class="home-tweet__container__tweet__createdAt">{time}・{date}</div>
     </div>
     <div class="home-tweet__container__tweet__num d-flex">
       <div class="home-tweet__container__tweet__num__box">
@@ -62,7 +58,7 @@
     <div class="home-tweet__container__tweet-list scrollbar">
       <div class="home-tweet__container__tweet-list__tweet d-flex">
         <img
-          src=""
+          src="../assets/images/avatar.svg"
           class="home-tweet__container__tweet-list__tweet__avatar"
           alt=""
         />
@@ -88,7 +84,7 @@
             class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
           >
             <span class="tweet-list__tweet__reply">回覆</span>
-            <span class="tweet-list__tweet____reply-to"> @apply </span>
+            <span class="tweet-list__tweet__reply-to"> @apple </span>
           </div>
 
           <div
