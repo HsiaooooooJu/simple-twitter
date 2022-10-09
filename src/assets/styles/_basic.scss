@@ -93,10 +93,10 @@
   transform: translate(-50%, -50%);
 }
 
-.error.error {
-  border-bottom: 2px solid var(--error);
-}
-
 button:disabled {
   filter: grayscale(100%) brightness(150%);
+}
+
+.error {
+  border-bottom: 2px solid var(--error) !important;
 }
