@@ -5,31 +5,34 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="account">帳號</label>
         <input
-          v-model="currentUser.account"
+          v-model="user.account"
+          :class="{ error: accountError }"
           id="account"
           placeholder="請輸入帳號"
           type="text"
-          required
           @keydown.space.prevent
         />
       </div>
-      <span class="settings__container__form__error">{{
-        !user.account.length ? '帳號不可為空白' : ''
-      }}</span>
+      <span v-show="accountError" class="settings__container__form__error"
+        >帳號不可為空白</span
+      >
 
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="name">名稱</label>
         <input
-          v-model="currentUser.name"
+          v-model="user.name"
+          :class="[{ error: nameErrorBlank }, { error: nameErrorLength }]"
           id="name"
           placeholder="請輸入名稱"
           type="text"
-          required
           @keydown.space.prevent
         />
       </div>
       <span class="settings__container__form__error">{{
         user.name.length > 50 ? '名稱不可超過 50 字' : ''
+      }}</span>
+      <span class="settings__container__form__error">{{
+        !user.name.length ? '名稱不可為空白' : ''
       }}</span>
       <span class="settings__container__form__letter-count"
         >{{ user.name.length }}/50</span
@@ -38,11 +41,10 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="email">Email</label>
         <input
-          v-model="currentUser.email"
+          v-model="user.email"
           id="email"
           placeholder="請輸入 Email"
-          type="email"
-          required
+          type=""
           @keydown.space.prevent
         />
       </div>
@@ -53,7 +55,7 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="password">密碼</label>
         <input
-          v-model="currentUser.password"
+          v-model="user.password"
           id="password"
           placeholder="請輸入密碼"
           type="password"
@@ -63,7 +65,7 @@
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="checkPassword">密碼確認</label>
         <input
-          v-model="currentUser.checkPassword"
+          v-model="user.checkPassword"
           id="checkPassword"
           placeholder="請再次輸入密碼"
           type="password"
@@ -98,7 +100,12 @@ export default {
         password: '',
         checkPassword: ''
       },
-      isProcessing: false
+      isProcessing: false,
+      accountError: false,
+      nameErrorBlank: false,
+      nameErrorLength: false,
+      emailErrorLength: false,
+      emailError: false
     }
   },
   created() {
@@ -114,17 +121,16 @@ export default {
     async updateSettings() {
       try {
         this.isProcessing = true
-        //todo
-        // 錯誤處理
+
         if (!this.user.account || !this.user.name || !this.user.email) {
           Toast.fire({
             icon: 'warning',
             title: '帳號、名稱、Email 不可為空白'
           })
+          this.error = true
           this.isProcessing = false
           return
         }
-
         if (this.user.name.length > 50) {
           Toast.fire({
             icon: 'warning',
@@ -173,17 +179,20 @@ export default {
           title: '儲存成功'
         })
         this.isProcessing = false
+
         this.$router.push('/home')
       } catch (error) {
         this.isProcessing = false
+
         const e = error.response.data.message
-        if ( e === 'Account already exists.') {
+
+        if (e === 'Account already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Account 已重複註冊！'
           })
         }
-        if( e === 'Email already exists.') {
+        if (e === 'Email already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Email 已重複註冊！'
@@ -203,6 +212,46 @@ export default {
         return
       }
       this.setUser(id)
+    },
+    account: {
+      handler: function () {
+        if (!this.user.account) {
+          this.accountError = true
+          return
+        }
+        this.accountError = false
+      }
+    },
+    name: {
+      handler: function () {
+        if (!this.user.name) {
+          this.nameErrorLength = false
+          this.nameErrorBlank = true
+          return
+        }
+        this.nameErrorBlank = false
+
+        if (this.user.name.length > 50) {
+          this.nameErrorLength = true
+          return
+        }
+        this.nameErrorLength = false
+      }
+    },
+    email: {
+      handler: function () {
+        if (!this.user.email) {
+          this.emailError = false
+          this.emailErrorLength = true
+          return
+        }
+        this.emailErrorLength = false
+        if (!this.user.email.includes('@') || !this.user.email.includes('.')) {
+          this.emailError = true
+          return
+        }
+        this.emailError = false
+      }
     }
   }
 }
