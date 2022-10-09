@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import Sidebar from '../components/Sidebar.vue'
 import HomeTweet from '../components/HomeTweet.vue'
 import PopularUsers from '../components/PopularUsers.vue'
 import Spinner from '../components/Spinner.vue'

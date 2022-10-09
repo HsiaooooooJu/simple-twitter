@@ -4,22 +4,20 @@
       <label for="account">帳號</label>
       <input
         v-model="account"
-        :class="{ error: accountError }"
+        :class="{ error: !account }"
         id="account"
         placeholder="請輸入帳號"
         type="text"
         @keydown.space.prevent
       />
     </div>
-    <span v-show="accountError" class="sign__container__error"
-      >帳號不可為空白</span
-    >
+    <span v-show="!account" class="sign__container__error">帳號不可為空白</span>
 
     <div class="sign__container__form-row d-flex flex-column">
       <label for="name">名稱</label>
       <input
         v-model="name"
-        :class="[{ error: nameErrorBlank }, { error: nameErrorLength }]"
+        :class="[{ error: name.length > 50 || !name.length }]"
         id="name"
         placeholder="請輸入名稱"
         type="text"
@@ -27,12 +25,13 @@
       />
     </div>
     <div class="d-flex">
-      <span v-show="nameErrorBlank" class="sign__container__error"
+      <span v-show="!name.length" class="sign__container__error"
         >名稱不可為空白</span
       >
-      <span v-show="nameErrorLength" class="sign__container__error"
+      <span v-show="name.length > 50" class="sign__container__error"
         >名稱不可超過 50 字</span
       >
+
       <span class="sign__container__letter-count">{{ name.length }}/50</span>
     </div>
 
@@ -40,17 +39,19 @@
       <label for="email">Email</label>
       <input
         v-model="email"
-        :class="[{ error: emailErrorLength }, { error: emailError }]"
+        :class="[{ error: !email.length || !email.includes('@' && '.') }]"
         id="email"
         placeholder="請輸入 Email"
         type=""
         @keydown.space.prevent
       />
     </div>
-    <span v-show="emailErrorLength" class="sign__container__error"
+    <span v-if="!email.length" class="sign__container__error"
       >Email 不可為空白</span
     >
-    <span v-show="emailError" class="sign__container__error"
+    <span
+      v-if="email.length > 0 && !email.includes('@' && '.')"
+      class="sign__container__error"
       >Email 格式錯誤</span
     >
 
@@ -94,12 +95,7 @@ export default {
       email: '',
       password: '',
       checkPassword: '',
-      isProcessing: false,
-      accountError: false,
-      nameErrorBlank: false,
-      nameErrorLength: false,
-      emailErrorLength: false,
-      emailError: false
+      isProcessing: false
     }
   },
   methods: {
@@ -179,48 +175,6 @@ export default {
             title: 'Email 已重複註冊！'
           })
         }
-      }
-    }
-  },
-  watch: {
-    account: {
-      handler: function () {
-        if (!this.account) {
-          this.accountError = true
-          return
-        }
-        this.accountError = false
-      }
-    },
-    name: {
-      handler: function () {
-        if (!this.name) {
-          this.nameErrorLength = false
-          this.nameErrorBlank = true
-          return
-        }
-        this.nameErrorBlank = false
-
-        if (this.name.length > 50) {
-          this.nameErrorLength = true
-          return
-        }
-        this.nameErrorLength = false
-      }
-    },
-    email: {
-      handler: function () {
-        if (!this.email) {
-          this.emailError = false
-          this.emailErrorLength = true
-          return
-        }
-        this.emailErrorLength = false
-        if (!this.email.includes('@') || !this.email.includes('.')) {
-          this.emailError = true
-          return
-        }
-        this.emailError = false
       }
     }
   }

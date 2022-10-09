@@ -6,42 +6,52 @@
         <label for="account">帳號</label>
         <input
           v-model="user.account"
-          :class="{ error: accountError }"
+          :class="[{ error: !user.account }]"
           id="account"
           placeholder="請輸入帳號"
           type="text"
           @keydown.space.prevent
         />
       </div>
-      <span v-show="accountError" class="settings__container__form__error"
-        >帳號不可為空白</span
-      >
+      <span v-show="!user.account" class="settings__container__form__error">{{
+        !user.account ? '帳號不可為空白' : ''
+      }}</span>
 
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="name">名稱</label>
         <input
           v-model="user.name"
-          :class="[{ error: nameErrorBlank }, { error: nameErrorLength }]"
+          :class="[{ error: !user.name || user.name.length > 50 }]"
           id="name"
           placeholder="請輸入名稱"
           type="text"
           @keydown.space.prevent
         />
       </div>
-      <span class="settings__container__form__error">{{
-        user.name.length > 50 ? '名稱不可超過 50 字' : ''
-      }}</span>
-      <span class="settings__container__form__error">{{
-        !user.name.length ? '名稱不可為空白' : ''
-      }}</span>
-      <span class="settings__container__form__letter-count"
-        >{{ user.name.length }}/50</span
-      >
+
+      <div class="d-flex">
+        <span v-show="!user.name" class="settings__container__form__error"
+          >名稱不可為空白</span
+        >
+
+        <span
+          v-show="user.name.length > 50"
+          class="settings__container__form__error"
+          >名稱不可超過 50 字</span
+        >
+
+        <span class="settings__container__form__letter-count"
+          >{{ user.name.length }}/50</span
+        >
+      </div>
 
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="email">Email</label>
         <input
           v-model="user.email"
+          :class="[
+            { error: !user.email.length || !user.email.includes('@' && '.') }
+          ]"
           id="email"
           placeholder="請輸入 Email"
           type=""
@@ -49,8 +59,13 @@
         />
       </div>
       <span class="settings__container__form__error">{{
-        !user.email.length ? 'Email 不可為空白' : ''
+        !user.email ? 'Email 不可為空白' : ''
       }}</span>
+      <span
+        v-if="user.email.length > 0 && !user.email.includes('@' && '.')"
+        class="settings__container__form__error"
+        >Email 格式錯誤</span
+      >
 
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="password">密碼</label>
@@ -100,18 +115,14 @@ export default {
         password: '',
         checkPassword: ''
       },
-      isProcessing: false,
-      accountError: false,
-      nameErrorBlank: false,
-      nameErrorLength: false,
-      emailErrorLength: false,
-      emailError: false
+      isProcessing: false
     }
   },
   created() {
     const { id } = this.$route.params
     this.setUser(id)
   },
+  beforeRouteUpdate() {},
   methods: {
     setUser() {
       this.user = this.currentUser
@@ -203,56 +214,6 @@ export default {
   },
   computed: {
     ...mapState(['currentUser'])
-  },
-  watch: {
-    currentUser() {
-      const { id } = this.$route.params
-      if (id !== this.user.id) {
-        this.$route.push('not-found')
-        return
-      }
-      this.setUser(id)
-    },
-    account: {
-      handler: function () {
-        if (!this.user.account) {
-          this.accountError = true
-          return
-        }
-        this.accountError = false
-      }
-    },
-    name: {
-      handler: function () {
-        if (!this.user.name) {
-          this.nameErrorLength = false
-          this.nameErrorBlank = true
-          return
-        }
-        this.nameErrorBlank = false
-
-        if (this.user.name.length > 50) {
-          this.nameErrorLength = true
-          return
-        }
-        this.nameErrorLength = false
-      }
-    },
-    email: {
-      handler: function () {
-        if (!this.user.email) {
-          this.emailError = false
-          this.emailErrorLength = true
-          return
-        }
-        this.emailErrorLength = false
-        if (!this.user.email.includes('@') || !this.user.email.includes('.')) {
-          this.emailError = true
-          return
-        }
-        this.emailError = false
-      }
-    }
   }
 }
 </script>
