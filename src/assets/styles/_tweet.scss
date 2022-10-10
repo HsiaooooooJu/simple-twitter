@@ -224,6 +224,16 @@
 }
 
 .tweet-list__tweet {
+
+  &__title {
+
+    &__name {
+      margin-right: 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
   &__reply {
     margin-top: 2px;
     margin-right: 5px;
