@@ -149,12 +149,12 @@ export default {
         })
       }
     },
-    async fetchTweet(tweetId) {
+    async fetchTweet(id) {
       try {
         this.isLoading = true
         this.showModal = true
 
-        const { data } = await tweetsAPI.getTweet({ tweetId })
+        const { data } = await tweetsAPI.getTweet({ id })
 
         if (data.status === 'error') {
           throw new Error(data.message)

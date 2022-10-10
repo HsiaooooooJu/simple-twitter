@@ -17,8 +17,8 @@ export default {
   },
 
   // 取得一則指定貼文的詳細資料
-  getTweet({ tweetId }) {
-    return apiHelper.get(`/tweets/${tweetId}`)
+  getTweet({ id }) {
+    return apiHelper.get(`/tweets/${id}`)
   },
 
   // 對指定貼文新增一則回覆
