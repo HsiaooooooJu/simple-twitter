@@ -1,6 +1,8 @@
 <template>
-  <div class="nav-tab__container">
-    <div v-for="tab in tabs" :key="tab.id" class="nav-tab__container__tab">{{ tab.title }}</div>
+  <div class="nav-tab__container d-flex">
+    <div v-for="tab in tabs" :key="tab.id"  class="nav-tab__container__tab">
+      <button class="nav-tab__container__tab__btn">{{ tab.title }}</button>
+    </div>
   </div>
 </template>
 
