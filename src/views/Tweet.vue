@@ -2,7 +2,11 @@
   <div class="container">
     <Spinner v-if="isLoading" />
     <div v-else class="home__container row flex-nowrap">
-      <TweetDetail :initial-tweet="tweet" :initial-replies="replies" class="col-7" />
+      <TweetDetail
+        :initial-tweet="tweet"
+        :initial-replies="replies"
+        class="col-7"
+      />
       <PopularUsers class="col-3" />
     </div>
   </div>
@@ -29,7 +33,7 @@ export default {
         replyCount: 0,
         likeCount: 0,
         isLiked: 0,
-        user: {},
+        user: {}
       },
       replies: [],
       isProcessing: false,
@@ -41,7 +45,7 @@ export default {
     this.fetchTweet(id)
     this.fetchTweetReplies(id)
   },
-    beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     const { id } = this.$route.params
     this.fetchTweet(id)
     this.fetchTweetReplies(id)
@@ -51,7 +55,7 @@ export default {
     async fetchTweet(id) {
       try {
         const { data } = await tweetsAPI.getTweet({ id })
-      
+
         this.tweet.id = data.id
         this.tweet.createdAt = data.createdAt
         this.tweet.description = data.description
@@ -60,7 +64,6 @@ export default {
         this.tweet.isLiked = data.isLiked
 
         this.tweet.user = data.User
-
       } catch (error) {
         Toast.fire({
           icon: 'error',
@@ -72,7 +75,7 @@ export default {
       try {
         this.isLoading = true
 
-        const { data } = await tweetsAPI.getReplies({tweet_id})
+        const { data } = await tweetsAPI.getReplies({ tweet_id })
 
         if (data.status === 'error') {
           throw new Error(data.message)
@@ -80,13 +83,11 @@ export default {
 
         this.replies = data
         this.isLoading = false
-
       } catch (error) {
-
         this.isLoading = false
         console.log(error)
       }
-    },
+    }
   },
   computed: {
     ...mapState(['currentUser'])

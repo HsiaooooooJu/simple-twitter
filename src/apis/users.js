@@ -27,12 +27,12 @@ export default {
   },
 
   // 對指定推文按 like
-  like({id}) {
+  like({ id }) {
     return apiHelper.post(`/tweets/${id}/like`, null)
   },
 
   // 對指定推文按 like
-  unlike({id}) {
+  unlike({ id }) {
     return apiHelper.post(`/tweets/${id}/unlike`, null)
   },
 
