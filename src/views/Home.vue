@@ -43,7 +43,7 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
-        console.error
+        console.log(error)
       }
     }
   },

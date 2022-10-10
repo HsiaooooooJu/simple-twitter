@@ -32,7 +32,7 @@
         {{ tweet.description }}
       </div>
       <div class="home-tweet__container__tweet__createdAt">
-        {{ tweet.createdAt | fromNow }}
+        {{ tweet.createdAt | time }}・{{ tweet.createdAt | date }}
       </div>
     </div>
     <div class="home-tweet__container__tweet__num d-flex">
@@ -131,10 +131,8 @@ import {
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
-
 import usersAPI from '../apis/users'
 
 export default {
@@ -156,9 +154,6 @@ export default {
       replies: this.initialReplies,
       isLiked: this.initialTweet.isLiked
     }
-  },
-  created() {
-    console.log(this.tweet)
   },
   methods: {
     async like(id) {
@@ -203,6 +198,7 @@ export default {
           title: '不要取消嘛～～～'
         })
       } catch (error) {
+        console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法取消喜歡，請稍後再試'
