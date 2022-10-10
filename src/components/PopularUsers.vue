@@ -165,9 +165,7 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
-
         console.log(error)
-
         Toast.fire({
           icon: 'error',
           title: '無法取消追蹤，請稍後再試'

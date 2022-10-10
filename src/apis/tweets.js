@@ -22,8 +22,8 @@ export default {
   },
 
   // 對指定貼文新增一則回覆
-  reply(tweet_id, comment) {
-    return apiHelper.post(`/tweets/${tweet_id}/replies`), { comment }
+  reply({ tweet_id, comment }) {
+    return apiHelper.post(`/tweets/${tweet_id}/replies`, { comment })
   },
 
   // 取得指定推文的所有回覆
