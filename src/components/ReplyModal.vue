@@ -138,6 +138,7 @@ export default {
         })
 
         this.$emit('close-modal')
+        this.$parent.fetchTweets()
       } catch (error) {
         console.log(error)
 

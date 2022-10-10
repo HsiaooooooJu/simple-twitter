@@ -127,6 +127,12 @@ export default {
     this.fetchTweets()
   },
   methods: {
+    checkTweetReplies(id) {
+      this.$router.push({
+        name: 'tweets',
+        params: { id }
+      })
+    },
     async fetchTweets() {
       try {
         this.isLoading = true
@@ -150,12 +156,12 @@ export default {
         })
       }
     },
-    async fetchTweet(tweetId) {
+    async fetchTweet(id) {
       try {
         this.isLoading = true
         this.showModal = true
 
-        const { data } = await tweetsAPI.getTweet({ tweetId })
+        const { data } = await tweetsAPI.getTweet({ id })
 
         if (data.status === 'error') {
           throw new Error(data.message)
@@ -173,14 +179,6 @@ export default {
           title: '無法取得推文資料，請稍後再試'
         })
       }
-    }
-  },
-  methods: {
-    checkTweetReplies(id) {
-      this.$router.push({
-        name: 'tweets',
-        params: { id }
-      })
     }
   },
   computed: {

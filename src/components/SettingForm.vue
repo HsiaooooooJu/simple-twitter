@@ -124,7 +124,7 @@ export default {
         password: '',
         checkPassword: ''
       },
-      isProcessing: false,
+      isProcessing: false
     }
   },
   created() {
