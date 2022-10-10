@@ -86,6 +86,10 @@ export default {
       } catch (error) {
         this.isLoading = false
         console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得回覆'
+        })
       }
     }
   },

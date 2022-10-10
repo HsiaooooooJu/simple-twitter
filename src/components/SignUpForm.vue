@@ -129,6 +129,8 @@ export default {
             icon: 'warning',
             title: '名稱不可超過 50 字'
           })
+          this.isProcessing = false
+          return
         }
 
         if (!this.email.includes('@') || !this.email.includes('.')) {
@@ -181,48 +183,6 @@ export default {
             title: 'Email 已重複註冊！'
           })
         }
-      }
-    }
-  },
-  watch: {
-    account: {
-      handler: function () {
-        if (!this.account) {
-          this.accountError = true
-          return
-        }
-        this.accountError = false
-      }
-    },
-    name: {
-      handler: function () {
-        if (!this.name) {
-          this.nameErrorLength = false
-          this.nameErrorBlank = true
-          return
-        }
-        this.nameErrorBlank = false
-
-        if (this.name.length > 50) {
-          this.nameErrorLength = true
-          return
-        }
-        this.nameErrorLength = false
-      }
-    },
-    email: {
-      handler: function () {
-        if (!this.email) {
-          this.emailError = false
-          this.emailErrorLength = true
-          return
-        }
-        this.emailErrorLength = false
-        if (!this.email.includes('@') || !this.email.includes('.')) {
-          this.emailError = true
-          return
-        }
-        this.emailError = false
       }
     }
   }

@@ -32,7 +32,7 @@
         {{ tweet.description }}
       </div>
       <div class="home-tweet__container__tweet__createdAt">
-        {{ tweet.createdAt | fromNow }}
+        {{ tweet.createdAt | time }}・{{ tweet.createdAt | date }}
       </div>
     </div>
     <div class="home-tweet__container__tweet__num d-flex">
@@ -58,6 +58,7 @@
       </button>
       <button
         v-if="!tweet.isLiked"
+        :disabled="isProcessing"
         @click.prevent.stop="like(tweet.id)"
         class="home-tweet__container__tweet__icon"
       >
@@ -65,6 +66,7 @@
       </button>
       <button
         v-else
+        :disabled="isProcessing"
         @click.prevent.stop="unlike(tweet.id)"
         class="home-tweet__container__tweet__icon"
       >
@@ -131,10 +133,8 @@ import {
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
-
 import usersAPI from '../apis/users'
 
 export default {
@@ -154,15 +154,15 @@ export default {
     return {
       tweet: this.initialTweet,
       replies: this.initialReplies,
-      isLiked: this.initialTweet.isLiked
+      isLiked: this.initialTweet.isLiked,
+      isProcessing: false
     }
-  },
-  created() {
-    console.log(this.tweet)
   },
   methods: {
     async like(id) {
       try {
+        this.isProcessing = true
+
         const { data } = await usersAPI.like({ id })
 
         if (data.status === 'error') {
@@ -171,14 +171,17 @@ export default {
 
         this.tweet = {
           ...this.tweet,
-          isLiked: 1
+          isLiked: true
         }
 
         Toast.fire({
           icon: 'success',
           title: '按讚成功！你真是個好人～'
         })
+
+        this.isProcessing = false
       } catch (error) {
+        this.isProcessing = false
         Toast.fire({
           icon: 'error',
           title: '無法按讚，請稍後再試'
@@ -187,6 +190,8 @@ export default {
     },
     async unlike(id) {
       try {
+        this.isProcessing = true
+
         const { data } = await usersAPI.unlike({ id })
 
         if (data.status === 'error') {
@@ -195,14 +200,18 @@ export default {
 
         this.tweet = {
           ...this.tweet,
-          isLiked: 0
+          isLiked: false
         }
 
         Toast.fire({
           icon: 'success',
           title: '不要取消嘛～～～'
         })
+
+        this.isProcessing = false
       } catch (error) {
+        this.isProcessing = false
+        console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法取消喜歡，請稍後再試'
