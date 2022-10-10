@@ -18,14 +18,14 @@
 
       <div class="info__container__user d-flex flex-column">
         <div class="info__container__user__cover-img">
-          <img src="../assets/images/cover-img.jpg" alt="" />
+          <img :src="user.cover | emptyCover" alt="" />
         </div>
 
         <div
           class="info__container__user__btn-panel d-flex justify-content-end"
         >
           <div class="info__container__user__btn-panel__img">
-            <img src="../assets/images/avatar.svg" alt="" />
+            <img :src="user.avatar | emptyImage" alt="" />
           </div>
           <div
             v-if="isCurrentUser"
@@ -92,7 +92,6 @@ import {
   atAccountFilter
 } from '../utils/mixins'
 import { mapState } from 'vuex'
-// import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Info',

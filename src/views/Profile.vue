@@ -53,19 +53,6 @@ export default {
           return new Error(data.message)
         }
         this.user = data
-        // const { id, name, account, avatar, cover, followerCount, followingCount, introduction } = data
-
-        // this.user = {
-        //   ...this.user,
-        //   id,
-        //   name,
-        //   account,
-        //   avatar,
-        //   cover,
-        //   followerCount,
-        //   followingCount,
-        //   introduction
-        // }
 
         this.user.id = data.id
         this.user.name = data.name
@@ -75,8 +62,6 @@ export default {
         this.user.followerCount = data.followerCount
         this.user.followingCount = data.followingCount
         this.user.introduction = data.introduction
-
-        // console.log(data)
       } catch (error) {
         this.isLoading = false
         console.log(error)
