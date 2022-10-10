@@ -22,7 +22,7 @@ export default {
   },
 
   // 對指定貼文新增一則回覆
-  reply(tweetId, formData) {
-    return apiHelper.post(`/tweets/${tweetId}/replies`), { ...formData }
+  reply({ tweet_id, comment }) {
+    return apiHelper.post(`/tweets/${tweet_id}/replies`, { comment })
   }
 }

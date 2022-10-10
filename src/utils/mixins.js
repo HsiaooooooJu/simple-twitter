@@ -3,6 +3,7 @@ import moment from 'moment'
 export const fromNowFilter = {
   filters: {
     fromNow(dataTime) {
+      moment.locale('zh-tw')
       return dataTime ? moment(dataTime).fromNow() : '-'
     }
   }
