@@ -16,6 +16,11 @@ export default {
   components: {
     SettingForm
   },
+  beforeRouteUpdate(to, from, next) {
+    if (this.currentUser.id !== to.id) {
+      next('/home')
+    }
+  },
   computed: {
     ...mapState(['currentUser'])
   }

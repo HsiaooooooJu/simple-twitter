@@ -12,6 +12,7 @@
           id="account"
           placeholder="請輸入帳號"
           type="text"
+          required
           @keydown.space.prevent
         />
       </div>
@@ -29,6 +30,7 @@
           id="name"
           placeholder="請輸入名稱"
           type="text"
+          required
           @keydown.space.prevent
         />
       </div>
@@ -58,11 +60,14 @@
           ]"
           id="email"
           placeholder="請輸入 Email"
-          type=""
+          type="email"
+          required
           @keydown.space.prevent
         />
       </div>
-      <span v-if="!user.email" class="settings__container__form__error">Email 不可為空白</span>
+      <span v-if="!user.email" class="settings__container__form__error"
+        >Email 不可為空白</span
+      >
       <span
         v-if="user.email.length > 0 && !user.email.includes('@' && '.')"
         class="settings__container__form__error"
@@ -117,68 +122,35 @@ export default {
         password: '',
         checkPassword: ''
       },
-      isProcessing: false,
-      error: false
+      isProcessing: false
     }
   },
   created() {
+    if (this.currentUser.id === 0) {
+      return
+    }
     const { id } = this.$route.params
     this.setUser(id)
   },
-  beforeRouteUpdate() {},
   methods: {
     setUser() {
       this.user = this.currentUser
       this.user.password = ''
       this.user.checkPassword = ''
     },
-    checkForm() {
-      if (!this.user.account || !this.user.name || !this.user.email) {
-        Toast.fire({
-          icon: 'warning',
-          title: '帳號、名稱、Email 不可為空白'
-        })
-        this.error = true
-        this.isProcessing = false
-        return
-      }
-      if (this.user.name.length > 50) {
-        Toast.fire({
-          icon: 'warning',
-          title: '名稱不可超過 50 字'
-        })
-        this.isProcessing = false
-        return
-      }
-
-      if (!this.user.email.includes('@') || !this.user.email.includes('.')) {
-        Toast.fire({
-          icon: 'warning',
-          title: 'Email 格式錯誤'
-        })
-        this.isProcessing = false
-        return
-      }
-
-      if (this.user.password !== this.user.checkPassword) {
-        Toast.fire({
-          icon: 'warning',
-          title: '兩次輸入密碼不同'
-        })
-        this.isProcessing = false
-        return
-      }
-    },
     async updateSettings() {
       try {
         this.isProcessing = true
 
-        if (!this.user.account || !this.user.name || !this.user.email) {
+        if (
+          !this.user.account.trim() ||
+          !this.user.name.trim() ||
+          !this.user.email.trim()
+        ) {
           Toast.fire({
             icon: 'warning',
             title: '帳號、名稱、Email 不可為空白'
           })
-          this.error = true
           this.isProcessing = false
           return
         }
@@ -242,11 +214,15 @@ export default {
             icon: 'error',
             title: 'Account 已重複註冊！'
           })
-        }
-        if (e === 'Email already exists.') {
+        } else if (e === 'Email already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Email 已重複註冊！'
+          })
+        } else {
+          Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請稍後再試'
           })
         }
       }

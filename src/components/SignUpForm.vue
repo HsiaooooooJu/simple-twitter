@@ -8,6 +8,7 @@
         id="account"
         placeholder="請輸入帳號"
         type="text"
+        required
         @keydown.space.prevent
       />
     </div>
@@ -21,6 +22,7 @@
         id="name"
         placeholder="請輸入名稱"
         type="text"
+        required
         @keydown.space.prevent
       />
     </div>
@@ -42,7 +44,8 @@
         :class="[{ error: !email.length || !email.includes('@' && '.') }]"
         id="email"
         placeholder="請輸入 Email"
-        type=""
+        type="email"
+        required
         @keydown.space.prevent
       />
     </div>
@@ -63,6 +66,7 @@
         id="password"
         placeholder="請輸入密碼"
         type="password"
+        required
         @keydown.space.prevent
       />
     </div>
@@ -74,6 +78,7 @@
         id="checkPassword"
         placeholder="請再次輸入密碼"
         type="password"
+        required
         @keydown.space.prevent
       />
     </div>
@@ -105,11 +110,11 @@ export default {
         this.isProcessing = true
 
         if (
-          !this.account ||
-          !this.name ||
-          !this.email ||
-          !this.password ||
-          !this.checkPassword
+          !this.account.trim() ||
+          !this.name.trim() ||
+          !this.email.trim() ||
+          !this.password.trim() ||
+          !this.checkPassword.trim()
         ) {
           Toast.fire({
             icon: 'warning',
