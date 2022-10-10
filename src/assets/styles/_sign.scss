@@ -1,8 +1,19 @@
 .sign__container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
+  &__error {
+    height: 10px;
+    margin: -30px auto 26px;
+    margin-left: calc((100% - 35%) / 2);
+    color: var(--error);
+    font-size: 12px;
+  }
+
+  &__letter-count {
+    height: 10px;
+    margin: -30px auto 26px;
+    margin-right: calc((100% - 35%) / 2);
+    color: var(--dark-80);
+    font-size: 12px;
+  }
 
   &__brand-logo {
     margin: 64px auto 24px;
@@ -17,36 +28,45 @@
   }
 
   form {
-    width: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
   &__form-row {
     margin: 0 auto 32px auto;
-    padding: 4px 10px 0;
     width: 35%;
-    border-bottom: 2px solid var(--default);
-    border-radius: 2px;
+  }
+
+  &__form-row > label {
+    padding: 4px 10px;
+    width: 100%;
     background-color: var(--placeholder-bg);
   }
 
   &__form-row > input {
     @extend %input-style;
+    margin: 0 auto;
+    padding: 4px 10px;
+    width: 100%;
+    border-bottom: 2px solid var(--default);
+    border-radius: 2px;
+    background-color: var(--placeholder-bg);
+
+    &:focus,
+    &:hover {
+      border-bottom: 2px solid var(--info);
+    }
   }
 
   &__btn {
-    margin: 8px auto 0;
     width: 35%;
     height: 46px;
+    margin: 8px auto 0;
     border-radius: 50px;
     color: var(--dark-0);
     background-color: var(--brand-color);
     font-size: 20px;
-  }
-
-  &__btn:disabled {
-    filter: grayscale(100%) brightness(150%);
   }
 
   &__link {

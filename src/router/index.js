@@ -39,7 +39,7 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
-    path: '/settings',
+    path: '/settings/:id',
     name: 'settings',
     component: () => import('../views/Settings'),
     beforeEnter: authorizeIsUser
@@ -58,6 +58,12 @@ const routes = [
     path: '/users/signup',
     name: 'user-signup',
     component: () => import('../views/UserSignUp')
+  },
+  {
+    path: '/tweets/:id',
+    name: 'tweets',
+    component: () => import('../views/Tweet'),
+    beforeEnter: authorizeIsUser
   },
   {
     path: '/admin/tweets',

@@ -1,13 +1,15 @@
 <template>
   <div class="container">
-    <div class="sign__container">
+    <div class="sign__container d-flex flex-column">
       <div class="sign__container__brand-logo">
         <img src="../assets/images/ac-logo.svg" alt="" />
       </div>
       <h3 class="sign__container__title">登入 Alphitter</h3>
 
       <form @submit.prevent.stop="userSignIn">
-        <div class="sign__container__form-row d-flex flex-column">
+        <div
+          class="sign__container__form-row d-flex flex-column form-row-margin"
+        >
           <label for="account">帳號</label>
           <input
             v-model="account"
@@ -51,7 +53,7 @@ export default {
   name: 'UserSignIn',
   data() {
     return {
-      account: '',
+      account: localStorage.getItem('account') || '',
       password: '',
       isProcessing: false
     }
@@ -81,7 +83,10 @@ export default {
 
         this.$store.commit('setCurrentUser', data.user)
 
+        localStorage.removeItem('account')
+
         this.$router.push('/home')
+
         this.isProcessing = false
       } catch (error) {
         this.password = ''

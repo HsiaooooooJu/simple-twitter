@@ -15,6 +15,27 @@ export default {
     return apiHelper.get(`/users/top_followers`)
   },
 
+  // 編輯自己的帳戶設定
+  setProfile({ userId, account, name, email, password, checkPassword }) {
+    return apiHelper.put(`/users/${userId}/setting`, {
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    })
+  },
+
+  // 對指定推文按 like
+  like({ id }) {
+    return apiHelper.post(`/tweets/${id}/like`, null)
+  },
+
+  // 對指定推文按 like
+  unlike({ id }) {
+    return apiHelper.post(`/tweets/${id}/unlike`, null)
+  },
+
   get: {
     // 顯示指定用戶的 profile
     profile(userId) {

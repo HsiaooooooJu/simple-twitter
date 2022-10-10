@@ -1,0 +1,226 @@
+// TweetModal
+
+.tweet__modal {
+  width: 635px;
+  height: 300px;
+  margin-top: 60px;
+  border-radius: 16px;
+  background-color: var(--dark-0);
+
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &__close {
+    height: 55px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+
+    &__button {
+      padding: 0;
+      vertical-align: top;
+
+      &__img {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+  &__content {
+    position: relative;
+    height: 245px;
+    padding: 16px;
+
+    &__img {
+      width: 50px;
+      height: 50px;
+      margin-left: 8px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    &__textarea {
+      resize: none;
+      height: 160px;
+      width: 470px;
+      margin-top: 12px;
+      border: none;
+      font-size: 16px;
+
+      &::placeholder {
+        color: #9197a3;
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+    &__button {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 65px;
+      height: 40px;
+      margin-right: 16px;
+      margin-bottom: 16px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--brand-color);
+      color: var(--dark-0);
+      font-size: 16px;
+    }
+
+    &__length {
+      position: absolute;
+      right: 18px;
+      bottom: 65px;
+      color: var(--dark-80);
+    }
+
+    &__notice {
+      position: absolute;
+      right: 100px;
+      bottom: 26px;
+      text-align: end;
+      color: var(--error);
+    }
+  }
+}
+
+// Reply Tweet
+.reply__modal {
+  width: 635px;
+  height: 500px;
+  margin-top: 60px;
+  border-radius: 16px;
+  background-color: var(--dark-0);
+
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  &__close {
+    height: 55px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+
+    &__button {
+      padding: 0;
+      vertical-align: top;
+      &__img {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+  &__container {
+    position: relative;
+    height: 445px;
+    padding: 16px;
+
+    &__tweet__img,
+    &__reply__img {
+      width: 50px;
+      height: 50px;
+      margin-left: 8px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    &__tweet {
+      &__line {
+        position: absolute;
+        top: 80px;
+        left: 48px;
+        width: 2px;
+        height: 85px;
+        background: var(--dark-60);
+        text-align: center;
+      }
+
+      &__name {
+        margin-right: 8px;
+        font-weight: 700;
+      }
+
+      &__account,
+      &__dot,
+      &__createdAt,
+      &__reply__title {
+        color: var(--nav-font);
+        font-size: 14px;
+      }
+
+      &__reply__target {
+        color: var(--brand-color);
+        font-size: 14px;
+      }
+      &__description {
+        height: 78px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 8px;
+      }
+    }
+
+    &__reply {
+      margin-top: 16px;
+
+      &__textarea {
+        resize: none;
+        height: 205px;
+        width: 470px;
+        margin-top: 12px;
+        border: none;
+        font-size: 16px;
+
+        &::placeholder {
+          color: #9197a3;
+          font-weight: 500;
+          font-size: 18px;
+        }
+      }
+
+      &__button {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 65px;
+        height: 40px;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: var(--brand-color);
+        color: var(--dark-0);
+        font-size: 16px;
+      }
+
+      &__length {
+        position: absolute;
+        right: 18px;
+        bottom: 65px;
+        color: var(--dark-80);
+      }
+
+      &__notice {
+        position: absolute;
+        right: 100px;
+        bottom: 26px;
+        text-align: end;
+        color: var(--error);
+      }
+    }
+  }
+}
