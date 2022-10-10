@@ -24,7 +24,10 @@
           </router-link>
         </li>
         <li class="sidebar__container__buttons__list">
-          <router-link class="d-flex" :to="{ name: 'profile', params: { id: currentUser.id}}">
+          <router-link
+            class="d-flex"
+            :to="{ name: 'profile', params: { id: currentUser.id } }"
+          >
             <span>
               <img
                 class="sidebar__container__buttons__list__img"
