@@ -37,7 +37,7 @@ export default {
         followingCount: '',
         introduction: ''
       },
-      isLoading: false
+      isLoading: true
     }
   },
   created() {
@@ -47,12 +47,13 @@ export default {
   methods: {
     async fetchUsers(id) {
       try {
+        this.isLoading = true
+
         const { data } = await usersAPI.get.profile({ id })
 
         if (data.status === 'error') {
           return new Error(data.message)
         }
-        this.user = data
 
         this.user.id = data.id
         this.user.name = data.name
@@ -62,6 +63,9 @@ export default {
         this.user.followerCount = data.followerCount
         this.user.followingCount = data.followingCount
         this.user.introduction = data.introduction
+
+        this.isLoading = false
+
       } catch (error) {
         this.isLoading = false
         console.log(error)
