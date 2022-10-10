@@ -17,7 +17,9 @@
     </div>
 
     <div class="home-tweet__container__tweet-list scrollbar">
+      <Spinner v-if="isLoading" />
       <div
+        v-else
         v-for="tweet in tweets"
         :key="tweet.id"
         class="home-tweet__container__tweet-list__tweet d-flex"
@@ -54,6 +56,7 @@
                 src="../assets/images/reply.svg"
                 class="tweet-list__tweet__action__reply__icon cursor-pointer"
                 alt=""
+                @click="fetchTweet(tweet.id)"
               />
               <div class="tweet-list__tweet__action__reply__count num-font">
                 {{ tweet.replyCount }}
@@ -73,30 +76,103 @@
         </div>
       </div>
     </div>
+    <Spinner v-if="isLoading" />
+    <ReplyModal
+      v-else
+      v-show="showModal"
+      :reply-tweet="tweet"
+      @close-modal="showModal = false"
+    />
   </div>
 </template>
 
 <script>
+import tweetsAPI from '../apis/tweets'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-
+import { Toast } from '../utils/helpers'
+import ReplyModal from '../components/ReplyModal.vue'
 import { mapState } from 'vuex'
+import Spinner from '../components/Spinner.vue'
 
 export default {
   name: 'HomeTweet',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
-  props: {
-    initialTweets: {
-      type: Array,
-      required: true
-    }
-  },
+  components: { ReplyModal, Spinner },
   data() {
     return {
-      tweets: this.initialTweets
+      tweets: [],
+      tweet: {
+        id: 0,
+        description: '',
+        createdAt: '',
+        replyCount: 0,
+        likeCount: 0,
+        isLiked: 0,
+        User: {
+          id: 0,
+          name: '',
+          account: '',
+          avatar: ''
+        }
+      },
+      showModal: false,
+      isLoading: false
+    }
+  },
+  created() {
+    this.fetchTweets()
+  },
+  methods: {
+    async fetchTweets() {
+      try {
+        this.isLoading = true
+
+        const { data } = await tweetsAPI.getAll()
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweets = data
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文資料，請稍後再試'
+        })
+      }
+    },
+    async fetchTweet(tweetId) {
+      try {
+        this.isLoading = true
+        this.showModal = true
+
+        const { data } = await tweetsAPI.getTweet({ tweetId })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweet = data
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文資料，請稍後再試'
+        })
+      }
     }
   },
   methods: {

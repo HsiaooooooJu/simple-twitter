@@ -81,6 +81,7 @@
           id="password"
           placeholder="請輸入密碼"
           type="password"
+          required
           @keydown.space.prevent
         />
       </div>
@@ -91,6 +92,7 @@
           id="checkPassword"
           placeholder="請再次輸入密碼"
           type="password"
+          required
           @keydown.space.prevent
         />
       </div>
@@ -122,7 +124,7 @@ export default {
         password: '',
         checkPassword: ''
       },
-      isProcessing: false
+      isProcessing: false,
     }
   },
   created() {
@@ -206,7 +208,7 @@ export default {
         this.$router.push('/home')
       } catch (error) {
         this.isProcessing = false
-
+        console.log(error)
         const e = error.response.data.message
 
         if (e === 'Account already exists.') {

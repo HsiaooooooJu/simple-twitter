@@ -129,7 +129,7 @@ export default {
             icon: 'warning',
             title: '名稱不可超過 50 字'
           })
-          this.isProccessing = false
+          this.isProcessing = false
           return
         }
 
