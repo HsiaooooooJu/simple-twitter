@@ -100,3 +100,12 @@ button:disabled {
 .error {
   border-bottom: 2px solid var(--error) !important;
 }
+
+.none {
+  text-decoration: none;
+  color: var(--dark-100);
+  
+  &:hover {
+    color: var(--dark-100);
+  }
+}

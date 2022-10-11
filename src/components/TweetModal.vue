@@ -39,7 +39,9 @@
         <span v-show="!description.length" class="tweet__modal__content__notice"
           >內容不可空白</span
         >
-        <button class="tweet__modal__content__button">推文</button>
+        <button class="tweet__modal__content__button" :disabled="isProcessing">
+          推文
+        </button>
       </form>
     </div>
   </div>
@@ -56,12 +58,14 @@ export default {
   mixins: [emptyImageFilter],
   data() {
     return {
-      description: ''
+      description: '',
+      isProcessing: false
     }
   },
   methods: {
     async handleSubmit() {
       try {
+        this.isProcessing = true
         this.description = this.description.trim()
 
         if (!this.description || this.description.length > 140) {
@@ -69,6 +73,7 @@ export default {
             icon: 'warning',
             title: '請檢查內容是否填寫正確'
           })
+          this.isProcessing = false
           return
         }
 
@@ -89,7 +94,10 @@ export default {
 
         this.$emit('close-modal')
         this.$store.commit('triggerRender')
+        this.isProcessing = false
       } catch (error) {
+        this.isProcessing = false
+
         console.log(error)
 
         Toast.fire({

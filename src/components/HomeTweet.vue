@@ -1,20 +1,46 @@
 <template>
   <div class="home-tweet__container">
     <h4 class="home-tweet__container__title">首頁</h4>
-    <div class="home-tweet__container__tweet-box d-flex">
+    <form
+      class="home-tweet__container__tweet-box d-flex justify-content-between"
+      @submit.stop.prevent="handleSubmit"
+    >
       <img
         :src="currentUser.avatar | emptyImage"
         class="home-tweet__container__tweet-box__img"
         alt=""
       />
       <textarea
-        class="home-tweet__container__tweet-box__input"
+        v-model="description"
+        class="home-tweet__container__tweet-box__input scrollbar"
         type="text"
         name="post-tweet"
         placeholder="有什麼新鮮事？"
       />
-      <button class="home-tweet__container__tweet-box__btn">推文</button>
-    </div>
+      <div
+        class="home-tweet__container__tweet-box__span d-flex flex-column align-items-end justify-content-end"
+      >
+        <span
+          v-show="description.length > 140"
+          class="home-tweet__container__tweet-box__input__notice"
+          >字數不可超過 140 字</span
+        >
+        <span
+          v-show="!description.length"
+          class="home-tweet__container__tweet-box__input__notice"
+          >內容不可空白</span
+        >
+        <span class="home-tweet__container__tweet-box__input__length"
+          >{{ description.length }}/140</span
+        >
+        <button
+          class="home-tweet__container__tweet-box__btn"
+          :disabled="isProcessing"
+        >
+          推文
+        </button>
+      </div>
+    </form>
 
     <div class="home-tweet__container__tweet-list scrollbar">
       <Spinner v-if="isLoading" />
@@ -24,25 +50,40 @@
         :key="tweet.id"
         class="home-tweet__container__tweet-list__tweet d-flex"
       >
-        <img
-          :src="tweet.User.avatar | emptyImage"
-          class="home-tweet__container__tweet-list__tweet__avatar"
-          alt=""
-        />
+        <router-link :to="{ name: 'profile', params: { id: tweet.User.id } }">
+          <img
+            :src="tweet.User.avatar | emptyImage"
+            class="home-tweet__container__tweet-list__tweet__avatar"
+            alt=""
+        /></router-link>
         <div
           class="home-tweet__container__tweet-list__tweet__text d-flex flex-column"
         >
-          <div class="tweet-list__tweet__title d-flex">
-            <div class="tweet-list__tweet__title__name">
-              <router-link to="/home">{{ tweet.User.name }}</router-link>
+          <div class="d-flex justify-content-between">
+            <div class="tweet-list__tweet__title d-flex">
+              <div class="tweet-list__tweet__title__name">
+                <router-link
+                  :to="{ name: 'profile', params: { id: tweet.User.id } }"
+                  >{{ tweet.User.name }}</router-link
+                >
+              </div>
+              <div class="tweet-list__tweet__title__account">
+                {{ tweet.User.account | atAccount }}
+              </div>
+              <span class="tweet-list__tweet__title__separator">・</span>
+              <div class="tweet-list__tweet__title__createdAt">
+                {{ tweet.createdAt | fromNow }}
+              </div>
             </div>
-            <div class="tweet-list__tweet__title__account">
-              {{ tweet.User.account | atAccount }}
-            </div>
-            <span class="tweet-list__tweet__title__separator">・</span>
-            <div class="tweet-list__tweet__title__createdAt">
-              {{ tweet.createdAt | fromNow }}
-            </div>
+
+            <button
+              v-show="currentUser.id === tweet.User.id"
+              class="home-tweet__container__tweet-list__tweet__delete"
+              :disabled="isProcessing"
+              @click="deleteTweet(tweet.id)"
+            >
+              ×
+            </button>
           </div>
           <div
             class="home-tweet__container__tweet-list__tweet__text__description cursor-pointer"
@@ -63,11 +104,29 @@
               </div>
             </div>
             <div class="tweet-list__tweet__action__like d-flex">
-              <img
-                src="../assets/images/unlike.svg"
-                alt=""
-                class="tweet-list__tweet__action__like__icon cursor-pointer"
-              />
+              <button
+                v-if="!tweet.isLiked"
+                :disabled="isProcessing"
+                @click.prevent.stop="like(tweet.id)"
+              >
+                <img
+                  src="../assets/images/unlike.svg"
+                  alt=""
+                  class="tweet-list__tweet__action__like__icon cursor-pointer"
+                />
+              </button>
+              <button
+                v-else
+                :disabled="isProcessing"
+                @click.prevent.stop="unlike(tweet.id)"
+              >
+                <img
+                  src="../assets/images/like.svg"
+                  alt=""
+                  class="tweet-list__tweet__action__like__icon cursor-pointer"
+                />
+              </button>
+
               <div class="tweet-list__tweet__action__like__count num-font">
                 {{ tweet.likeCount }}
               </div>
@@ -80,7 +139,7 @@
     <ReplyModal
       v-else
       v-show="showModal"
-      :reply-tweet="tweet"
+      :reply-tweet="replyTweet"
       @close-modal="showModal = false"
     />
   </div>
@@ -88,6 +147,7 @@
 
 <script>
 import tweetsAPI from '../apis/tweets'
+import usersAPI from '../apis/users'
 import {
   emptyImageFilter,
   fromNowFilter,
@@ -105,7 +165,7 @@ export default {
   data() {
     return {
       tweets: [],
-      tweet: {
+      replyTweet: {
         id: 0,
         description: '',
         createdAt: '',
@@ -120,7 +180,9 @@ export default {
         }
       },
       showModal: false,
-      isLoading: false
+      isLoading: false,
+      description: '',
+      isProcessing: false
     }
   },
   created() {
@@ -167,7 +229,7 @@ export default {
           throw new Error(data.message)
         }
 
-        this.tweet = data
+        this.replyTweet = data
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
@@ -177,6 +239,151 @@ export default {
         Toast.fire({
           icon: 'error',
           title: '無法取得推文資料，請稍後再試'
+        })
+      }
+    },
+    async handleSubmit() {
+      try {
+        this.isProcessing = true
+        this.description = this.description.trim()
+
+        if (!this.description || this.description.length > 140) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請檢查內容是否填寫正確'
+          })
+          this.isProcessing = false
+          return
+        }
+
+        const { data } = await tweetsAPI.create({
+          description: this.description
+        })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.description = ''
+
+        Toast.fire({
+          icon: 'success',
+          title: '成功建立推文'
+        })
+
+        this.$store.commit('triggerRender')
+        this.isProcessing = false
+      } catch (error) {
+        this.isProcessing = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增推文，請稍後再試'
+        })
+      }
+    },
+    async like(id) {
+      try {
+        this.isProcessing = true
+
+        const { data } = await usersAPI.like({ id })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id !== id) {
+            return tweet
+          } else {
+            return {
+              ...tweet,
+              isLiked: true
+            }
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: '按讚成功！你真是個好人～'
+        })
+
+        this.fetchTweets()
+        this.isProcessing = false
+      } catch (error) {
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法按讚，請稍後再試'
+        })
+      }
+    },
+    async unlike(id) {
+      try {
+        this.isProcessing = true
+
+        const { data } = await usersAPI.unlike({ id })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id !== id) {
+            return tweet
+          } else {
+            return {
+              ...tweet,
+              isLiked: false
+            }
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: '不要取消嘛～～～'
+        })
+
+        this.fetchTweets()
+        this.isProcessing = false
+      } catch (error) {
+        this.isProcessing = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消喜歡，請稍後再試'
+        })
+      }
+    },
+    async deleteTweet(id) {
+      try {
+        this.isProcessing = true
+
+        const { data } = await tweetsAPI.delete({ id })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        Toast.fire({
+          icon: 'success',
+          title: '成功刪除推文'
+        })
+
+        this.fetchTweets()
+        this.isProcessing = false
+      } catch (error) {
+        this.isProcessing = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法刪除推文，請稍後再試'
         })
       }
     }
