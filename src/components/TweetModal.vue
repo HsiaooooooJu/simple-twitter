@@ -64,7 +64,7 @@ export default {
       try {
         this.description = this.description.trim()
 
-        if (!this.description || this.description > 140) {
+        if (!this.description || this.description.length > 140) {
           Toast.fire({
             icon: 'warning',
             title: '請檢查內容是否填寫正確'
@@ -88,6 +88,7 @@ export default {
         })
 
         this.$emit('close-modal')
+        this.$store.commit('triggerRender')
       } catch (error) {
         console.log(error)
 

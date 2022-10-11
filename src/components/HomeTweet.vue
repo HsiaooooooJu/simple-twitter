@@ -182,7 +182,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderTweet'])
+  },
+  watch: {
+    renderTweet: {
+      handler: function () {
+        this.fetchTweets()
+      },
+      deep: true
+    }
   }
 }
 </script>

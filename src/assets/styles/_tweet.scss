@@ -87,7 +87,7 @@
 
       &__text {
         margin-top: 16px;
-        width: 100%;
+        width: 85%;
 
         .tweet-list__tweet__title {
           &__name > a {
@@ -114,6 +114,7 @@
         &__description {
           margin: 0 0 10px;
           color: var(dark-100);
+          overflow-wrap: break-word;
         }
 
         .tweet-list__tweet__action {
@@ -178,6 +179,7 @@
       color: var(--dark-100);
       font-size: 24px;
       font-weight: 400;
+      overflow-wrap: break-word;
     }
 
     &__createdAt {

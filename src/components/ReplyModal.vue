@@ -113,7 +113,7 @@ export default {
       try {
         this.comment = this.comment.trim()
 
-        if (!this.comment || this.comment > 140) {
+        if (!this.comment || this.comment.length > 140) {
           Toast.fire({
             icon: 'warning',
             title: '請檢查內容是否填寫正確'
