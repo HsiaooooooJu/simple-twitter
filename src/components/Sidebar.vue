@@ -20,11 +20,14 @@
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__name"> 首頁</span>
+            <span class="sidebar__container__buttons__list__name">首頁</span>
           </router-link>
         </li>
         <li class="sidebar__container__buttons__list">
-          <router-link class="d-flex" to="#">
+          <router-link
+            class="d-flex"
+            :to="{ name: 'profile', params: { id: currentUser.id } }"
+          >
             <span>
               <img
                 class="sidebar__container__buttons__list__img"
@@ -49,7 +52,7 @@
                 alt=""
               />
             </span>
-            <span class="sidebar__container__buttons__list__name"> 設定</span>
+            <span class="sidebar__container__buttons__list__name">設定</span>
           </router-link>
         </li>
         <button

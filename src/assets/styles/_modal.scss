@@ -144,7 +144,7 @@
         top: 80px;
         left: 48px;
         width: 2px;
-        height: 85px;
+        height: 125px;
         background: var(--dark-60);
         text-align: center;
       }
@@ -167,10 +167,12 @@
         font-size: 14px;
       }
       &__description {
-        height: 78px;
+        height: 120px;
+        width: 525px;
         margin-top: 10px;
         margin-bottom: 10px;
         margin-right: 8px;
+        overflow-wrap: break-word;
       }
     }
 
@@ -179,7 +181,7 @@
 
       &__textarea {
         resize: none;
-        height: 205px;
+        height: 150px;
         width: 470px;
         margin-top: 12px;
         border: none;

@@ -7,20 +7,23 @@
       :key="topFollower.id"
       class="popular__users__container__top__user d-flex"
     >
-      <div>
+      <router-link :to="{ name: 'profile', params: { id: topFollower.id } }">
         <img
           class="popular__users__container__top__user__img"
           :src="topFollower.avatar | emptyImage"
           alt=""
         />
-      </div>
+      </router-link>
       <div
         class="popular__users__container__top__user__description__button d-flex justify-content-between"
       >
         <div class="popular__users__container__top__user__description">
-          <div class="popular__users__container__top__user__description__name">
+          <router-link
+            :to="{ name: 'profile', params: { id: topFollower.id } }"
+            class="popular__users__container__top__user__description__name none"
+          >
             {{ topFollower.name }}
-          </div>
+          </router-link>
           <div
             class="popular__users__container__top__user__description__account"
           >
