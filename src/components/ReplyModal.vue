@@ -77,7 +77,12 @@
             class="reply__modal__container__reply__notice"
             >內容不可空白</span
           >
-          <button class="reply__modal__container__reply__button">回覆</button>
+          <button
+            class="reply__modal__container__reply__button"
+            :disabled="isProcessing"
+          >
+            回覆
+          </button>
         </form>
       </div>
     </div>
@@ -105,19 +110,22 @@ export default {
   },
   data() {
     return {
-      comment: ''
+      comment: '',
+      isProcessing: false
     }
   },
   methods: {
     async handleSubmit() {
       try {
+        this.isProcessing = true
         this.comment = this.comment.trim()
 
-        if (!this.comment || this.comment > 140) {
+        if (!this.comment || this.comment.length > 140) {
           Toast.fire({
             icon: 'warning',
             title: '請檢查內容是否填寫正確'
           })
+          this.isProcessing = false
           return
         }
 
@@ -138,8 +146,17 @@ export default {
         })
 
         this.$emit('close-modal')
-        this.$parent.fetchTweets()
+        this.isProcessing = false
+
+        if (this.$route.name === 'home') {
+          this.$parent.fetchTweets()
+        } else {
+          this.$parent.$parent.fetchTweetReplies(this.replyTweet.id)
+          this.$parent.$parent.fetchTweet(this.replyTweet.id)
+        }
       } catch (error) {
+        this.isProcessing = false
+
         console.log(error)
 
         const e = error.response.data.message
