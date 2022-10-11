@@ -43,14 +43,18 @@
               <img src="../assets/images/noti.svg" alt="" />
             </button>
             <button
+              :disabled="isProcessing"
               v-if="isFollowed"
               class="info__container__user__btn-panel__btn__other-following"
+              @click.prevent.stop="deleteFollowing(user.id)"
             >
               正在跟隨
             </button>
             <button
+              :disabled="isProcessing"
               v-else
               class="info__container__user__btn-panel__btn__other-follow"
+              @click.prevent.stop="addFollowing(user.id)"
             >
               跟隨
             </button>
@@ -106,12 +110,16 @@ export default {
     isCurrentUser: {
       type: Boolean,
       required: true
+    },
+    initialIsFollowed: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
     return {
-      isFollowed: false,
-      isProcessing: false
+      isFollowed: this.initialIsFollowed,
+      isProcessing: false,
     }
   },
   methods: {
@@ -120,7 +128,19 @@ export default {
         this.isProcessing = true
 
         const { data } = await followshipsAPI.addFollowing({ id })
-        console.log(data)
+
+        if(data.status === 'error') {
+          throw new Error(data.message)
+        }
+        this.isFollowed = true
+
+        Toast.fire({
+          icon: 'success',
+          title: '成功追蹤！'
+        })
+
+        this.isProcessing = false
+
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -135,21 +155,36 @@ export default {
         this.isProcessing = true
 
         const { data } = await followshipsAPI.deleteFollowing({ id })
-        console.log(data)
+        
+        if(data.status === 'error') {
+          throw new Error(data.message)
+        }
+        this.isFollowed = false
+
+        Toast.fire({
+          icon: 'success',
+          title: '成功取消追蹤 Ｔ＿Ｔ'
+        })
 
         this.isProcessing = false
+
       } catch (error) {
         this.isProcessing = false
         console.log(error)
         Toast.fire({
           icon: 'error',
-          tittle: '無法取消追蹤，請稍後再試'
+          title: '無法取消追蹤，請稍後再試'
         })
       }
     }
   },
   computed: {
     ...mapState(['currentUser'])
+  },
+  watch: {
+    initialIsFollowed (isFollowed) {
+      this.isFollowed = isFollowed
+    }
   }
 }
 </script>

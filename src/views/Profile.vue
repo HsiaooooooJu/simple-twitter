@@ -3,7 +3,7 @@
   <div v-else class="container">
     <div class="profile__container row flex-nowrap">
       <div class="profile__container__main col-7">
-        <Info :user="user" :is-current-user="currentUser.id === user.id" />
+        <Info :user="user" :is-current-user="currentUser.id === user.id" :initial-is-followed="isFollowed" />
         <NavTab />
         <UserAction />
       </div>
@@ -35,15 +35,15 @@ export default {
         cover: '',
         followerCount: '',
         followingCount: '',
-        introduction: ''
+        introduction: '',                
       },
+      isFollowed: false,
       isLoading: true
     }
   },
   created() {
     const { id } = this.$route.params
     this.fetchUsers(id)
-    this.fetchFollowings(id)
     this.fetchFollowers(id)
   },
   beforeRouteUpdate(to, from, next) {
@@ -75,31 +75,18 @@ export default {
         })
       }
     },
-    async fetchFollowings(id) {
-      try {
-        this.isLoading = true
-
-        const data = await usersAPI.get.followings({ id })
-        console.log(data)
-
-        this.isLoading = false
-      } catch (error) {
-        this.isLoading = false
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得您正在跟隨的使用者資料'
-        })
-      }
-    },
     async fetchFollowers(id) {
       try {
         this.isLoading = true
 
         const { data } = await usersAPI.get.followers({ id })
-        console.log(data)
+
+        this.isFollowed = data.some((item) => {
+          return this.currentUser.id === item.followerId
+        })
 
         this.isLoading = false
+
       } catch (error) {
         this.isLoading = false
         console.log(error)
