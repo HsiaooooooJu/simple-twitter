@@ -20,16 +20,6 @@
       <div
         class="home-tweet__container__tweet-box__span d-flex flex-column align-items-end justify-content-end"
       >
-        <span
-          v-show="description.length > 140"
-          class="home-tweet__container__tweet-box__input__notice"
-          >字數不可超過 140 字</span
-        >
-        <span
-          v-show="!description.length"
-          class="home-tweet__container__tweet-box__input__notice"
-          >內容不可空白</span
-        >
         <span class="home-tweet__container__tweet-box__input__length"
           >{{ description.length }}/140</span
         >
@@ -247,10 +237,19 @@ export default {
         this.isProcessing = true
         this.description = this.description.trim()
 
-        if (!this.description || this.description.length > 140) {
+        if (!this.description) {
           Toast.fire({
             icon: 'warning',
-            title: '請檢查內容是否填寫正確'
+            title: '推文內容不可空白'
+          })
+          this.isProcessing = false
+          return
+        }
+
+        if (this.description.length > 140) {
+          Toast.fire({
+            icon: 'warning',
+            title: '推文字數不可超過 140 字'
           })
           this.isProcessing = false
           return
