@@ -92,6 +92,8 @@ import {
   atAccountFilter
 } from '../utils/mixins'
 import { mapState } from 'vuex'
+import followshipsAPI from '../apis/followships'
+import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Info',
@@ -100,12 +102,50 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    isCurrentUser: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
     return {
       isFollowed: false,
-      isCurrentUser: false
+      isProcessing: false
+    }
+  },
+  methods: {
+    async addFollowing(id) {
+      try {
+        this.isProcessing = true
+
+        const { data } = await followshipsAPI.addFollowing({ id })
+        console.log(data)
+      } catch (error) {
+        this.isProcessing = false
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法追蹤，請稍後再試'
+        })
+      }
+    },
+    async deleteFollowing(id) {
+      try {
+        this.isProcessing = true
+
+        const { data } = await followshipsAPI.deleteFollowing({ id })
+        console.log(data)
+
+        this.isProcessing = false
+      } catch (error) {
+        this.isProcessing = false
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          tittle: '無法取消追蹤，請稍後再試'
+        })
+      }
     }
   },
   computed: {

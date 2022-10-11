@@ -43,27 +43,27 @@ export default {
     },
 
     // 顯示指定用戶所有的推文
-    tweets(id) {
+    tweets({ id }) {
       return apiHelper.get(`/users/${id}/tweets`)
     },
 
     // 顯示指定用戶所有回覆過的推文
-    replied(id) {
+    replied({ id }) {
       return apiHelper.get(`/users/${id}/replied_tweets`)
     },
 
     // 顯示指定用戶所有 like 過的推文
-    likes(id) {
+    likes({ id }) {
       return apiHelper.get(`/users/${id}/likes`)
     },
 
     // 顯示指定用戶所有跟隨中的人
-    followings(id) {
+    followings({ id }) {
       return apiHelper.get(`/users/${id}/followings`)
     },
 
     // 顯示指定用戶所有的跟隨者
-    followers(id) {
+    followers({ id }) {
       return apiHelper.get(`/users/${id}/followers`)
     }
   }
