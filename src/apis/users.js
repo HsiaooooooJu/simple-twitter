@@ -38,33 +38,33 @@ export default {
 
   get: {
     // 顯示指定用戶的 profile
-    profile(userId) {
-      return apiHelper.get(`/users/${userId}`)
+    profile({ id }) {
+      return apiHelper.get(`/users/${id}`)
     },
 
     // 顯示指定用戶所有的推文
-    tweets(userId) {
-      return apiHelper.get(`/users/${userId}/tweets`)
+    tweets(id) {
+      return apiHelper.get(`/users/${id}/tweets`)
     },
 
     // 顯示指定用戶所有回覆過的推文
-    replied(userId) {
-      return apiHelper.get(`/users/${userId}/replied_tweets`)
+    replied(id) {
+      return apiHelper.get(`/users/${id}/replied_tweets`)
     },
 
     // 顯示指定用戶所有 like 過的推文
-    likes(userId) {
-      return apiHelper.get(`/users/${userId}/likes`)
+    likes(id) {
+      return apiHelper.get(`/users/${id}/likes`)
     },
 
     // 顯示指定用戶所有跟隨中的人
-    followings(userId) {
-      return apiHelper.get(`/users/${userId}/followings`)
+    followings(id) {
+      return apiHelper.get(`/users/${id}/followings`)
     },
 
     // 顯示指定用戶所有的跟隨者
-    followers(userId) {
-      return apiHelper.get(`/users/${userId}/followers`)
+    followers(id) {
+      return apiHelper.get(`/users/${id}/followers`)
     }
   }
 }

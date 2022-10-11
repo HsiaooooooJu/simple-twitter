@@ -1,0 +1,21 @@
+.nav-tab__container {
+  width: 100%;
+  margin: 15px 0;
+  border-bottom: 1px solid var(--border);
+
+  &__tab {
+    &__btn {
+      height: 30px;
+      padding: 0 40px 40px;
+      color: var(--secondary-color);
+      font-size: 15px;
+      font-weight: 700;
+      z-index: 20;
+    }
+
+    &__btn:focus {
+      border-bottom: 2px solid var(--brand-color);
+      color: var(--brand-color);
+    }
+  }
+}

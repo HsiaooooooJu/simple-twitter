@@ -39,6 +39,12 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
+    path: '/profile/:id',
+    name: 'profile',
+    component: () => import('../views/Profile'),
+    beforeEnter: authorizeIsUser
+  },
+  {
     path: '/settings/:id',
     name: 'settings',
     component: () => import('../views/Settings'),
