@@ -21,6 +21,8 @@
           <img :src="user.cover | emptyCover" alt="" />
         </div>
 
+        <EditModal v-show="showModal" @close="showModal = false" :user="user" />
+
         <div
           class="info__container__user__btn-panel d-flex justify-content-between"
         >
@@ -31,7 +33,10 @@
             v-if="isCurrentUser"
             class="info__container__user__btn-panel__btn"
           >
-            <button class="info__container__user__btn-panel__btn__self">
+            <button
+              class="info__container__user__btn-panel__btn__self"
+              @click="showModal = true"
+            >
               編輯個人資料
             </button>
           </div>
@@ -98,10 +103,14 @@ import {
 import { mapState } from 'vuex'
 import followshipsAPI from '../apis/followships'
 import { Toast } from '../utils/helpers'
+import EditModal from './EditModal.vue'
 
 export default {
   name: 'Info',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
+  components: {
+    EditModal
+  },
   props: {
     user: {
       type: Object,
@@ -120,6 +129,7 @@ export default {
     return {
       isFollowed: this.initialIsFollowed,
       isProcessing: false,
+      showModal: false
     }
   },
   methods: {
@@ -129,7 +139,7 @@ export default {
 
         const { data } = await followshipsAPI.addFollowing({ id })
 
-        if(data.status === 'error') {
+        if (data.status === 'error') {
           throw new Error(data.message)
         }
         this.isFollowed = true
@@ -140,7 +150,6 @@ export default {
         })
 
         this.isProcessing = false
-
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -155,8 +164,8 @@ export default {
         this.isProcessing = true
 
         const { data } = await followshipsAPI.deleteFollowing({ id })
-        
-        if(data.status === 'error') {
+
+        if (data.status === 'error') {
           throw new Error(data.message)
         }
         this.isFollowed = false
@@ -167,7 +176,6 @@ export default {
         })
 
         this.isProcessing = false
-
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -182,7 +190,7 @@ export default {
     ...mapState(['currentUser'])
   },
   watch: {
-    initialIsFollowed (isFollowed) {
+    initialIsFollowed(isFollowed) {
       this.isFollowed = isFollowed
     }
   }

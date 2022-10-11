@@ -4,7 +4,11 @@
       <div class="profile__container__main col-7">
         <Spinner v-if="isLoading" />
         <template v-else>
-          <Info :user="user" :is-current-user="currentUser.id === user.id" :initial-is-followed="isFollowed" />
+          <Info
+            :user="user"
+            :is-current-user="currentUser.id === user.id"
+            :initial-is-followed="isFollowed"
+          />
           <NavTab />
           <UserAction />
         </template>
@@ -37,7 +41,7 @@ export default {
         cover: '',
         followerCount: '',
         followingCount: '',
-        introduction: '',                
+        introduction: ''
       },
       isFollowed: false,
       isLoading: true
@@ -88,7 +92,6 @@ export default {
         })
 
         this.isLoading = false
-
       } catch (error) {
         this.isLoading = false
         console.log(error)

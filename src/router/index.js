@@ -49,13 +49,13 @@ const routes = [
     name: 'tweets',
     component: () => import('../views/Tweet'),
     beforeEnter: authorizeIsUser
-  },  
+  },
   {
     path: '/users/signin',
     name: 'user-signin',
     component: () => import('.././views/UserSignIn')
   },
-  
+
   {
     path: '/users/signup',
     name: 'user-signup',
@@ -71,7 +71,7 @@ const routes = [
     name: 'profile',
     component: () => import('../views/Profile'),
     beforeEnter: authorizeIsUser
-  },  
+  },
   {
     path: '/admin/signin',
     name: 'admin-signin',
