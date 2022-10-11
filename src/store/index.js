@@ -16,7 +16,8 @@ export default new Vuex.Store({
       role: ''
     },
     isAuthenticated: false,
-    token: ''
+    token: '',
+    renderTweet: false
   },
   mutations: {
     setCurrentUser(state, currentUser) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
       state.isAuthenticated = false
       state.token = ''
       localStorage.removeItem('token')
+    },
+    triggerRender(state) {
+      state.renderTweet = !state.renderTweet
     }
   },
   actions: {

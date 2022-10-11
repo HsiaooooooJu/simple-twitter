@@ -29,5 +29,10 @@ export default {
   // 取得指定推文的所有回覆
   getReplies({ tweet_id }) {
     return apiHelper.get(`/tweets/${tweet_id}/replies`)
+  },
+
+  // 刪除 User 自己的回覆
+  deleteReply({ tweet_id, id }) {
+    return apiHelper.delete(`/tweets/${tweet_id}/replies/${id}`)
   }
 }
