@@ -39,7 +39,7 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
-    path: '/profile/:id',
+    path: '/users/:id',
     name: 'profile',
     component: () => import('../views/Profile'),
     beforeEnter: authorizeIsUser
@@ -70,6 +70,11 @@ const routes = [
     name: 'tweets',
     component: () => import('../views/Tweet'),
     beforeEnter: authorizeIsUser
+  },
+  {
+    path: '/users/:id/follow',
+    name: 'follow',
+    component: () => import('../views/Follow')
   },
   {
     path: '/admin/tweets',
