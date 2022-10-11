@@ -22,7 +22,7 @@
         </div>
 
         <div
-          class="info__container__user__btn-panel d-flex justify-content-end"
+          class="info__container__user__btn-panel d-flex justify-content-between"
         >
           <div class="info__container__user__btn-panel__img">
             <img :src="user.avatar | emptyImage" alt="" />
