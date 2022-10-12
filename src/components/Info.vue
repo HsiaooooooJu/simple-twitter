@@ -21,7 +21,7 @@
           <img :src="user.cover | emptyCover" alt="" />
         </div>
 
-        <EditModal v-show="showModal" :user="user" @close="showModal = false"/>
+        <EditModal v-show="showModal" :user="user" @close="showModal = false" />
         <!-- @after-submit="handleAfterSubmit"  -->
 
         <div
@@ -76,22 +76,30 @@
             {{ user.introduction }}
           </div>
           <div class="info__container__user__profile__follow">
-            <router-link :to="{name: 'follow', params: { id: user.id}}">
-              <span class="info__container__user__profile__follow__num"
-                >{{ user.followingCount }} 個</span
-              >
-              <span class="info__container__user__profile__follow__unit">
-                跟隨中</span
-              >
-            </router-link>
-            <router-link :to="{name: 'follow', params: { id: user.id}}">
-              <span class="info__container__user__profile__follow__num"
-                >{{ user.followerCount }} 位</span
-              >
-              <span class="info__container__user__profile__follow__unit">
-                跟隨者</span
-              >
-            </router-link>
+            <router-link
+              :to="{
+                name: 'follow',
+                params: { id: user.id },
+                query: { followType: '2' }
+              }"
+              class="info__container__user__profile__follow__num none"
+              >{{ user.followingCount }} 個</router-link
+            >
+            <span class="info__container__user__profile__follow__unit">
+              跟隨中</span
+            >
+            <router-link
+              :to="{
+                name: 'follow',
+                params: { id: user.id },
+                query: { followType: '1' }
+              }"
+              class="info__container__user__profile__follow__num none"
+              >{{ user.followerCount }} 位</router-link
+            >
+            <span class="info__container__user__profile__follow__unit">
+              跟隨者</span
+            >
           </div>
         </div>
       </div>
