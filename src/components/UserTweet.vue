@@ -312,7 +312,7 @@ export default {
   watch: {
     renderTweet: {
       handler: function () {
-        const {id} = this.$route.params
+        const { id } = this.$route.params
         this.fetchUserTweets(id)
       },
       deep: true
