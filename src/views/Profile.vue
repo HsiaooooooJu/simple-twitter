@@ -1,11 +1,17 @@
 <template>
-  <Spinner v-if="isLoading" />
-  <div v-else class="container">
+  <div class="container">
     <div class="profile__container row flex-nowrap">
       <div class="profile__container__main col-7">
-        <Info :user="user" :is-current-user="currentUser.id === user.id" :initial-is-followed="isFollowed" />
-        <NavTab />
-        <UserAction />
+        <Spinner v-if="isLoading" />
+        <template v-else>
+          <Info
+            :user="user"
+            :is-current-user="currentUser.id === user.id"
+            :initial-is-followed="isFollowed"
+          />
+          <NavTab />
+          <UserAction />
+        </template>
       </div>
       <PopularUsers class="col-3" />
     </div>
@@ -35,7 +41,7 @@ export default {
         cover: '',
         followerCount: '',
         followingCount: '',
-        introduction: '',                
+        introduction: ''
       },
       isFollowed: false,
       isLoading: true
@@ -86,7 +92,6 @@ export default {
         })
 
         this.isLoading = false
-
       } catch (error) {
         this.isLoading = false
         console.log(error)
