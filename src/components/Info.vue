@@ -76,18 +76,22 @@
             {{ user.introduction }}
           </div>
           <div class="info__container__user__profile__follow">
-            <span class="info__container__user__profile__follow__num"
-              >{{ user.followingCount }} 個</span
-            >
-            <span class="info__container__user__profile__follow__unit">
-              跟隨中</span
-            >
-            <span class="info__container__user__profile__follow__num"
-              >{{ user.followerCount }} 位</span
-            >
-            <span class="info__container__user__profile__follow__unit">
-              跟隨者</span
-            >
+            <router-link :to="{name: 'follow', params: { id: user.id}}">
+              <span class="info__container__user__profile__follow__num"
+                >{{ user.followingCount }} 個</span
+              >
+              <span class="info__container__user__profile__follow__unit">
+                跟隨中</span
+              >
+            </router-link>
+            <router-link :to="{name: 'follow', params: { id: user.id}}">
+              <span class="info__container__user__profile__follow__num"
+                >{{ user.followerCount }} 位</span
+              >
+              <span class="info__container__user__profile__follow__unit">
+                跟隨者</span
+              >
+            </router-link>
           </div>
         </div>
       </div>
@@ -156,6 +160,7 @@ export default {
           title: '成功追蹤！'
         })
 
+        this.$store.commit('triggerPopularUsersRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

@@ -115,8 +115,16 @@
       &__follow {
         font-size: 14px;
 
+        > a {
+          text-decoration: none;
+        }
+
         &__num {
           color: var(--dark-100);
+
+          &:hover {
+            color: var(--brand-color);
+          }
         }
 
         &__unit {
