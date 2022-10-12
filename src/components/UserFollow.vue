@@ -19,14 +19,14 @@
     <div class="user__follow__container__tab d-flex">
       <button
         class="user__follow__container__tab__followers"
-        :class="{ active: followersTab }"
+        :class="{ active: this.$route.query.followType === '1' }"
         @click="toggleTab('followers')"
       >
         追隨者
       </button>
       <button
         class="user__follow__container__tab__followings"
-        :class="{ active: !followersTab }"
+        :class="{ active: this.$route.query.followType === '2' }"
         @click="toggleTab('followings')"
       >
         正在追隨
@@ -34,7 +34,7 @@
     </div>
     <Spinner v-if="isLoading" />
     <div v-else class="user__follow__container__content scrollbar">
-      <div v-show="followersTab">
+      <div v-show="this.$route.query.followType === '1'">
         <div
           v-if="this.followers.length === 0"
           class="user__follow__container__no__content text-center"
@@ -94,7 +94,7 @@
           </div>
         </div>
       </div>
-      <div v-show="!followersTab">
+      <div v-show="this.$route.query.followType === '2'">
         <div
           v-if="this.followings.length === 0"
           class="user__follow__container__no__content text-center"
@@ -172,7 +172,6 @@ export default {
   components: { Spinner },
   data() {
     return {
-      followersTab: true,
       userName: '',
       userTweetCount: 0,
       followers: [],
@@ -183,9 +182,33 @@ export default {
   },
   created() {
     const { id } = this.$route.params
+
+    if (
+      this.$route.query.followType !== '1' &&
+      this.$route.query.followType !== '2'
+    ) {
+      this.$router.push({ name: 'not-found' })
+    }
+
     this.fetchFollowers(id)
     this.fetchFollowings(id)
     this.fetchUserTweets(id)
+  },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = this.$route.params
+
+    if (
+      this.$route.query.followType !== '1' &&
+      this.$route.query.followType !== '2'
+    ) {
+      this.$router.push({ name: 'not-found' })
+    }
+
+    this.fetchFollowers(id)
+    this.fetchFollowings(id)
+    this.fetchUserTweets(id)
+
+    next()
   },
   methods: {
     async fetchUserTweets(id) {
@@ -282,7 +305,7 @@ export default {
           throw new Error(data.message)
         }
 
-        if (this.followersTab) {
+        if (this.$route.query.followType === '1') {
           this.followers = this.followers.map((follower) => {
             if (follower.id !== userId) {
               return follower
@@ -293,7 +316,7 @@ export default {
               }
             }
           })
-        } else {
+        } else if (this.$route.query.followType === '2') {
           this.followings = this.followings.map((following) => {
             if (following.id !== userId) {
               return following
@@ -338,7 +361,7 @@ export default {
           throw new Error(data.message)
         }
 
-        if (this.followersTab) {
+        if (this.$route.query.followType === '1') {
           this.followers = this.followers.map((follower) => {
             if (follower.id !== userId) {
               return follower
@@ -349,7 +372,7 @@ export default {
               }
             }
           })
-        } else {
+        } else if (this.$route.query.followType === '2') {
           this.followings = this.followings.map((following) => {
             if (following.id !== userId) {
               return following
@@ -386,9 +409,19 @@ export default {
     },
     toggleTab(tab) {
       if (tab === 'followers') {
-        this.followersTab = true
-      } else {
-        this.followersTab = false
+        this.$router.push({
+          name: 'follow',
+          query: {
+            followType: '1'
+          }
+        })
+      } else if (tab === 'followings') {
+        this.$router.push({
+          name: 'follow',
+          query: {
+            followType: '2'
+          }
+        })
       }
     }
   },

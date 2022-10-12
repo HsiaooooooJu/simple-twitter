@@ -8,15 +8,6 @@
 
 <script>
 export default {
-  name: 'NotFound',
-
-  created() {
-    this.logout()
-  },
-  methods: {
-    logout() {
-      this.$store.commit('revokeAuthentication')
-    }
-  }
+  name: 'NotFound'
 }
 </script>
