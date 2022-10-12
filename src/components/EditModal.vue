@@ -3,12 +3,12 @@
     <div class="edit-modal__container d-flex flex-column">
       <form @submit.stop.prevent="updateProfile">
         <div class="edit-modal__container__top d-flex align-items-center">
-          <button
-            class="edit-modal__container__top__close"
+          <div
+            class="edit-modal__container__top__close cursor-pointer"
             @click="$emit('close')"
           >
             <img src="../assets/images/close.svg" alt="" />
-          </button>
+          </div>
           <h5 class="edit-modal__container__top__title">編輯個人資料</h5>
           <button type="submit" class="edit-modal__container__top__save">
             {{ isProcessing ? '處理中' : '儲存' }}
@@ -41,9 +41,12 @@
               <img src="../assets/images/add-image.svg" alt="" />
             </label>
 
-            <button class="edit-modal__container__cover__icon__close">
+            <div
+              class="edit-modal__container__cover__icon__close cursor-pointer"
+              @click="initializeCover"
+            >
               <img src="../assets/images/close.svg" alt="" />
-            </button>
+            </div>
           </div>
 
           <!-- avatar file input -->
@@ -103,15 +106,15 @@
             >
               <label for="introduction">自我介紹</label>
               <textarea
+                class="scrollbar"
+                :class="{ error: profile.introduction.length > 160 }"
                 v-model="profile.introduction"
                 type="text"
                 name="introduction"
               ></textarea>
             </div>
 
-            <!-- :class="{ error: profile.introduction.length > 160 }" -->
-
-            <!-- <div class="d-flex">
+            <div class="d-flex">
               <span
                 v-show="profile.introduction.length > 160"
                 class="edit-modal__container__edit__error"
@@ -120,7 +123,7 @@
               <span class="edit-modal__container__edit__letter-count"
                 >{{ profile.introduction.length }}/160</span
               >
-            </div> -->
+            </div>
           </div>
         </div>
       </form>
@@ -129,6 +132,7 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users'
 import { emptyImageFilter } from '../utils/mixins'
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
@@ -191,17 +195,18 @@ export default {
 
         this.isProcessing = true
 
-        // const { data } = await usersAPI.update({
-        //   id: this.profile.id,
-        //   formData
-        // })
+        const { data } = await usersAPI.update({
+          id: this.profile.id,
+          formData
+        })
 
-        // if (data.status === 'error') {
-        //   throw new Error(data.message)
-        // }
-        // console.log(data)
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+        console.log(data)
 
-        this.$emit('close-modal')
+        this.$emit('close')
+        this.$parent.$parent.fetchUsers(this.profile.id)
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -211,15 +216,13 @@ export default {
           title: '無法更新資料，請稍後再試'
         })
       }
+    },
+    initializeCover() {
+      this.profile.cover = ''
     }
   },
   computed: {
     ...mapState(['currentUser'])
-  },
-  watch: {
-    user(newValue) {
-      this.profile = { ...newValue }
-    }
   }
 }
 </script>

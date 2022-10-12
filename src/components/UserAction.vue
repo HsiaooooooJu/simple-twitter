@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="user__action__container">
     <UserLike />
     <UserReply />
     <UserTweet />

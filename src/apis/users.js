@@ -7,7 +7,7 @@ export default {
 
   // 使用者編輯自己的 profile
   update({ id, formData }) {
-    return apiHelper.put(`/users/${id}`), formData
+    return apiHelper.put(`/users/${id}`, formData)
   },
 
   // 顯示跟隨者數量排列前 10 的使用者

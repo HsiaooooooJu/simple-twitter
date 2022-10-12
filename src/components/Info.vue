@@ -12,7 +12,9 @@
         />
         <div class="info__container__title__box d-flex flex-column">
           <h5>{{ user.name }}</h5>
-          <div class="info__container__title__box__content">{num} 推文</div>
+          <div class="info__container__title__box__content">
+            {{ userTweetCount }} 推文
+          </div>
         </div>
       </div>
 
@@ -114,6 +116,7 @@ import {
   atAccountFilter
 } from '../utils/mixins'
 import { mapState } from 'vuex'
+import usersAPI from '../apis/users'
 import followshipsAPI from '../apis/followships'
 import { Toast } from '../utils/helpers'
 import EditModal from './EditModal.vue'
@@ -140,12 +143,40 @@ export default {
   },
   data() {
     return {
+      userTweetCount: 0,
       isFollowed: this.initialIsFollowed,
       isProcessing: false,
       showModal: false
     }
   },
+  created() {
+    const { id } = this.$route.params
+    this.fetchUserTweets(id)
+  },
   methods: {
+    async fetchUserTweets(id) {
+      try {
+        this.isLoading = true
+
+        const { data } = await usersAPI.get.tweets({ id })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.userTweetCount = data.length
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文資料，請稍後再試'
+        })
+      }
+    },
     async addFollowing(id) {
       try {
         this.isProcessing = true
@@ -189,6 +220,7 @@ export default {
           title: '成功取消追蹤 Ｔ＿Ｔ'
         })
 
+        this.$store.commit('triggerPopularUsersRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

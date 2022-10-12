@@ -103,7 +103,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderProfile'])
+  },
+  watch: {
+    renderProfile: function () {
+      const { id } = this.$route.params
+      this.fetchFollowers(id)
+    },
+    deep: true
   }
 }
 </script>
