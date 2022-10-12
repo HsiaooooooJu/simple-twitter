@@ -1,7 +1,3 @@
-.user__action__container {
-  padding: 0;
-}
-
 .user-tweet__container {
   height: 100%;
   padding: 0;
@@ -15,7 +11,7 @@
     }
 
     &__tweet {
-      padding-bottom: 18px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
 
       &__delete {
@@ -28,6 +24,7 @@
         height: 50px;
         margin: 16px 8px 0 24px;
         border-radius: 50%;
+        object-fit: cover;
       }
 
       &__text {

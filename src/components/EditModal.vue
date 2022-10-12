@@ -10,20 +10,17 @@
             <img src="../assets/images/close.svg" alt="" />
           </div>
           <h5 class="edit-modal__container__top__title">編輯個人資料</h5>
-          <button type="submit" class="edit-modal__container__top__save">
+          <button
+            :disabled="isProcessing"
+            type="submit"
+            class="edit-modal__container__top__save"
+          >
             {{ isProcessing ? '處理中' : '儲存' }}
           </button>
         </div>
 
         <!-- cover file input -->
         <div class="edit-modal__container__cover">
-          <label for="cover-input">
-            <img
-              :src="profile.cover | emptyCover"
-              alt=""
-              class="edit-modal__container__cover__img"
-            />
-          </label>
           <input
             type="file"
             id="cover-input"
@@ -32,6 +29,13 @@
             accept="image/*"
             @change="handleCoverChange"
           />
+          <label for="cover-input">
+            <img
+              :src="profile.cover | emptyCover"
+              alt=""
+              class="edit-modal__container__cover__img"
+            />
+          </label>
 
           <div class="edit-modal__container__cover__icon d-flex">
             <label
@@ -153,8 +157,9 @@ export default {
     }
   },
   created() {
-    this.getProfile()
-    // console.log(this.profile.name)
+    const { id } = this.$route.params
+    this.getProfile(id)
+    console.log(id)
   },
   methods: {
     getProfile() {
@@ -184,30 +189,23 @@ export default {
           })
           return
         }
-
         const form = e.target
         const formData = new FormData(form)
-
         for (let [name, value] of formData.entries()) {
           console.log(name + ': ' + value)
         }
-
         this.isProcessing = true
-
         const { data } = await usersAPI.update({
           id: this.profile.id,
           formData
         })
-
         if (data.status === 'error') {
           throw new Error(data.message)
         }
-
         Toast.fire({
           icon: 'success',
           title: '已更新個人資料'
         })
-
         this.$emit('close')
         this.$parent.$parent.fetchUsers(this.profile.id)
         this.isProcessing = false

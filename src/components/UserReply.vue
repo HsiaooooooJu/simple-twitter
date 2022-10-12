@@ -2,24 +2,28 @@
   <Spinner v-if="isLoading" />
   <div v-else class="user-reply__container d-flex flex-column">
     <div class="user-reply__container__reply-list scrollbar">
-      <div v-for="repliedTweet in repliedTweets" :key="repliedTweet.id"
+      <div
+        v-for="repliedTweet in repliedTweets"
+        :key="repliedTweet.id"
         class="user-reply__container__reply-list__tweet d-flex"
       >
-        <router-link :to="{name: 'profile', params: {id: repliedTweet.User.id}}">
+        <router-link
+          :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
+        >
           <img
             :src="repliedTweet.User.avatar | emptyImage"
             class="user-reply__container__reply-list__tweet__avatar"
             alt=""
           />
         </router-link>
-        
+
         <div
           class="user-reply__container__reply-list__tweet__text d-flex flex-column"
         >
           <div class="d-flex justify-content-between">
             <div class="reply-list__tweet__title d-flex">
               <router-link
-                :to="{name: 'profile', params: {id: repliedTweet.User.id}}"
+                :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
                 class="reply-list__tweet__title__name none"
               >
                 {{ repliedTweet.User.name }}
@@ -34,17 +38,22 @@
             </div>
             <button
               v-show="currentUser"
-              class="user-reply__container__reply-list__tweet__text__delete__reply"
+              class="user-tweet__container__tweet-list__tweet__delete"
               :disabled="isProcessing"
-              @click.prevent.stop="deleteReply(repliedTweet.Tweet.id, repliedTweet.id)"
-            > x
+              @click.prevent.stop="
+                deleteReply(repliedTweet.Tweet.id, repliedTweet.id)
+              "
+            >
+              ×
             </button>
           </div>
           <div
             class="user-reply__container__reply-list__tweet__text__reply d-flex"
           >
             <span class="reply-list__tweet__reply">回覆</span>
-            <span class="reply-list__tweet__reply-to">{{ repliedTweet.Tweet.User.account | atAccount }}</span>
+            <span class="reply-list__tweet__reply-to">{{
+              repliedTweet.Tweet.User.account | atAccount
+            }}</span>
           </div>
 
           <div
@@ -82,18 +91,17 @@ export default {
     }
   },
   created() {
-    const {id} = this.$route.params
+    const { id } = this.$route.params
     this.fetchRepliedTweets(id)
   },
   methods: {
     async fetchRepliedTweets(id) {
       try {
         this.isLoading = true
-        const { data } = await usersAPI.get.replied({id})
+        const { data } = await usersAPI.get.replied({ id })
         this.repliedTweets = data
         this.isLoading = false
-        
-      } catch(error) {
+      } catch (error) {
         this.isProcessing = false
         console.log(error)
         Toast.fire({
