@@ -104,13 +104,14 @@
               <label for="introduction">自我介紹</label>
               <textarea
                 v-model="profile.introduction"
-                :class="{ error: profile.introduction.length > 160 }"
                 type="text"
                 name="introduction"
               ></textarea>
             </div>
 
-            <div class="d-flex">
+            <!-- :class="{ error: profile.introduction.length > 160 }" -->
+
+            <!-- <div class="d-flex">
               <span
                 v-show="profile.introduction.length > 160"
                 class="edit-modal__container__edit__error"
@@ -119,7 +120,7 @@
               <span class="edit-modal__container__edit__letter-count"
                 >{{ profile.introduction.length }}/160</span
               >
-            </div>
+            </div> -->
           </div>
         </div>
       </form>
@@ -139,13 +140,7 @@ export default {
   props: {
     user: {
       type: Object,
-      default: () => ({
-        id: 0,
-        name: '',
-        cover: '',
-        avatar: '',
-        introduction: ''
-      })
+      default: () => {}
     }
   },
   data() {
@@ -156,7 +151,7 @@ export default {
   },
   created() {
     this.getProfile()
-    console.log(this.profile.id)
+    // console.log(this.profile.name)
   },
   methods: {
     getProfile() {
@@ -204,8 +199,8 @@ export default {
         // if (data.status === 'error') {
         //   throw new Error(data.message)
         // }
-
         // console.log(data)
+
         this.$emit('close-modal')
         this.isProcessing = false
       } catch (error) {
