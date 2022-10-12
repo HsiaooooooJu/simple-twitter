@@ -1,0 +1,101 @@
+.user__follow__container {
+  height: 100vh;
+  padding: 0;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+
+  &__no__content {
+    margin-top: 30%;
+  }
+
+  &__header {
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+
+    &__back {
+      width: 17px;
+      height: 14px;
+      margin-top: 14px;
+      margin-right: 20px;
+    }
+
+    &__user__name {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    &__tweet__count {
+      color: var(--secondary-color);
+      font-weight: 500;
+      font-size: 13px;
+    }
+  }
+
+  &__tab {
+    border-bottom: 1px solid var(--border);
+
+    &__followers,
+    &__followings {
+      padding: 15px 35px 15px 42px;
+      color: var(--nav-font);
+      font-weight: 700;
+      font-size: 15px;
+
+      &.active {
+        padding-bottom: 13px;
+        border-bottom: 2px solid var(--brand-color);
+        color: var(--brand-color);
+      }
+    }
+  }
+
+  &__content {
+    height: 85vh;
+
+    &__container {
+      flex: 1;
+    }
+
+    &__followers,
+    &__followings {
+      padding: 16px 23px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    &__img {
+      width: 50px;
+      height: 50px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+
+    &__name {
+      font-weight: 700;
+      line-height: 35px;
+
+      &__button {
+        margin-bottom: 8px;
+      }
+    }
+
+    &__add__button {
+      padding: 8px 16px;
+      border: 1px solid var(--brand-color);
+      border-radius: 50px;
+      background: var(--dark-0);
+      color: var(--brand-color);
+    }
+
+    &__delete__button {
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--brand-color);
+      color: var(--dark-0);
+    }
+
+    &__no__introduction,
+    &__introduction {
+      overflow-wrap: break-word;
+    }
+  }
+}

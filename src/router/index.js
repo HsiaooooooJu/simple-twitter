@@ -39,31 +39,10 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
-    path: '/users/:id',
-    name: 'profile',
-    component: () => import('../views/Profile'),
-    beforeEnter: authorizeIsUser
-  },
-  {
     path: '/settings/:id',
     name: 'settings',
     component: () => import('../views/Settings'),
     beforeEnter: authorizeIsUser
-  },
-  {
-    path: '/users/signin',
-    name: 'user-signin',
-    component: () => import('.././views/UserSignIn')
-  },
-  {
-    path: '/admin/signin',
-    name: 'admin-signin',
-    component: () => import('../views/AdminSignIn')
-  },
-  {
-    path: '/users/signup',
-    name: 'user-signup',
-    component: () => import('../views/UserSignUp')
   },
   {
     path: '/tweets/:id',
@@ -72,9 +51,30 @@ const routes = [
     beforeEnter: authorizeIsUser
   },
   {
+    path: '/users/signin',
+    name: 'user-signin',
+    component: () => import('.././views/UserSignIn')
+  },
+  {
+    path: '/users/signup',
+    name: 'user-signup',
+    component: () => import('../views/UserSignUp')
+  },
+  {
     path: '/users/:id/follow',
     name: 'follow',
     component: () => import('../views/Follow')
+  },
+  {
+    path: '/users/:id',
+    name: 'profile',
+    component: () => import('../views/Profile'),
+    beforeEnter: authorizeIsUser
+  },
+  {
+    path: '/admin/signin',
+    name: 'admin-signin',
+    component: () => import('../views/AdminSignIn')
   },
   {
     path: '/admin/tweets',
@@ -84,7 +84,7 @@ const routes = [
   },
   {
     path: '/admin/users',
-    name: 'admin-uses',
+    name: 'admin-users',
     component: () => import('../views/AdminUserList')
   },
   {
