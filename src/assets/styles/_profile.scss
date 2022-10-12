@@ -6,6 +6,7 @@
 }
 
 .info__container {
+
   &__title {
     padding: 20px;
     border-bottom: 1px solid var(--border);
@@ -40,10 +41,8 @@
     }
 
     &__btn-panel {
-      display: flex;
-      // position: relative;
       width: 100%;
-      padding: 16px;
+      padding: 8px 16px;
 
       &__img {
         width: 136px;
@@ -62,6 +61,7 @@
       }
 
       &__btn {
+        padding-top: 8px;
         &__self,
         &__other-follow {
           height: 40px;
@@ -93,7 +93,7 @@
     }
 
     &__profile {
-      padding: 8px 16px;
+      padding: 0 16px 8px;
 
       &__name {
         font-weight: 700;

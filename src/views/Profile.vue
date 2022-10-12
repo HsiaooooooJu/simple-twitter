@@ -39,9 +39,9 @@ export default {
         account: '',
         avatar: '',
         cover: '',
+        introduction: '',
         followerCount: '',
-        followingCount: '',
-        introduction: ''
+        followingCount: ''
       },
       isFollowed: false,
       isLoading: true

@@ -1,0 +1,81 @@
+.user-tweet__container {
+  height: 100%;
+  padding: 0;
+
+  &__tweet-list {
+    height: 45vh;
+
+    &__blank {
+      margin: 24px auto;
+      text-align: center;
+    }
+
+    &__tweet {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+
+      &__delete {
+        width: 15px;
+        height: 15px;
+      }
+
+      &__avatar {
+        width: 50px;
+        height: 50px;
+        margin: 16px 8px 0 24px;
+        border-radius: 50%;
+      }
+
+      &__text {
+        margin-top: 16px;
+        width: 84%;
+
+        .tweet-list__tweet__title {
+          &__name>a {
+            margin-right: 8px;
+            color: var(--dark-100);
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+          }
+
+          &__account,
+          &__createdAt,
+          &__separator {
+            padding-top: 1px;
+            color: var(--secondary-color);
+            font-size: 14px;
+          }
+
+          &__separator {
+            padding: 4px 0;
+          }
+        }
+
+        &__description {
+          margin: 0 0 10px;
+          color: var(dark-100);
+          overflow-wrap: break-word;
+        }
+
+        .tweet-list__tweet__action {
+
+          &__reply,
+          &__like {
+            &__icon {
+              width: 14px;
+              margin-right: 8px;
+            }
+
+            &__count {
+              margin-right: 64px;
+              color: var(--secondary-color);
+              font-size: 14px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
