@@ -1,12 +1,12 @@
 <template>
   <div class="sidebar__container">
-    <router-link to="/home">
+    <div>
       <img
         class="sidebar__container__logo"
         src="../assets/images/ac-logo.svg"
         alt=""
       />
-    </router-link>
+    </div>
     <div
       class="sidebar__container__buttons d-flex flex-column justify-content-between"
     >

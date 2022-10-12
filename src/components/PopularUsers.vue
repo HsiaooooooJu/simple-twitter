@@ -127,6 +127,7 @@ export default {
           title: '追蹤成功 !'
         })
 
+        this.$store.commit('triggerFollowRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -165,6 +166,7 @@ export default {
           title: '取消追蹤成功 !'
         })
 
+        this.$store.commit('triggerFollowRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -177,7 +179,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderPopularUsers'])
+  },
+  watch: {
+    renderPopularUsers: {
+      handler: function () {
+        this.fetchTopFollowers()
+      },
+      deep: true
+    }
   }
 }
 </script>

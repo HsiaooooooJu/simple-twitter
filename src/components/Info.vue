@@ -66,14 +66,26 @@
             {{ user.introduction }}
           </div>
           <div class="info__container__user__profile__follow">
-            <span class="info__container__user__profile__follow__num"
-              >{{ user.followingCount }} 個</span
+            <router-link
+              :to="{
+                name: 'follow',
+                params: { id: user.id },
+                query: { followType: '2' }
+              }"
+              class="info__container__user__profile__follow__num none"
+              >{{ user.followingCount }} 個</router-link
             >
             <span class="info__container__user__profile__follow__unit">
               跟隨中</span
             >
-            <span class="info__container__user__profile__follow__num"
-              >{{ user.followerCount }} 位</span
+            <router-link
+              :to="{
+                name: 'follow',
+                params: { id: user.id },
+                query: { followType: '1' }
+              }"
+              class="info__container__user__profile__follow__num none"
+              >{{ user.followerCount }} 位</router-link
             >
             <span class="info__container__user__profile__follow__unit">
               跟隨者</span
