@@ -136,7 +136,6 @@ import usersAPI from '../apis/users'
 import { emptyImageFilter } from '../utils/mixins'
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
-// import usersAPI from '../apis/users'
 
 export default {
   name: 'EditModal',
@@ -203,7 +202,11 @@ export default {
         if (data.status === 'error') {
           throw new Error(data.message)
         }
-        console.log(data)
+
+        Toast.fire({
+          icon: 'success',
+          title: '已更新個人資料'
+        })
 
         this.$emit('close')
         this.$parent.$parent.fetchUsers(this.profile.id)
@@ -218,7 +221,8 @@ export default {
       }
     },
     initializeCover() {
-      this.profile.cover = ''
+      document.querySelector('#cover-input').value = ''
+      this.profile.cover = this.user.cover
     }
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
-  <!-- <Spinner v-if="isLoading" /> -->
-  <div class="user-reply__container d-flex flex-column">
+  <Spinner v-if="isLoading" />
+  <div v-else class="user-reply__container d-flex flex-column">
     <div class="user-reply__container__reply-list scrollbar">
       <div v-for="repliedTweet in repliedTweets" :key="repliedTweet.id"
         class="user-reply__container__reply-list__tweet d-flex"
@@ -68,47 +68,17 @@ import {
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-// import Spinner from '../components/Spinner.vue'
-// import ReplyModal from '../components/ReplyModal.vue'
+import Spinner from '../components/Spinner.vue'
 
 export default {
   name: 'UserReply',
   mixins: [emptyImageFilter, fromNowFilter, atAccountFilter],
-  // components: { ReplyModal, Spinner },
-  // props: {
-  //   tweet: {
-  //     type: Object,
-  //     required: true
-  //   },
-  //   replies: {
-  //     type: Array,
-  //     required: true
-  //   },
-  //   isLoading: {
-  //     type: Boolean,
-  //     required: true
-  //   }
-  // },
+  components: { Spinner },
   data() {
     return {
       isProcessing: false,
+      isLoading: true,
       repliedTweets: []
-      // modalIsLoading: false,
-      // showModal: false,
-      // replyTweet: {
-      //   id: 0,
-      //   description: '',
-      //   createdAt: '',
-      //   replyCount: 0,
-      //   likeCount: 0,
-      //   isLiked: 0,
-      //   User: {
-      //     id: 0,
-      //     name: '',
-      //     account: '',
-      //     avatar: ''
-      //   }
-      // }
     }
   },
   created() {
@@ -118,11 +88,11 @@ export default {
   methods: {
     async fetchRepliedTweets(id) {
       try {
-        this.isProcessing = true
-
+        this.isLoading = true
         const { data } = await usersAPI.get.replied({id})
         this.repliedTweets = data
-
+        this.isLoading = false
+        
       } catch(error) {
         this.isProcessing = false
         console.log(error)
@@ -132,85 +102,6 @@ export default {
         })
       }
     },
-    // async fetchTweet(id) {
-    //   try {
-    //     this.modalIsLoading = true
-    //     this.showModal = true
-
-    //     const { data } = await tweetsAPI.getTweet({ id })
-
-    //     if (data.status === 'error') {
-    //       throw new Error(data.message)
-    //     }
-
-    //     this.replyTweet = data
-    //     this.modalIsLoading = false
-    //   } catch (error) {
-    //     this.modalIsLoading = false
-
-    //     console.log(error)
-
-    //     Toast.fire({
-    //       icon: 'error',
-    //       title: '無法取得推文資料，請稍後再試'
-    //     })
-    //   }
-    // },
-    // async like(id) {
-    //   try {
-    //     this.isProcessing = true
-
-    //     const { data } = await usersAPI.like({ id })
-
-    //     if (data.status === 'error') {
-    //       throw new Error(data.message)
-    //     }
-
-    //     this.$emit('after-like-tweet', id)
-
-    //     Toast.fire({
-    //       icon: 'success',
-    //       title: '按讚成功！你真是個好人～'
-    //     })
-
-    //     this.$parent.fetchTweet(id)
-    //     this.isProcessing = false
-    //   } catch (error) {
-    //     this.isProcessing = false
-    //     Toast.fire({
-    //       icon: 'error',
-    //       title: '無法按讚，請稍後再試'
-    //     })
-    //   }
-    // },
-    // async unlike(id) {
-    //   try {
-    //     this.isProcessing = true
-
-    //     const { data } = await usersAPI.unlike({ id })
-
-    //     if (data.status === 'error') {
-    //       throw new Error(data.message)
-    //     }
-
-    //     this.$emit('after-unlike-tweet', id)
-
-    //     Toast.fire({
-    //       icon: 'success',
-    //       title: '不要取消嘛～～～'
-    //     })
-
-    //     this.$parent.fetchTweet(id)
-    //     this.isProcessing = false
-    //   } catch (error) {
-    //     this.isProcessing = false
-    //     console.log(error)
-    //     Toast.fire({
-    //       icon: 'error',
-    //       title: '無法取消喜歡，請稍後再試'
-    //     })
-    //   }
-    // },
     async deleteReply(tweet_id, id) {
       try {
         this.isProcessing = true

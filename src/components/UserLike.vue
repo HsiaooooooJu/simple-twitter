@@ -1,5 +1,5 @@
 <template>
-  <div class="user-like__container"></div>
+  <div class="user-like__container">like</div>
 </template>
 
 <script>
