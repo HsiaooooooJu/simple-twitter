@@ -13,6 +13,12 @@ import UserTweet from '../components/UserTweet.vue'
 
 export default {
   name: 'UserAction',
-  components: { UserLike, UserTweet, UserReply }
+  components: { UserLike, UserTweet, UserReply },
+  data() {
+    return {}
+  },
+  created() {
+    console.log(this.currentTab)
+  }
 }
 </script>
