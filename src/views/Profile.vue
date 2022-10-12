@@ -1,11 +1,17 @@
 <template>
-  <Spinner v-if="isLoading" />
-  <div v-else class="container">
+  <div class="container">
     <div class="profile__container row flex-nowrap">
       <div class="profile__container__main col-7">
-        <Info :user="user" />
-        <NavTab />
-        <UserAction />
+        <Spinner v-if="isLoading" />
+        <template v-else>
+          <Info
+            :user="user"
+            :is-current-user="currentUser.id === user.id"
+            :initial-is-followed="isFollowed"
+          />
+          <NavTab />
+          <UserAction />
+        </template>
       </div>
       <PopularUsers class="col-3" />
     </div>
@@ -33,16 +39,24 @@ export default {
         account: '',
         avatar: '',
         cover: '',
+        introduction: '',
         followerCount: '',
-        followingCount: '',
-        introduction: ''
+        followingCount: ''
       },
+      currentTab: 1,
+      isFollowed: false,
       isLoading: true
     }
   },
   created() {
     const { id } = this.$route.params
     this.fetchUsers(id)
+    this.fetchFollowers(id)
+  },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params
+    this.fetchUsers(id)
+    next()
   },
   methods: {
     async fetchUsers(id) {
@@ -55,14 +69,8 @@ export default {
           return new Error(data.message)
         }
 
+        this.user = data
         this.user.id = data.id
-        this.user.name = data.name
-        this.user.account = data.account
-        this.user.avatar = data.avatar
-        this.user.cover = data.cover
-        this.user.followerCount = data.followerCount
-        this.user.followingCount = data.followingCount
-        this.user.introduction = data.introduction
 
         this.isLoading = false
       } catch (error) {
@@ -73,10 +81,37 @@ export default {
           title: '無法取得使用者資料'
         })
       }
+    },
+    async fetchFollowers(id) {
+      try {
+        this.isLoading = true
+
+        const { data } = await usersAPI.get.followers({ id })
+
+        this.isFollowed = data.some((item) => {
+          return this.currentUser.id === item.followerId
+        })
+
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得跟隨您的使用者資料'
+        })
+      }
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderProfile'])
+  },
+  watch: {
+    renderProfile: function () {
+      const { id } = this.$route.params
+      this.fetchFollowers(id)
+    },
+    deep: true
   }
 }
 </script>

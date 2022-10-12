@@ -195,7 +195,7 @@ export default {
     this.fetchUserTweets(id)
   },
   beforeRouteUpdate(to, from, next) {
-    const { id } = this.$route.params
+    const { id } = to.params
 
     if (
       this.$route.query.followType !== '1' &&
