@@ -1,7 +1,7 @@
 <template>
   <div class="edit-modal__overlay">
     <div class="edit-modal__container d-flex flex-column">
-      <form @submit.prevent.stop="updateProfile">
+      <form @submit.stop.prevent="updateProfile">
         <div class="edit-modal__container__top d-flex align-items-center">
           <button
             class="edit-modal__container__top__close"
@@ -10,42 +10,65 @@
             <img src="../assets/images/close.svg" alt="" />
           </button>
           <h5 class="edit-modal__container__top__title">編輯個人資料</h5>
-          <button class="edit-modal__container__top__save">
+          <button type="submit" class="edit-modal__container__top__save">
             {{ isProcessing ? '處理中' : '儲存' }}
           </button>
         </div>
 
+        <!-- cover file input -->
         <div class="edit-modal__container__cover">
-          <img
-            :src="profile.cover | emptyCover"
-            alt=""
-            class="edit-modal__container__cover__img"
+          <label for="cover-input">
+            <img
+              :src="profile.cover | emptyCover"
+              alt=""
+              class="edit-modal__container__cover__img"
+            />
+          </label>
+          <input
+            type="file"
+            id="cover-input"
+            name="cover"
+            class="d-none"
+            accept="image/*"
+            @change="handleCoverChange"
           />
-          <div class="edit-modal__container__cover__icon">
-            <button
+
+          <div class="edit-modal__container__cover__icon d-flex">
+            <label
               class="edit-modal__container__cover__icon__add"
-              @change="handleCoverChange"
+              for="cover-input"
             >
               <img src="../assets/images/add-image.svg" alt="" />
-            </button>
+            </label>
+
             <button class="edit-modal__container__cover__icon__close">
               <img src="../assets/images/close.svg" alt="" />
             </button>
           </div>
 
-          <button class="edit-modal__container__avatar">
-            <img
-              :src="profile.avatar | emptyImage"
-              alt=""
-              class="edit-modal__container__avatar__img"
+          <!-- avatar file input -->
+          <div class="edit-modal__container__avatar">
+            <label for="avatar-input">
+              <img
+                :src="profile.avatar | emptyImage"
+                alt=""
+                class="edit-modal__container__avatar__img"
+              />
+              <img
+                src="../assets/images/add-image.svg"
+                alt=""
+                class="edit-modal__container__avatar__icon align-center"
+              />
+            </label>
+            <input
+              type="file"
+              id="avatar-input"
+              name="avatar"
+              class="d-none"
+              accept="image/*"
               @change="handleAvatarChange"
             />
-            <img
-              src="../assets/images/add-image.svg"
-              alt=""
-              class="edit-modal__container__avatar__icon align-center"
-            />
-          </button>
+          </div>
 
           <div class="edit-modal__container__form">
             <div class="edit-modal__container__form__name d-flex flex-column">
@@ -55,6 +78,7 @@
                 type="text"
                 :class="[{ error: !profile.name || profile.name.length > 50 }]"
                 id="name"
+                name="name"
               />
             </div>
 
@@ -82,6 +106,7 @@
                 v-model="profile.introduction"
                 :class="{ error: profile.introduction.length > 160 }"
                 type="text"
+                name="introduction"
               ></textarea>
             </div>
 
@@ -106,7 +131,7 @@
 import { emptyImageFilter } from '../utils/mixins'
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
-import usersAPI from '../apis/users'
+// import usersAPI from '../apis/users'
 
 export default {
   name: 'EditModal',
@@ -114,49 +139,47 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
+      default: () => ({
+        id: 0,
+        name: '',
+        cover: '',
+        avatar: '',
+        introduction: ''
+      })
     }
   },
   data() {
     return {
-      profile: { ...this.user },
+      profile: {},
       isProcessing: false
     }
   },
   created() {
     this.getProfile()
-    console.log(this.name)
+    console.log(this.profile.id)
   },
   methods: {
     getProfile() {
-      // const { profile } = this.user
-      // const { id, cover, avatar, name, introduction } = this.user
-      this.profile = this.user
-
-      if (this.currentUser.id !== this.user.id) return
-
-      // this.id = id
-      // this.name = name
-      // this.cover = cover
-      // this.avatar = avatar
-      // this.introduction = introduction
+      this.profile = {
+        ...this.user,
+        ...this.profile
+      }
     },
     handleCoverChange(e) {
       const { files } = e.target
-      if (!files.length) return
+      if (!files.length) return this.profile.cover
       const imageURL = window.URL.createObjectURL(files[0])
-      this.cover = imageURL
+      this.profile.cover = imageURL
     },
     handleAvatarChange(e) {
       const { files } = e.target
-      if (!files.length) return
+      if (!files.length) return this.profile.avatar
       const imageURL = window.URL.createObjectURL(files[0])
-      this.avatar = imageURL
-      console.log(this.avatar)
+      this.profile.avatar = imageURL
     },
     async updateProfile(e) {
       try {
-        if (!this.name) {
+        if (!this.profile.name) {
           Toast.fire({
             icon: 'warning',
             title: '名稱不可為空白'
@@ -167,17 +190,22 @@ export default {
         const form = e.target
         const formData = new FormData(form)
 
+        for (let [name, value] of formData.entries()) {
+          console.log(name + ': ' + value)
+        }
+
         this.isProcessing = true
 
-        const { data } = await usersAPI.update({
-          id: this.id,
-          formData
-        })
-        console.log(data)
+        // const { data } = await usersAPI.update({
+        //   id: this.profile.id,
+        //   formData
+        // })
+
         // if (data.status === 'error') {
         //   throw new Error(data.message)
         // }
 
+        // console.log(data)
         this.$emit('close-modal')
         this.isProcessing = false
       } catch (error) {
@@ -195,10 +223,7 @@ export default {
   },
   watch: {
     user(newValue) {
-      this.profile = {
-        ...this.profile,
-        ...newValue
-      }
+      this.profile = { ...newValue }
     }
   }
 }
