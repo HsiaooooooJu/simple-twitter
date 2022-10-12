@@ -1,24 +1,25 @@
 <template>
   <div class="user__action__container">
-    <UserLike />
+    <!-- <UserTweet /> -->
     <UserReply />
-    <UserTweet />
+    <UserLike />
   </div>
 </template>
 
 <script>
 import UserLike from '../components/UserLike.vue'
 import UserReply from '../components/UserReply.vue'
-import UserTweet from '../components/UserTweet.vue'
+// import UserTweet from '../components/UserTweet.vue'
 
 export default {
   name: 'UserAction',
-  components: { UserLike, UserTweet, UserReply },
+  components: { UserLike, UserReply },
   data() {
     return {}
   },
   created() {
-    console.log(this.currentTab)
+    // console.log(this.currentTab)
   }
 }
 </script>
+<!-- UserTweet -->
