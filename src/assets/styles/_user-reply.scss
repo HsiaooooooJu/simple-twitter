@@ -1,0 +1,113 @@
+.user-reply__container {
+  &__title {
+    h4 {
+      font-weight: 700;
+    }
+
+    &__img {
+      width: 18px;
+      margin-right: 18px;
+    }
+  }
+
+  &__tweet {
+    padding: 16px;
+
+    &__title {
+      margin-bottom: 8px;
+
+      &__img {
+        width: 50px;
+        height: 50px;
+        margin-right: 8px;
+        border-radius: 50%;
+      }
+
+      &__box {
+        &__name {
+          font-weight: 700;
+        }
+
+        &__account {
+          color: var(--secondary-color);
+          font-size: 14px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &__description {
+      color: var(--dark-100);
+      font-size: 24px;
+      font-weight: 400;
+      overflow-wrap: break-word;
+    }
+
+    &__createdAt {
+      margin-top: 8px;
+      color: var(--secondary-color);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &__num {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+
+      &__box {
+        margin-right: 24px;
+
+        &__count {
+          margin-right: 5px;
+          color: var(dark-100);
+          font-size: 19px;
+          font-weight: 700;
+        }
+
+        &__unit {
+          color: var(--secondary-color);
+          font-size: 19px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    &__icon {
+      width: 25px;
+      padding: 0;
+      margin-right: 90px;
+    }
+
+    &__num__box__count {
+      width: 120px;
+    }
+  }
+
+  &__reply-list {
+    border-top: 1px solid var(--border);
+  }
+}
+
+.tweet-list__tweet {
+  &__title {
+    margin-bottom: 6px;
+
+    &__name {
+      margin-right: 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  &__reply {
+    margin: 2px 5px 8px 0;
+    color: var(--secondary-color);
+    font-size: 14px;
+  }
+
+  &__reply-to {
+    color: var(--brand-color);
+    font-size: 14px;
+  }
+}

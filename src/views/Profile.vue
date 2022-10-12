@@ -43,6 +43,7 @@ export default {
         followerCount: '',
         followingCount: ''
       },
+      currentTab: 1,
       isFollowed: false,
       isLoading: true
     }
