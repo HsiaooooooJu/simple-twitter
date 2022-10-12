@@ -1,8 +1,29 @@
 <template>
   <div class="user__action__container">
-    <UserLike />
-    <UserReply />
-    <UserTweet />
+    <div class="nav-tab__container d-flex">
+      <div class="nav-tab__container__tab">
+        <button
+          class="nav-tab__container__tab__btn"
+          @click="toggleTab('tweet')"
+        >
+          推文
+        </button>
+        <button
+          class="nav-tab__container__tab__btn"
+          @click="toggleTab('reply')"
+        >
+          回覆
+        </button>
+        <button class="nav-tab__container__tab__btn" @click="toggleTab('like')">
+          喜歡的內容
+        </button>
+      </div>
+    </div>
+    <div>
+      <UserTweet v-show="this.tabType === 1" />
+      <UserReply v-show="this.tabType === 2" />
+      <UserLike v-show="this.tabType === 3" />
+    </div>
   </div>
 </template>
 
@@ -15,10 +36,23 @@ export default {
   name: 'UserAction',
   components: { UserLike, UserTweet, UserReply },
   data() {
-    return {}
+    return {
+      tabType: 0
+    }
   },
   created() {
     console.log(this.currentTab)
+  },
+  methods: {
+    toggleTab(tab) {
+      if (tab === 'tweet') {
+        this.tabType = 1
+      } else if (tab === 'reply') {
+        this.tabType = 2
+      } else if (tab === 'like') {
+        this.tabType = 3
+      }
+    }
   }
 }
 </script>

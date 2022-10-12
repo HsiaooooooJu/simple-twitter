@@ -9,7 +9,6 @@
             :is-current-user="currentUser.id === user.id"
             :initial-is-followed="isFollowed"
           />
-          <NavTab />
           <UserAction />
         </template>
       </div>
@@ -21,7 +20,6 @@
 <script>
 import PopularUsers from '../components/PopularUsers.vue'
 import Info from '../components/Info.vue'
-import NavTab from '../components/NavTab.vue'
 import UserAction from '../components/UserAction.vue'
 import Spinner from '../components/Spinner.vue'
 import usersAPI from '../apis/users'
@@ -30,7 +28,7 @@ import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Profile',
-  components: { Info, NavTab, UserAction, PopularUsers, Spinner },
+  components: { Info, UserAction, PopularUsers, Spinner },
   data() {
     return {
       user: {
@@ -110,6 +108,7 @@ export default {
     renderProfile: function () {
       const { id } = this.$route.params
       this.fetchFollowers(id)
+      this.fetchUsers(id)
     },
     deep: true
   }

@@ -203,7 +203,11 @@ export default {
         if (data.status === 'error') {
           throw new Error(data.message)
         }
-        console.log(data)
+
+        Toast.fire({
+          icon: 'success',
+          title: '已更新個人資料'
+        })
 
         this.$emit('close')
         this.$parent.$parent.fetchUsers(this.profile.id)
@@ -218,7 +222,8 @@ export default {
       }
     },
     initializeCover() {
-      this.profile.cover = ''
+      document.querySelector('#cover-input').value = ''
+      this.profile.cover = this.user.cover
     }
   },
   computed: {
