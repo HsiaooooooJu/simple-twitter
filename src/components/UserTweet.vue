@@ -1,5 +1,8 @@
 <template>
-  <div class="user-tweet__container">
+  <div v-if="tweets.length === 0" class="home-tweet__container__tweet-list__blank">
+    目前沒有推文
+  </div>
+  <div v-else class="user-tweet__container">
     <div class="user-tweet__container__tweet-list scrollbar">
       <Spinner v-if="isLoading" />
       <div
@@ -228,7 +231,6 @@ export default {
           title: '按讚成功！你真是個好人～'
         })
 
-        // this.fetchUserTweets(id)
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -264,7 +266,6 @@ export default {
           title: '不要取消嘛～～～'
         })
 
-        // this.fetchUserTweets(id)
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -292,7 +293,6 @@ export default {
           title: '成功刪除推文'
         })
 
-        // this.fetchUserTweets(id)
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

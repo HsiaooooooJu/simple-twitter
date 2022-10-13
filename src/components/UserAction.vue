@@ -20,9 +20,9 @@
       </div>
     </div>
     <div>
-      <UserTweet v-show="this.tabType === 1" />
-      <UserReply v-show="this.tabType === 2" />
-      <UserLike v-show="this.tabType === 3" />
+      <UserTweet v-if="this.tabType === 1" />
+      <UserReply v-if="this.tabType === 2" />
+      <UserLike v-if="this.tabType === 3" />
     </div>
   </div>
 </template>
@@ -37,12 +37,12 @@ export default {
   components: { UserTweet, UserLike, UserReply },
   data() {
     return {
-      tabType: 0
+      tabType: 1
     }
   },
   methods: {
     toggleTab(tab) {
-      if (tab === 'tweet') {
+      if (tab !== 'reply' && tab !== 'like') {
         this.tabType = 1
       } else if (tab === 'reply') {
         this.tabType = 2

@@ -1,65 +1,76 @@
 <template>
-  <Spinner v-if="isLoading" />
-  <div v-else class="user-reply__container d-flex flex-column">
-    <div class="user-reply__container__reply-list scrollbar">
-      <div
-        v-for="repliedTweet in repliedTweets"
-        :key="repliedTweet.id"
-        class="user-reply__container__reply-list__tweet d-flex"
-      >
-        <router-link
-          :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
-        >
-          <img
-            :src="repliedTweet.User.avatar | emptyImage"
-            class="user-reply__container__reply-list__tweet__avatar"
-            alt=""
-          />
-        </router-link>
-
+  <div>
+    <div
+      v-if="repliedTweets.length === 0"
+      class="home-tweet__container__tweet-list__blank"
+    >
+      目前沒有回覆
+    </div>
+    <Spinner v-else-if="isLoading" />
+    <div v-else class="user-reply__container d-flex flex-column">
+      <div class="user-reply__container__reply-list scrollbar">
         <div
-          class="user-reply__container__reply-list__tweet__text d-flex flex-column"
+          v-for="repliedTweet in repliedTweets"
+          :key="repliedTweet.id"
+          class="user-reply__container__reply-list__tweet d-flex"
         >
-          <div class="d-flex justify-content-between">
-            <div class="reply-list__tweet__title d-flex">
-              <router-link
-                :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
-                class="reply-list__tweet__title__name none"
-              >
-                {{ repliedTweet.User.name }}
-              </router-link>
-              <div class="reply-list__tweet__title__account">
-                {{ repliedTweet.User.account | atAccount }}
-              </div>
-              <span class="reply-list__tweet__title__separator">・</span>
-              <div class="reply-list__tweet__title__createdAt">
-                {{ repliedTweet.createdAt | fromNow }}
-              </div>
-            </div>
-            <button
-              v-show="currentUser"
-              class="user-tweet__container__tweet-list__tweet__delete"
-              :disabled="isProcessing"
-              @click.prevent.stop="
-                deleteReply(repliedTweet.Tweet.id, repliedTweet.id)
-              "
-            >
-              ×
-            </button>
-          </div>
-          <div
-            class="user-reply__container__reply-list__tweet__text__reply d-flex"
+          <router-link
+            :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
           >
-            <span class="reply-list__tweet__reply">回覆</span>
-            <span class="reply-list__tweet__reply-to">{{
-              repliedTweet.Tweet.User.account | atAccount
-            }}</span>
-          </div>
+            <img
+              :src="repliedTweet.User.avatar | emptyImage"
+              class="user-reply__container__reply-list__tweet__avatar"
+              alt=""
+            />
+          </router-link>
 
           <div
-            class="user-reply__container__reply-list__tweet__text__description"
+            class="user-reply__container__reply-list__tweet__text d-flex flex-column"
           >
-            {{ repliedTweet.comment }}
+            <div class="d-flex justify-content-between">
+              <div class="reply-list__tweet__title d-flex">
+                <router-link
+                  :to="{
+                    name: 'profile',
+                    params: { id: repliedTweet.User.id }
+                  }"
+                  class="reply-list__tweet__title__name none"
+                >
+                  {{ repliedTweet.User.name }}
+                </router-link>
+                <div class="reply-list__tweet__title__account">
+                  {{ repliedTweet.User.account | atAccount }}
+                </div>
+                <span class="reply-list__tweet__title__separator">・</span>
+                <div class="reply-list__tweet__title__createdAt">
+                  {{ repliedTweet.createdAt | fromNow }}
+                </div>
+              </div>
+              <button
+                v-show="currentUser"
+                class="user-tweet__container__tweet-list__tweet__delete"
+                :disabled="isProcessing"
+                @click.prevent.stop="
+                  deleteReply(repliedTweet.Tweet.id, repliedTweet.id)
+                "
+              >
+                ×
+              </button>
+            </div>
+            <div
+              class="user-reply__container__reply-list__tweet__text__reply d-flex"
+            >
+              <span class="reply-list__tweet__reply">回覆</span>
+              <span class="reply-list__tweet__reply-to">{{
+                repliedTweet.Tweet.User.account | atAccount
+              }}</span>
+            </div>
+
+            <div
+              class="user-reply__container__reply-list__tweet__text__description"
+            >
+              {{ repliedTweet.comment }}
+            </div>
           </div>
         </div>
       </div>
