@@ -203,7 +203,8 @@ export default {
         })
         this.isProcessing = false
 
-        this.$router.push('/home')
+        const { id } = this.$route.params
+        this.$router.push(`/settings/${id}`)
       } catch (error) {
         this.isProcessing = false
         console.log(error)
