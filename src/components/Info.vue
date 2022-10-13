@@ -23,8 +23,12 @@
           <img :src="user.cover | emptyCover" alt="" />
         </div>
 
-        <EditModal v-show="showModal" :user="user" @close="showModal = false" />
-        <!-- @after-submit="handleAfterSubmit"  -->
+        <EditModal
+          v-if="user.id"
+          v-show="showModal"
+          :user="user"
+          @close="showModal = false"
+        />
 
         <div
           class="info__container__user__btn-panel d-flex justify-content-between"

@@ -152,14 +152,19 @@ export default {
   },
   data() {
     return {
-      profile: {},
+      profile: {
+        id: this.user.id,
+        name: this.user.name,
+        avatar: this.user.avatar,
+        cover: this.user.cover,
+        introduction: this.user.introduction || ''
+      },
       isProcessing: false
     }
   },
   created() {
     const { id } = this.$route.params
     this.getProfile(id)
-    console.log(id)
   },
   methods: {
     getProfile() {
