@@ -148,8 +148,11 @@ export default {
         this.$emit('close-modal')
         this.isProcessing = false
 
-        if (this.$route.name === 'home') {
-          this.$parent.fetchTweets()
+        if (this.$route.name !== 'tweets') {
+          this.$router.push({
+            name: 'tweets',
+            params: { id: this.replyTweet.id }
+          })
         } else {
           this.$parent.$parent.fetchTweetReplies(this.replyTweet.id)
           this.$parent.$parent.fetchTweet(this.replyTweet.id)

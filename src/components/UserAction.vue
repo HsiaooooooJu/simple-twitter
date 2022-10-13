@@ -4,17 +4,23 @@
       <div class="nav-tab__container__tab">
         <button
           class="nav-tab__container__tab__btn"
+          :class="{ active: this.tabType === 1 }"
           @click="toggleTab('tweet')"
         >
           推文
         </button>
         <button
           class="nav-tab__container__tab__btn"
+          :class="{ active: this.tabType === 2 }"
           @click="toggleTab('reply')"
         >
           回覆
         </button>
-        <button class="nav-tab__container__tab__btn" @click="toggleTab('like')">
+        <button
+          class="nav-tab__container__tab__btn"
+          :class="{ active: this.tabType === 3 }"
+          @click="toggleTab('like')"
+        >
           喜歡的內容
         </button>
       </div>

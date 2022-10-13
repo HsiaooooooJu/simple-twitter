@@ -14,22 +14,22 @@
         :key="tweet.id"
         class="user-tweet__container__tweet-list__tweet d-flex"
       >
-        <router-link :to="{ name: 'profile', params: { id: tweet.User.id } }">
+        <div>
           <img
             :src="tweet.User.avatar | emptyImage"
             class="user-tweet__container__tweet-list__tweet__avatar"
             alt=""
-        /></router-link>
+          />
+        </div>
         <div
           class="user-tweet__container__tweet-list__tweet__text d-flex flex-column"
         >
           <div class="d-flex justify-content-between">
             <div class="tweet-list__tweet__title d-flex">
               <div class="tweet-list__tweet__title__name">
-                <router-link
-                  :to="{ name: 'profile', params: { id: tweet.User.id } }"
-                  >{{ tweet.User.name }}</router-link
-                >
+                <div>
+                  {{ tweet.User.name }}
+                </div>
               </div>
               <div class="tweet-list__tweet__title__account">
                 {{ tweet.User.account | atAccount }}
@@ -225,8 +225,8 @@ export default {
           } else {
             return {
               ...tweet,
-              likeCount: tweet.likeCount + 1,
-              isLiked: true
+              isLiked: true,
+              likeCount: tweet.likeCount + 1
             }
           }
         })
@@ -261,8 +261,8 @@ export default {
           } else {
             return {
               ...tweet,
-              likeCount: tweet.likeCount - 1,
-              isLiked: false
+              isLiked: false,
+              likeCount: tweet.likeCount - 1
             }
           }
         })
@@ -314,6 +314,8 @@ export default {
         }
 
         this.tweets = this.tweets.filter((tweet) => tweet.id !== id)
+        this.$store.commit('triggerUserTweetsRender')
+
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

@@ -103,9 +103,9 @@
               class="info__container__user__profile__follow__num none"
               >{{ user.followerCount }} 位</router-link
             >
-            <span class="info__container__user__profile__follow__unit">
-              跟隨者</span
-            >
+              <span class="info__container__user__profile__follow__unit">
+                跟隨者</span
+              >
           </div>
         </div>
       </div>
@@ -237,11 +237,18 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderUserTweets'])
   },
   watch: {
     initialIsFollowed(isFollowed) {
       this.isFollowed = isFollowed
+    },
+    renderUserTweets: {
+      handler: function () {
+        const { id } = this.$route.params
+        this.fetchUserTweets(id)
+      },
+      deep: true
     }
   }
 }
