@@ -1,0 +1,66 @@
+.user-like__container {
+  height: 47vh;
+
+  &__no__content {
+    margin-top: 30%;
+  }
+
+  &__tweet {
+    padding: 15px 24px 18px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__img {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    border-radius: 50%;
+  }
+
+  &__text {
+    width: 84%;
+    flex: 1;
+  }
+
+  &__content {
+    margin-bottom: 8px;
+  }
+
+  &__name {
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin-bottom: 8px;
+    overflow-wrap: break-word;
+  }
+
+  &__account,
+  &__dot,
+  &__createdAt,
+  &__action__reply__count,
+  &__action__like__count {
+    color: var(--secondary-color);
+    font-size: 14px;
+  }
+
+  &__action {
+    &__reply__count {
+      margin-right: 64px;
+    }
+
+    &__reply__count,
+    &__like__count {
+      font-weight: 600;
+    }
+
+    &__reply__button,
+    &__like__button,
+    &__unlike__button {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2px;
+    }
+  }
+}

@@ -106,9 +106,11 @@ export default {
   },
   watch: {
     renderProfile: function () {
-      const { id } = this.$route.params
-      this.fetchFollowers(id)
-      this.fetchUsers(id)
+      if (this.currentUser.id !== this.user.id) {
+        const { id } = this.$route.params
+        this.fetchFollowers(id)
+        this.fetchUsers(id)
+      }
     },
     deep: true
   }

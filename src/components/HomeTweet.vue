@@ -299,7 +299,8 @@ export default {
           } else {
             return {
               ...tweet,
-              isLiked: true
+              isLiked: true,
+              likeCount: tweet.likeCount + 1
             }
           }
         })
@@ -309,7 +310,6 @@ export default {
           title: '按讚成功！你真是個好人～'
         })
 
-        this.fetchTweets()
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -335,7 +335,8 @@ export default {
           } else {
             return {
               ...tweet,
-              isLiked: false
+              isLiked: false,
+              likeCount: tweet.likeCount - 1
             }
           }
         })
@@ -345,7 +346,6 @@ export default {
           title: '不要取消嘛～～～'
         })
 
-        this.fetchTweets()
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

@@ -23,7 +23,12 @@
           <img :src="user.cover | emptyCover" alt="" />
         </div>
 
-        <EditModal v-show="showModal" :user="user" @close="showModal = false" />
+        <EditModal
+          v-if="user.id"
+          v-show="showModal"
+          :user="user"
+          @close="showModal = false"
+        />
         <!-- @after-submit="handleAfterSubmit"  -->
 
         <div
@@ -233,11 +238,18 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderUserTweets'])
   },
   watch: {
     initialIsFollowed(isFollowed) {
       this.isFollowed = isFollowed
+    },
+    renderUserTweets: {
+      handler: function () {
+        const { id } = this.$route.params
+        this.fetchUserTweets(id)
+      },
+      deep: true
     }
   }
 }

@@ -41,7 +41,7 @@
 
     &__btn-panel {
       width: 100%;
-      padding: 8px 16px;
+      padding: 8px 16px 4px 16px;
 
       &__img {
         width: 136px;
@@ -96,6 +96,7 @@
 
       &__name {
         font-weight: 700;
+        margin-bottom: 3px;
       }
 
       &__account {
