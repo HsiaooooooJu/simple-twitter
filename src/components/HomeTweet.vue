@@ -271,6 +271,7 @@ export default {
           title: '成功建立推文'
         })
 
+        this.fetchTweets()
         this.$store.commit('triggerRender')
         this.isProcessing = false
       } catch (error) {
@@ -365,9 +366,10 @@ export default {
 
         const result = await Swal.fire({
           icon: 'warning',
-          title: '會一併刪除該則推文的回覆，且無法復原，確認要刪除？',
+          title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
           cancelButtonColor: '#fc5a5a',
+          cancelButtonText: '取消',
           confirmButtonColor: '#50b5ff',
           confirmButtonText: '是'
         })
