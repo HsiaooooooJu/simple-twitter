@@ -1,113 +1,71 @@
 .user-reply__container {
-  &__title {
-    h4 {
-      font-weight: 700;
-    }
-
-    &__img {
-      width: 18px;
-      margin-right: 18px;
-    }
-  }
-
-  &__tweet {
-    padding: 16px;
-
-    &__title {
-      margin-bottom: 8px;
-
-      &__img {
-        width: 50px;
-        height: 50px;
-        margin-right: 8px;
-        border-radius: 50%;
-      }
-
-      &__box {
-        &__name {
-          font-weight: 700;
-        }
-
-        &__account {
-          color: var(--secondary-color);
-          font-size: 14px;
-          font-weight: 400;
-        }
-      }
-    }
-
-    &__description {
-      color: var(--dark-100);
-      font-size: 24px;
-      font-weight: 400;
-      overflow-wrap: break-word;
-    }
-
-    &__createdAt {
-      margin-top: 8px;
-      color: var(--secondary-color);
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    &__num {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-
-      &__box {
-        margin-right: 24px;
-
-        &__count {
-          margin-right: 5px;
-          color: var(dark-100);
-          font-size: 19px;
-          font-weight: 700;
-        }
-
-        &__unit {
-          color: var(--secondary-color);
-          font-size: 19px;
-          font-weight: 500;
-        }
-      }
-    }
-
-    &__icon {
-      width: 25px;
-      padding: 0;
-      margin-right: 90px;
-    }
-
-    &__num__box__count {
-      width: 120px;
-    }
-  }
+  height: 100%;
+  margin: 0 -1px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
 
   &__reply-list {
-    border-top: 1px solid var(--border);
-  }
-}
+    height: 45vh;
 
-.tweet-list__tweet {
-  &__title {
-    margin-bottom: 6px;
+    &__tweet {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
 
-    &__name {
-      margin-right: 8px;
-      font-size: 16px;
-      font-weight: 700;
+      &__avatar {
+        width: 50px;
+        height: 50px;
+        margin: 16px 8px 0 24px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      &__text {
+        margin-top: 16px;
+        width: 84%;
+
+        &__reply {
+          margin-bottom: 3px;
+        }
+
+        .reply-list__tweet {
+          &__title {
+            margin-bottom: 6px;
+
+            &__account,
+            &__createdAt,
+            &__separator {
+              padding-top: 1px;
+              color: var(--secondary-color);
+              font-size: 14px;
+            }
+
+            &__separator {
+              padding: 4px 0;
+            }
+
+            &__name {
+              margin-right: 12px;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+
+          &__reply {
+            margin: 0 5px 0 0;
+            color: var(--secondary-color);
+            font-size: 14px;
+            line-height: 2;
+          }
+
+          &__reply-to {
+            color: var(--brand-color);
+            font-size: 14px;
+          }
+        }
+        a {
+          text-decoration: none;
+        }
+      }
     }
-  }
-
-  &__reply {
-    margin: 2px 5px 8px 0;
-    color: var(--secondary-color);
-    font-size: 14px;
-  }
-
-  &__reply-to {
-    color: var(--brand-color);
-    font-size: 14px;
   }
 }

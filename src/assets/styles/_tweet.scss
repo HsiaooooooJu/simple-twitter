@@ -18,6 +18,8 @@
       height: 50px;
       margin: 16px 10px auto 24px;
       border-radius: 50%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
     }
 
     &__span {
@@ -106,6 +108,7 @@
         height: 50px;
         margin: 16px 8px 0 24px;
         border-radius: 50%;
+        object-fit: cover;
       }
 
       &__text {
@@ -184,6 +187,7 @@
         height: 50px;
         margin-right: 8px;
         border-radius: 50%;
+        object-fit: cover;
       }
 
       &__box {

@@ -29,7 +29,6 @@
           :user="user"
           @close="showModal = false"
         />
-        <!-- @after-submit="handleAfterSubmit"  -->
 
         <div
           class="info__container__user__btn-panel d-flex justify-content-between"

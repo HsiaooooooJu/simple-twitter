@@ -147,6 +147,7 @@ import { Toast } from '../utils/helpers'
 import ReplyModal from '../components/ReplyModal.vue'
 import { mapState } from 'vuex'
 import Spinner from '../components/Spinner.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'HomeTweet',
@@ -362,18 +363,33 @@ export default {
       try {
         this.isProcessing = true
 
+        const result = await Swal.fire({
+          icon: 'warning',
+          title: '會一併刪除該則推文的回覆，且無法復原，確認要刪除？',
+          showCancelButton: true,
+          cancelButtonColor: '#fc5a5a',
+          confirmButtonColor: '#50b5ff',
+          confirmButtonText: '是'
+        })
+
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: 'success',
+            title: '成功刪除推文'
+          })
+        } else {
+          this.isProcessing = false
+          return false
+        }
+
         const { data } = await tweetsAPI.delete({ id })
 
         if (data.status === 'error') {
           throw new Error(data.message)
         }
 
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除推文'
-        })
+        this.tweets = this.tweets.filter((tweet) => tweet.id !== id)
 
-        this.fetchTweets()
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
@@ -389,14 +405,6 @@ export default {
   },
   computed: {
     ...mapState(['currentUser', 'renderTweet'])
-  },
-  watch: {
-    renderTweet: {
-      handler: function () {
-        this.fetchTweets()
-      },
-      deep: true
-    }
   }
 }
 </script>

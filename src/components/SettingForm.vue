@@ -81,7 +81,6 @@
           id="password"
           placeholder="請輸入密碼"
           type="password"
-          required
           @keydown.space.prevent
         />
       </div>
@@ -92,7 +91,6 @@
           id="checkPassword"
           placeholder="請再次輸入密碼"
           type="password"
-          required
           @keydown.space.prevent
         />
       </div>

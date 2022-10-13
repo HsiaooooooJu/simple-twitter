@@ -40,7 +40,7 @@ import UserTweet from '../components/UserTweet.vue'
 
 export default {
   name: 'UserAction',
-  components: { UserLike, UserTweet, UserReply },
+  components: { UserTweet, UserLike, UserReply },
   data() {
     return {
       tabType: 1
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     toggleTab(tab) {
-      if (tab === 'tweet') {
+      if (tab !== 'reply' && tab !== 'like') {
         this.tabType = 1
       } else if (tab === 'reply') {
         this.tabType = 2
