@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <Spinner v-if="isLoading" />
+  <div v-else>
     <div
       v-if="repliedTweets.length === 0"
       class="home-tweet__container__tweet-list__blank"
     >
       目前沒有回覆
     </div>
-    <Spinner v-else-if="isLoading" />
     <div v-else class="user-reply__container d-flex flex-column">
       <div class="user-reply__container__reply-list scrollbar">
         <div
@@ -61,9 +61,11 @@
               class="user-reply__container__reply-list__tweet__text__reply d-flex"
             >
               <span class="reply-list__tweet__reply">回覆</span>
-              <span class="reply-list__tweet__reply-to">{{
-                repliedTweet.Tweet.User.account | atAccount
-              }}</span>
+                <router-link :to="{ name: 'profile', params: { id: repliedTweet.Tweet.User.id }}">
+                  <span class="reply-list__tweet__reply-to">{{
+                    repliedTweet.Tweet.User.account | atAccount
+                  }}</span>
+                </router-link>
             </div>
 
             <div
@@ -89,6 +91,7 @@ import {
   atAccountFilter
 } from '../utils/mixins'
 import Spinner from '../components/Spinner.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'UserReply',
@@ -109,9 +112,11 @@ export default {
     async fetchRepliedTweets(id) {
       try {
         this.isLoading = true
+        
         const { data } = await usersAPI.get.replied({ id })
         this.repliedTweets = data
         this.isLoading = false
+
       } catch (error) {
         this.isProcessing = false
         console.log(error)
@@ -125,21 +130,34 @@ export default {
       try {
         this.isProcessing = true
 
+        const result = await Swal.fire({
+          icon: 'warning',
+          title: '刪除無法復原，確認要刪除？',
+          showCancelButton: true,
+          cancelButtonColor: '#fc5a5a',
+          confirmButtonColor: '#50b5ff',
+          confirmButtonText: '是'
+        })
+
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: 'success',
+            title: '成功刪除推文'
+          })
+        } else {
+          this.isProcessing = false
+          return false
+        }
+
         const { data } = await tweetsAPI.deleteReply({ tweet_id, id })
 
         if (data.status === 'error') {
           throw new Error(data.message)
         }
 
-        this.$emit('after-delete-reply', id)
-
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除回覆'
-        })
-
-        this.$parent.fetchTweetReplies(tweet_id)
-        this.$parent.fetchTweet(tweet_id)
+        this.repliedTweets = this.repliedTweets.filter(
+          (reply) => reply.id !== id
+        )
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

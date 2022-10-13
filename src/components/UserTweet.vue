@@ -1,10 +1,13 @@
 <template>
-  <div v-if="tweets.length === 0" class="home-tweet__container__tweet-list__blank">
-    目前沒有推文
-  </div>
+  <Spinner v-if="isLoading" />
   <div v-else class="user-tweet__container">
     <div class="user-tweet__container__tweet-list scrollbar">
-      <Spinner v-if="isLoading" />
+      <div
+        v-if="tweets.length === 0"
+        class="home-tweet__container__tweet-list__blank"
+      >
+        目前沒有推文
+      </div>
       <div
         v-else
         v-for="tweet in tweets"
@@ -118,6 +121,7 @@ import { Toast } from '../utils/helpers'
 import ReplyModal from '../components/ReplyModal.vue'
 import { mapState } from 'vuex'
 import Spinner from '../components/Spinner.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'UserTweet',
@@ -221,6 +225,7 @@ export default {
           } else {
             return {
               ...tweet,
+              likeCount: tweet.likeCount + 1,
               isLiked: true
             }
           }
@@ -256,6 +261,7 @@ export default {
           } else {
             return {
               ...tweet,
+              likeCount: tweet.likeCount - 1,
               isLiked: false
             }
           }
@@ -282,23 +288,36 @@ export default {
       try {
         this.isProcessing = true
 
+        const result = await Swal.fire({
+          icon: 'warning',
+          title: '會一併刪除該則推文的回覆，且無法復原，確認要刪除？',
+          showCancelButton: true,
+          cancelButtonColor: '#fc5a5a',
+          confirmButtonColor: '#50b5ff',
+          confirmButtonText: '是'
+        })
+
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: 'success',
+            title: '成功刪除推文'
+          })
+        } else {
+          this.isProcessing = false
+          return false
+        }
+
         const { data } = await tweetsAPI.delete({ id })
 
         if (data.status === 'error') {
           throw new Error(data.message)
         }
 
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除推文'
-        })
-
+        this.tweets = this.tweets.filter((tweet) => tweet.id !== id)
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
-
         console.log(error)
-
         Toast.fire({
           icon: 'error',
           title: '無法刪除推文，請稍後再試'

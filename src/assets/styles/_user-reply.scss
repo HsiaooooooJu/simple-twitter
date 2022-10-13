@@ -7,15 +7,9 @@
   &__reply-list {
     height: 45vh;
 
-    &__blank {
-      margin: 24px auto;
-      text-align: center;
-    }
-
     &__tweet {
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
-      // height: 135px;
 
       &__avatar {
         width: 50px;
@@ -29,9 +23,13 @@
         margin-top: 16px;
         width: 84%;
 
+        &__reply {
+          margin-bottom: 3px;
+        }
+
         .reply-list__tweet {
           &__title {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
 
             &__account,
             &__createdAt,
@@ -53,15 +51,19 @@
           }
 
           &__reply {
-            margin: 2px 5px 8px 0;
+            margin: 0 5px 0 0;
             color: var(--secondary-color);
             font-size: 14px;
+            line-height: 2;
           }
 
           &__reply-to {
             color: var(--brand-color);
             font-size: 14px;
           }
+        }
+        a {
+          text-decoration: none;
         }
       }
     }
