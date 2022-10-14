@@ -177,7 +177,7 @@ export default {
       followers: [],
       followings: [],
       isProcessing: false,
-      isLoading: false
+      isLoading: true
     }
   },
   created() {
@@ -261,8 +261,6 @@ export default {
     },
     async fetchFollowers(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.followers({ id })
 
         if (data.status === 'error') {
@@ -291,8 +289,6 @@ export default {
     },
     async fetchFollowings(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.followings({ id })
 
         if (data.status === 'error') {
@@ -355,7 +351,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '追蹤成功 !'
+          title: '追蹤成功！'
         })
 
         const { id } = this.$route.params
@@ -411,7 +407,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '取消追蹤成功 !'
+          title: '取消追蹤成功！'
         })
 
         const { id } = this.$route.params

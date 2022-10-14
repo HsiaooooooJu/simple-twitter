@@ -62,8 +62,6 @@ export default {
   methods: {
     async fetchUsers(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.profile({ id })
 
         if (data.status === 'error') {
@@ -87,18 +85,12 @@ export default {
     },
     async fetchFollowers(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.followers({ id })
 
         this.isFollowed = data.some((item) => {
           return this.currentUser.id === item.followerId
         })
-
-        this.isLoading = false
       } catch (error) {
-        this.isLoading = false
-
         console.log(error)
 
         Toast.fire({
