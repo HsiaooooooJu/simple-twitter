@@ -8,15 +8,12 @@
         @after-delete-reply="afterDeleteReply"
         @after-like-tweet="afterLikeTweet"
         @after-unlike-tweet="afterUnlikeTweet"
-        class="col-7"
       />
-      <PopularUsers class="col-3" />
     </div>
   </div>
 </template>
 
 <script>
-import PopularUsers from '../components/PopularUsers.vue'
 import TweetDetail from '../components/TweetDetail.vue'
 import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
@@ -24,7 +21,7 @@ import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Home',
-  components: { PopularUsers, TweetDetail },
+  components: { TweetDetail },
   data() {
     return {
       tweet: {

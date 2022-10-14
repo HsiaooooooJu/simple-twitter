@@ -2,7 +2,7 @@
   <div class="user__follow__container">
     <div class="user__follow__container__header d-flex">
       <div
-        class="user__follow__container__header__back"
+        class="user__follow__container__header__back cursor-pointer"
         @click="$router.back()"
       >
         <img src="../assets/images/back.svg" alt="" />

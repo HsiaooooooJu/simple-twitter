@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="profile__container row flex-nowrap">
-      <div class="profile__container__main col-7">
+      <div class="profile__container__main">
         <Spinner v-if="isLoading" />
         <template v-else>
           <Info
@@ -12,13 +12,11 @@
           <UserAction />
         </template>
       </div>
-      <PopularUsers class="col-3" />
     </div>
   </div>
 </template>
 
 <script>
-import PopularUsers from '../components/PopularUsers.vue'
 import Info from '../components/Info.vue'
 import UserAction from '../components/UserAction.vue'
 import Spinner from '../components/Spinner.vue'
@@ -28,7 +26,7 @@ import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Profile',
-  components: { Info, UserAction, PopularUsers, Spinner },
+  components: { Info, UserAction, Spinner },
   data() {
     return {
       user: {
