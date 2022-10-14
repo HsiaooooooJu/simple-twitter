@@ -63,7 +63,7 @@
               <span class="reply-list__tweet__reply">回覆</span>
               <router-link
                 :to="{
-                  name: 'profile',
+                  name: 'tweets',
                   params: { id: repliedTweet.Tweet.User.id }
                 }"
               >

@@ -170,6 +170,7 @@ export default {
         this.$router.push('/users/signin')
       } catch (error) {
         this.isProcessing = false
+        console.log(error)
         const e = error.response.data.message
         if (e === 'Account already exists.') {
           Toast.fire({

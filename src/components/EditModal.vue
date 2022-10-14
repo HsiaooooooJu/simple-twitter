@@ -215,10 +215,18 @@ export default {
       } catch (error) {
         this.isProcessing = false
         console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法更新資料，請稍後再試'
-        })
+        const e = error.response.data.message
+        if( e === 'Please upload an image.') {
+          Toast.fire({
+            icon: 'error',
+            title: '請確認上傳檔案格式是圖片'
+          })
+        } else {
+          Toast.fire({
+            icon: 'error',
+            title: '無法更新資料，請稍後再試'
+          })
+        }
       }
     },
     initializeCover() {
