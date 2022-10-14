@@ -290,9 +290,10 @@ export default {
 
         const result = await Swal.fire({
           icon: 'warning',
-          title: '會一併刪除該則推文的回覆，且無法復原，確認要刪除？',
+          title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
           cancelButtonColor: '#fc5a5a',
+          cancelButtonText: '取消',
           confirmButtonColor: '#50b5ff',
           confirmButtonText: '是'
         })
@@ -313,13 +314,9 @@ export default {
           throw new Error(data.message)
         }
 
-        Toast.fire({
-          icon: 'success',
-          title: '成功刪除推文'
-        })
-
         this.tweets = this.tweets.filter((tweet) => tweet.id !== id)
         this.$store.commit('triggerUserTweetsRender')
+
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

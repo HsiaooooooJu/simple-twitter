@@ -47,7 +47,7 @@
                 </div>
               </div>
               <button
-                v-show="currentUser"
+                v-if="currentUser.id === repliedTweet.User.id"
                 class="user-tweet__container__tweet-list__tweet__delete"
                 :disabled="isProcessing"
                 @click.prevent.stop="
@@ -61,11 +61,16 @@
               class="user-reply__container__reply-list__tweet__text__reply d-flex"
             >
               <span class="reply-list__tweet__reply">回覆</span>
-                <router-link :to="{ name: 'profile', params: { id: repliedTweet.Tweet.User.id }}">
-                  <span class="reply-list__tweet__reply-to">{{
-                    repliedTweet.Tweet.User.account | atAccount
-                  }}</span>
-                </router-link>
+              <router-link
+                :to="{
+                  name: 'profile',
+                  params: { id: repliedTweet.Tweet.User.id }
+                }"
+              >
+                <span class="reply-list__tweet__reply-to">{{
+                  repliedTweet.Tweet.User.account | atAccount
+                }}</span>
+              </router-link>
             </div>
 
             <div
@@ -132,9 +137,10 @@ export default {
 
         const result = await Swal.fire({
           icon: 'warning',
-          title: '刪除無法復原，確認要刪除？',
+          title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
           cancelButtonColor: '#fc5a5a',
+          cancelButtonText: '取消',
           confirmButtonColor: '#50b5ff',
           confirmButtonText: '是'
         })
@@ -142,7 +148,7 @@ export default {
         if (result.isConfirmed) {
           Toast.fire({
             icon: 'success',
-            title: '成功刪除推文'
+            title: '成功刪除回覆'
           })
         } else {
           this.isProcessing = false

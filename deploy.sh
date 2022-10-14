@@ -14,13 +14,13 @@ cd dist
 
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m 'feat: deploy'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f https://github.com/<USERNAME>/<USERNAME>.GitHub.io.git main
 
 # if you are deploying to https://<USERNAME>.Github.io/<REPO>
-# git push -f https://github.com/<USERNAME>/<REPO>.git main:gh-pages
+# git push -f https://github.com/<USERNAME>/<REPO>.git master:gh-pages
 git push -f https://github.com/HsiaooooooJu/simple-twitter.git master:gh-pages
 
 cd -

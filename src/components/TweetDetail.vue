@@ -136,9 +136,13 @@
             class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
           >
             <span class="tweet-list__tweet__reply">回覆</span>
-            <span class="tweet-list__tweet__reply-to">{{
-              reply.Tweet.User.account | atAccount
-            }}</span>
+            <router-link
+              :to="{ name: 'profile', params: { id: reply.Tweet.User.id } }"
+            >
+              <span class="tweet-list__tweet__reply-to">{{
+                reply.Tweet.User.account | atAccount
+              }}</span>
+            </router-link>
           </div>
 
           <div
@@ -299,9 +303,10 @@ export default {
 
         const result = await Swal.fire({
           icon: 'warning',
-          title: '刪除無法復原，確認要刪除？',
+          title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
           cancelButtonColor: '#fc5a5a',
+          cancelButtonText: '取消',
           confirmButtonColor: '#50b5ff',
           confirmButtonText: '是'
         })
