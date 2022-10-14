@@ -194,21 +194,27 @@ export default {
           })
           return
         }
+
         const form = e.target
         const formData = new FormData(form)
 
         this.isProcessing = true
+
         const { data } = await usersAPI.update({
           id: this.profile.id,
           formData
         })
+
         if (data.status === 'error') {
           throw new Error(data.message)
         }
+
         Toast.fire({
           icon: 'success',
           title: '已更新個人資料'
         })
+
+        this.$store.dispatch('fetchCurrentUser')
         this.$emit('close')
         this.$parent.$parent.fetchUsers(this.profile.id)
         this.isProcessing = false
