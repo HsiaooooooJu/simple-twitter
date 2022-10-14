@@ -130,7 +130,12 @@ export default {
   methods: {
     logout() {
       this.$store.commit('revokeAuthentication')
-      this.$router.push('/users/signin')
+
+      if (this.$route.name === ('admin-tweets' || 'admin-users')) {
+        this.$router.push('/admin/signin')
+      } else {
+        this.$router.push('/users/signin')
+      }
     }
   },
   computed: {

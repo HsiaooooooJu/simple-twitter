@@ -103,9 +103,9 @@
               class="info__container__user__profile__follow__num none"
               >{{ user.followerCount }} 位</router-link
             >
-              <span class="info__container__user__profile__follow__unit">
-                跟隨者</span
-              >
+            <span class="info__container__user__profile__follow__unit">
+              跟隨者</span
+            >
           </div>
         </div>
       </div>
@@ -191,10 +191,11 @@ export default {
           throw new Error(data.message)
         }
         this.isFollowed = true
+        this.user.followerCount += 1
 
         Toast.fire({
           icon: 'success',
-          title: '成功追蹤！'
+          title: '追蹤成功！'
         })
 
         this.$store.commit('triggerPopularUsersRender')
@@ -218,10 +219,11 @@ export default {
           throw new Error(data.message)
         }
         this.isFollowed = false
+        this.user.followerCount -= 1
 
         Toast.fire({
           icon: 'success',
-          title: '成功取消追蹤 Ｔ＿Ｔ'
+          title: '取消追蹤成功！'
         })
 
         this.$store.commit('triggerPopularUsersRender')

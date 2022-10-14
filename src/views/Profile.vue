@@ -48,19 +48,20 @@ export default {
   },
   created() {
     const { id } = this.$route.params
+
     this.fetchUsers(id)
     this.fetchFollowers(id)
   },
   beforeRouteUpdate(to, from, next) {
     const { id } = to.params
+
     this.fetchUsers(id)
+    this.fetchFollowers(id)
     next()
   },
   methods: {
     async fetchUsers(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.profile({ id })
 
         if (data.status === 'error') {
@@ -73,7 +74,9 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取得使用者資料'
@@ -82,18 +85,14 @@ export default {
     },
     async fetchFollowers(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.followers({ id })
 
         this.isFollowed = data.some((item) => {
           return this.currentUser.id === item.followerId
         })
-
-        this.isLoading = false
       } catch (error) {
-        this.isLoading = false
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取得跟隨您的使用者資料'
@@ -108,6 +107,7 @@ export default {
     renderProfile: function () {
       if (this.currentUser.id !== this.user.id) {
         const { id } = this.$route.params
+
         this.fetchFollowers(id)
         this.fetchUsers(id)
       }

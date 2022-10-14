@@ -93,8 +93,13 @@ export default {
         })
 
         this.$emit('close-modal')
-        this.$store.commit('triggerRender')
-        this.$router.push({ name: 'home' })
+
+        if (this.$route.name === 'home') {
+          this.$store.commit('triggerRender')
+        } else {
+          this.$router.push({ name: 'home' })
+        }
+
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

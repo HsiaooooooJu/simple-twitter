@@ -90,7 +90,7 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.password = ''
-        this.isProcessing = false        
+        this.isProcessing = false
         Toast.fire({
           icon: 'error',
           title: '帳號或密碼錯誤'

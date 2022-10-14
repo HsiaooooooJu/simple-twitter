@@ -109,6 +109,8 @@
 <script>
 import usersAPI from '../apis/users'
 import tweetsAPI from '../apis/tweets'
+import Spinner from './Spinner.vue'
+import ReplyModal from './ReplyModal.vue'
 import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
 import {
@@ -116,8 +118,7 @@ import {
   atAccountFilter,
   fromNowFilter
 } from '../utils/mixins'
-import Spinner from './Spinner.vue'
-import ReplyModal from './ReplyModal.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'UserLike',
@@ -210,7 +211,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '成功按讚'
+          title: '按讚成功！你真是個好人～'
         })
 
         this.isProcessing = false
@@ -257,7 +258,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '成功取消讚'
+          title: '不要取消嘛～～～'
         })
 
         this.isProcessing = false
@@ -299,6 +300,21 @@ export default {
     async deleteTweet(id) {
       try {
         this.isProcessing = true
+
+        const result = await Swal.fire({
+          icon: 'warning',
+          title: '刪除無法復原，確認刪除？',
+          showCancelButton: true,
+          cancelButtonColor: '#50b5ff',
+          cancelButtonText: '取消',
+          confirmButtonColor: '#fc5a5a',
+          confirmButtonText: '確認'
+        })
+
+        if (!result.isConfirmed) {
+          this.isProcessing = false
+          return
+        }
 
         const { data } = await tweetsAPI.delete({ id })
 

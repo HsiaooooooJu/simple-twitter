@@ -3,6 +3,7 @@
     <div class="popular__users__container__title">推薦跟隨</div>
     <Spinner v-if="isLoading" />
     <div
+      v-else
       v-for="topFollower in topFollowers"
       :key="topFollower.id"
       class="popular__users__container__top__user d-flex"
@@ -71,7 +72,7 @@ export default {
   data() {
     return {
       topFollowers: [],
-      isLoading: false,
+      isLoading: true,
       isProcessing: false
     }
   },
@@ -81,8 +82,6 @@ export default {
   methods: {
     async fetchTopFollowers() {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.topFollowers()
 
         if (data.status === 'error') {
@@ -124,7 +123,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '追蹤成功 !'
+          title: '追蹤成功！'
         })
 
         this.$store.commit('triggerProfileRender')
@@ -164,7 +163,7 @@ export default {
 
         Toast.fire({
           icon: 'success',
-          title: '取消追蹤成功 !'
+          title: '取消追蹤成功！'
         })
 
         this.$store.commit('triggerProfileRender')
