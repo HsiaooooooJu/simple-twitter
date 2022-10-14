@@ -117,11 +117,10 @@ export default {
     async fetchRepliedTweets(id) {
       try {
         this.isLoading = true
-        
+
         const { data } = await usersAPI.get.replied({ id })
         this.repliedTweets = data
         this.isLoading = false
-
       } catch (error) {
         this.isProcessing = false
         console.log(error)
