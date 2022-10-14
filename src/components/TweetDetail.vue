@@ -305,20 +305,15 @@ export default {
           icon: 'warning',
           title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
-          cancelButtonColor: '#fc5a5a',
+          cancelButtonColor: '#50b5ff',
           cancelButtonText: '取消',
-          confirmButtonColor: '#50b5ff',
+          confirmButtonColor: '#fc5a5a',
           confirmButtonText: '確認'
         })
 
-        if (result.isConfirmed) {
-          Toast.fire({
-            icon: 'success',
-            title: '成功刪除推文'
-          })
-        } else {
+        if (!result.isConfirmed) {
           this.isProcessing = false
-          return false
+          return
         }
 
         const { data } = await tweetsAPI.deleteReply({ tweet_id, id })
@@ -327,14 +322,12 @@ export default {
           throw new Error(data.message)
         }
 
-        this.$emit('after-delete-reply', id)
-
         Toast.fire({
           icon: 'success',
           title: '成功刪除回覆'
         })
 
-        this.$parent.fetchTweetReplies(tweet_id)
+        this.$emit('after-delete-reply', id)
         this.$parent.fetchTweet(tweet_id)
         this.isProcessing = false
       } catch (error) {

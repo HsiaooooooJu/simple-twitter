@@ -292,20 +292,15 @@ export default {
           icon: 'warning',
           title: '刪除無法復原，確認刪除？',
           showCancelButton: true,
-          cancelButtonColor: '#fc5a5a',
+          cancelButtonColor: '#50b5ff',
           cancelButtonText: '取消',
-          confirmButtonColor: '#50b5ff',
+          confirmButtonColor: '#fc5a5a',
           confirmButtonText: '確認'
         })
 
-        if (result.isConfirmed) {
-          Toast.fire({
-            icon: 'success',
-            title: '成功刪除推文'
-          })
-        } else {
+        if (!result.isConfirmed) {
           this.isProcessing = false
-          return false
+          return
         }
 
         const { data } = await tweetsAPI.delete({ id })
@@ -315,12 +310,19 @@ export default {
         }
 
         this.tweets = this.tweets.filter((tweet) => tweet.id !== id)
-        this.$store.commit('triggerUserTweetsRender')
 
+        Toast.fire({
+          icon: 'success',
+          title: '成功刪除推文'
+        })
+
+        this.$store.commit('triggerUserTweetsRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法刪除推文，請稍後再試'
