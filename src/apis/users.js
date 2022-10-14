@@ -6,8 +6,8 @@ export default {
   },
 
   // 使用者編輯自己的 profile
-  update({ userId, formData }) {
-    return apiHelper.put(`/users/${userId}`), formData
+  update({ id, formData }) {
+    return apiHelper.put(`/users/${id}`, formData)
   },
 
   // 顯示跟隨者數量排列前 10 的使用者
@@ -28,12 +28,12 @@ export default {
 
   // 對指定推文按 like
   like({ id }) {
-    return apiHelper.post(`/tweets/${id}/like`, null)
+    return apiHelper.post(`/tweets/${id}/like`)
   },
 
   // 對指定推文按 like
   unlike({ id }) {
-    return apiHelper.post(`/tweets/${id}/unlike`, null)
+    return apiHelper.post(`/tweets/${id}/unlike`)
   },
 
   get: {

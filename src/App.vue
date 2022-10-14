@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <div class="app__container row flex-nowrap">
       <Sidebar
-        v-if="isAuthenticated && this.$route.name !== 'not-found'"
+        v-if="isAuthenticated && $route.name !== 'not-found'"
         class="col-2"
       />
       <router-view />

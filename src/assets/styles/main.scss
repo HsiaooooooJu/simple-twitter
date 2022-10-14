@@ -11,10 +11,14 @@
 @import './sidebar';
 @import './tweet';
 @import './popular-users';
-@import './profile';
+@import './info';
 @import './nav-tab';
-@import './modal';
+@import './tweet-reply-modal';
+@import './edit-modal';
 @import './follow';
+@import './user-tweet';
+@import './user-reply';
+@import './user-like';
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');

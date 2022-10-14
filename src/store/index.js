@@ -19,7 +19,9 @@ export default new Vuex.Store({
     token: '',
     renderTweet: false,
     renderPopularUsers: false,
-    renderFollow: false
+    renderFollow: false,
+    renderProfile: false,
+    renderUserTweets: false
   },
   mutations: {
     setCurrentUser(state, currentUser) {
@@ -44,6 +46,12 @@ export default new Vuex.Store({
     },
     triggerFollowRender(state) {
       state.renderFollow = !state.renderFollow
+    },
+    triggerProfileRender(state) {
+      state.renderProfile = !state.renderProfile
+    },
+    triggerUserTweetsRender(state) {
+      state.renderUserTweets = !state.renderUserTweets
     }
   },
   actions: {

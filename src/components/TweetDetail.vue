@@ -15,7 +15,7 @@
 
     <div class="home-tweet__container__tweet d-flex flex-column">
       <div class="home-tweet__container__tweet__title d-flex">
-        <router-link :to="{ name: 'profile', params: { id: tweet.user.id } }"
+        <router-link :to="{ name: 'tweets', params: { id: tweet.user.id } }"
           ><img
             :src="tweet.user.avatar | emptyImage"
             alt=""
@@ -136,9 +136,13 @@
             class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
           >
             <span class="tweet-list__tweet__reply">回覆</span>
-            <span class="tweet-list__tweet__reply-to">{{
-              reply.Tweet.User.account | atAccount
-            }}</span>
+            <router-link
+              :to="{ name: 'profile', params: { id: reply.Tweet.User.id } }"
+            >
+              <span class="tweet-list__tweet__reply-to">{{
+                reply.Tweet.User.account | atAccount
+              }}</span>
+            </router-link>
           </div>
 
           <div
@@ -171,6 +175,7 @@ import {
 import Spinner from '../components/Spinner.vue'
 import ReplyModal from '../components/ReplyModal.vue'
 import { Toast } from '../utils/helpers'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'TweetDetail',
@@ -295,6 +300,26 @@ export default {
     async deleteReply(tweet_id, id) {
       try {
         this.isProcessing = true
+
+        const result = await Swal.fire({
+          icon: 'warning',
+          title: '刪除無法復原，確認刪除？',
+          showCancelButton: true,
+          cancelButtonColor: '#fc5a5a',
+          cancelButtonText: '取消',
+          confirmButtonColor: '#50b5ff',
+          confirmButtonText: '確認'
+        })
+
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: 'success',
+            title: '成功刪除推文'
+          })
+        } else {
+          this.isProcessing = false
+          return false
+        }
 
         const { data } = await tweetsAPI.deleteReply({ tweet_id, id })
 

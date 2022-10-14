@@ -1,0 +1,93 @@
+.user-reply__container {
+  height: 100%;
+  margin: 0 -1px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+
+  &__reply-list {
+    height: 45vh;
+
+    &__tweet {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+
+      &__avatar {
+        width: 50px;
+        height: 50px;
+        margin: 16px 8px 0 24px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      &__text {
+        margin-top: 16px;
+        width: 84%;
+
+        &__reply {
+          margin-bottom: 3px;
+        }
+
+        .reply-list__tweet {
+          &__title {
+            margin-bottom: 6px;
+
+            &__account,
+            &__createdAt,
+            &__separator {
+              padding-top: 1px;
+              color: var(--secondary-color);
+              font-size: 14px;
+            }
+
+            &__separator {
+              padding: 4px 0;
+            }
+
+            &__name {
+              margin-right: 12px;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+
+          &__reply {
+            margin: 0 5px 0 0;
+            color: var(--secondary-color);
+            font-size: 14px;
+            line-height: 2;
+          }
+
+          &__reply-to {
+            color: var(--brand-color);
+            font-size: 14px;
+          }
+        }
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+.tweet-list__tweet {
+  &__title {
+    margin-bottom: 6px;
+
+    &__name {
+      margin-right: 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  &__reply {
+    margin: 2px 5px 8px 0;
+    color: var(--secondary-color);
+    font-size: 14px;
+  }
+
+  &__reply-to {
+    color: var(--brand-color);
+    font-size: 14px;
+  }
+}

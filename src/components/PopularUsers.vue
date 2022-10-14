@@ -127,6 +127,7 @@ export default {
           title: '追蹤成功 !'
         })
 
+        this.$store.commit('triggerProfileRender')
         this.$store.commit('triggerFollowRender')
         this.isProcessing = false
       } catch (error) {
@@ -166,6 +167,7 @@ export default {
           title: '取消追蹤成功 !'
         })
 
+        this.$store.commit('triggerProfileRender')
         this.$store.commit('triggerFollowRender')
         this.isProcessing = false
       } catch (error) {

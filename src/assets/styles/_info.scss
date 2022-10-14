@@ -40,17 +40,13 @@
     }
 
     &__btn-panel {
-      position: relative;
       width: 100%;
-      padding: 16px;
+      padding: 8px 16px 4px 16px;
 
       &__img {
-        position: absolute;
-        left: 16px;
-        top: 0%;
-        transform: translateY(-50%);
         width: 136px;
         height: 136px;
+        margin-top: calc(-136px / 2 - 18px);
 
         > img {
           width: 100%;
@@ -64,6 +60,7 @@
       }
 
       &__btn {
+        padding-top: 8px;
         &__self,
         &__other-follow {
           height: 40px;
@@ -95,10 +92,11 @@
     }
 
     &__profile {
-      padding: 8px 16px;
+      padding: 0 16px 8px;
 
       &__name {
         font-weight: 700;
+        margin-bottom: 3px;
       }
 
       &__account {
@@ -117,8 +115,16 @@
       &__follow {
         font-size: 14px;
 
+        > a {
+          text-decoration: none;
+        }
+
         &__num {
           color: var(--dark-100);
+
+          &:hover {
+            color: var(--brand-color);
+          }
         }
 
         &__unit {
