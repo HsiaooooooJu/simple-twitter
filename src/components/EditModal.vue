@@ -216,7 +216,7 @@ export default {
         this.isProcessing = false
         console.log(error)
         const e = error.response.data.message
-        if( e === 'Please upload an image.') {
+        if (e === 'Please upload an image.') {
           Toast.fire({
             icon: 'error',
             title: '請確認上傳檔案格式是圖片'

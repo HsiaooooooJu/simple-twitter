@@ -1,11 +1,8 @@
 .user-reply__container {
   height: 45vh;
   margin: 0 -1px;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
 
   &__reply-list {
-
     &__tweet {
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
