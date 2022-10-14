@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="admin__container row flex-nowrap">
-      <AdminTweetCard class="col-10" />
+      <AdminTweetCard />
     </div>
   </div>
 </template>

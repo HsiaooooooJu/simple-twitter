@@ -1,8 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <div class="settings__container row">
-      <SettingForm class="col-7" />
-      <div class="col-3"></div>
+      <SettingForm />
     </div>
   </div>
 </template>
