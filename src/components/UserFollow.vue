@@ -192,6 +192,7 @@ export default {
 
     this.fetchFollowers(id)
     this.fetchFollowings(id)
+    this.fetchUserName(id)
     this.fetchUserTweets(id)
   },
   beforeRouteUpdate(to, from, next) {
@@ -206,6 +207,7 @@ export default {
 
     this.fetchFollowers(id)
     this.fetchFollowings(id)
+    this.fetchUserName(id)
     this.fetchUserTweets(id)
 
     next()
@@ -221,7 +223,6 @@ export default {
           throw new Error(data.message)
         }
 
-        this.userName = data[0].User.name
         this.userTweetCount = data.length
         this.isLoading = false
       } catch (error) {
@@ -232,6 +233,29 @@ export default {
         Toast.fire({
           icon: 'error',
           title: '無法取得推文資料，請稍後再試'
+        })
+      }
+    },
+    async fetchUserName(id) {
+      try {
+        this.isLoading = true
+
+        const { data } = await usersAPI.get.profile({ id })
+
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+
+        this.userName = data.name
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得使用者資料，請稍後再試'
         })
       }
     },

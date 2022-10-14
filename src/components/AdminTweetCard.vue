@@ -106,7 +106,7 @@ export default {
           cancelButtonColor: '#fc5a5a',
           cancelButtonText: '取消',
           confirmButtonColor: '#50b5ff',
-          confirmButtonText: '是'
+          confirmButtonText: '確認'
         })
 
         if (result.isConfirmed) {
