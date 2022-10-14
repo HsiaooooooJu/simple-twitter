@@ -1,11 +1,10 @@
 .user-reply__container {
-  height: 100%;
+  height: 45vh;
   margin: 0 -1px;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
 
   &__reply-list {
-    height: 45vh;
 
     &__tweet {
       padding-bottom: 18px;
@@ -40,7 +39,7 @@
             }
 
             &__separator {
-              padding: 4px 0;
+              padding: 3px;
             }
 
             &__name {

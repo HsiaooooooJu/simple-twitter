@@ -71,6 +71,10 @@
         filter: brightness(100);
       }
 
+      &__add:hover {
+        cursor: pointer;
+      }
+
       &__close > img {
         width: 15px;
         padding: 0 0 2px 0;
@@ -93,6 +97,10 @@
     border: 4px solid var(--dark-0);
     border-radius: 50%;
 
+    &__avatar:hover {
+        cursor: pointer;
+      }
+
     &__img {
       width: 100%;
       height: 100%;
@@ -106,6 +114,14 @@
       width: 22px;
       padding: 0;
       filter: brightness(100);
+    }
+
+    &__img:hover {
+      cursor: pointer;
+    }
+    
+    &__icon:hover {
+      cursor: pointer;
     }
   }
 
