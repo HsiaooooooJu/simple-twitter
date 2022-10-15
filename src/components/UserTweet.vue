@@ -331,10 +331,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser', 'renderTweet'])
+    ...mapState(['currentUser', 'renderUserAction'])
   },
   watch: {
-    renderTweet: {
+    renderUserAction: {
       handler: function () {
         const { id } = this.$route.params
 
