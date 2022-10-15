@@ -140,9 +140,21 @@
         }
 
         &__description {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 4;
+          max-height: 10vh;
+          margin: 0 0 10px;
+          color: var(dark-100);
+          overflow: hidden;
+          overflow-wrap: break-word;
+          white-space: pre-line;
+        }
+        &__reply__description {
           margin: 0 0 10px;
           color: var(dark-100);
           overflow-wrap: break-word;
+          white-space: pre-line;
         }
 
         .tweet-list__tweet__action {
@@ -210,6 +222,7 @@
       font-size: 24px;
       font-weight: 400;
       overflow-wrap: break-word;
+      white-space: pre-line;
     }
 
     &__createdAt {

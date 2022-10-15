@@ -36,7 +36,7 @@
                 replyTweet.createdAt | fromNow
               }}</span>
             </div>
-            <div class="reply__modal__container__tweet__description">
+            <div class="reply__modal__container__tweet__description scrollbar">
               {{ replyTweet.description }}
             </div>
             <div>

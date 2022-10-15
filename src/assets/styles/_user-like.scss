@@ -18,8 +18,7 @@
   }
 
   &__text {
-    width: 84%;
-    flex: 1;
+    width: 90%;
   }
 
   &__content {
@@ -31,9 +30,19 @@
     font-weight: 700;
   }
 
+  &__delete {
+    padding: 0;
+  }
+
   &__description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    max-height: 10vh;
     margin-bottom: 8px;
+    overflow: hidden;
     overflow-wrap: break-word;
+    white-space: pre-line;
   }
 
   &__account,
