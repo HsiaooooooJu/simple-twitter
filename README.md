@@ -1,5 +1,7 @@
 # simple-twitter
 
+![Image](src/assets/images/readme.jpg)
+
 ## Demo
 
 [Simple Twitter](https://hsiaooooooju.github.io/simple-twitter/#/users/signin)
@@ -13,15 +15,17 @@
 
 ## Features
 
+### User
+
 - Sign up
 - Sign In
 - Browse tweets
 - Browse replies
 - Browse profiles
 - Browse followers & followings
-- Browse Top10 users recommended to follow 
+- Browse Top10 users recommended to follow
 - Post tweets
-- Reply to tweets 
+- Reply to tweets
 - Delete his own tweets and replies
 - Change his own account settings & profile
 - Follow & unfollow others user
@@ -31,9 +35,7 @@
 
 - Sign in
 - Browse & delete user's tweets
-- Browse user's information
-
-### User
+- Browse everyone's information
 
 ## Project setup
 
