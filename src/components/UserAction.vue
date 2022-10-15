@@ -1,34 +1,20 @@
 <template>
   <div class="user__action__container">
     <div class="nav-tab__container d-flex">
-      <div class="nav-tab__container__tab">
+      <div v-for="tab in tabs" :key="tab.id" class="nav-tab__container__tab">
         <button
           class="nav-tab__container__tab__btn"
-          :class="{ active: this.tabType === 1 }"
-          @click="toggleTab('tweet')"
+          :class="{ active: tab.id === currentTab }"
+          @click="toggleTab(tab.id)"
         >
-          推文
-        </button>
-        <button
-          class="nav-tab__container__tab__btn"
-          :class="{ active: this.tabType === 2 }"
-          @click="toggleTab('reply')"
-        >
-          回覆
-        </button>
-        <button
-          class="nav-tab__container__tab__btn"
-          :class="{ active: this.tabType === 3 }"
-          @click="toggleTab('like')"
-        >
-          喜歡的內容
+          {{ tab.title }}
         </button>
       </div>
     </div>
     <div>
-      <UserTweet v-if="this.tabType === 1" />
-      <UserReply v-if="this.tabType === 2" />
-      <UserLike v-if="this.tabType === 3" />
+      <UserTweet v-if="currentTab === 1" />
+      <UserReply v-if="currentTab === 2" />
+      <UserLike v-if="currentTab === 3" />
     </div>
   </div>
 </template>
@@ -43,17 +29,31 @@ export default {
   components: { UserTweet, UserLike, UserReply },
   data() {
     return {
-      tabType: 1
+      tabs: [
+        {
+          id: 1,
+          title: '推文'
+        },
+        {
+          id: 2,
+          title: '回覆'
+        },
+        {
+          id: 3,
+          title: '喜歡的內容'
+        }
+      ],
+      currentTab: 1
     }
   },
   methods: {
-    toggleTab(tab) {
-      if (tab !== 'reply' && tab !== 'like') {
-        this.tabType = 1
-      } else if (tab === 'reply') {
-        this.tabType = 2
-      } else if (tab === 'like') {
-        this.tabType = 3
+    toggleTab(tabId) {
+      if (tabId === 1) {
+        this.currentTab = 1
+      } else if (tabId === 2) {
+        this.currentTab = 2
+      } else if (tabId === 3) {
+        this.currentTab = 3
       }
     }
   }
