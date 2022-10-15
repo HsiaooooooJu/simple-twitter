@@ -116,7 +116,7 @@
                   {{ reply.User.name }}
                 </router-link>
                 <div class="tweet-list__tweet__title__account">
-                  {{ reply.Tweet.User.account | atAccount }}
+                  {{ reply.User.account | atAccount }}
                 </div>
                 <span class="tweet-list__tweet__title__separator">・</span>
                 <div class="tweet-list__tweet__title__createdAt">

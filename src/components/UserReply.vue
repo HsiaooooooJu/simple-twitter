@@ -14,30 +14,21 @@
           :key="repliedTweet.id"
           class="user-reply__container__reply-list__tweet d-flex"
         >
-          <router-link
-            :to="{ name: 'profile', params: { id: repliedTweet.User.id } }"
-          >
+          <div>
             <img
               :src="repliedTweet.User.avatar | emptyImage"
               class="user-reply__container__reply-list__tweet__avatar"
               alt=""
             />
-          </router-link>
-
+          </div>
           <div
             class="user-reply__container__reply-list__tweet__text d-flex flex-column"
           >
             <div class="d-flex justify-content-between">
               <div class="reply-list__tweet__title d-flex">
-                <router-link
-                  :to="{
-                    name: 'profile',
-                    params: { id: repliedTweet.User.id }
-                  }"
-                  class="reply-list__tweet__title__name none"
-                >
+                <div class="reply-list__tweet__title__name none">
                   {{ repliedTweet.User.name }}
-                </router-link>
+                </div>
                 <div class="reply-list__tweet__title__account">
                   {{ repliedTweet.User.account | atAccount }}
                 </div>
@@ -64,7 +55,7 @@
               <router-link
                 :to="{
                   name: 'tweets',
-                  params: { id: repliedTweet.Tweet.User.id }
+                  params: { id: repliedTweet.Tweet.id }
                 }"
               >
                 <span class="reply-list__tweet__reply-to">{{
