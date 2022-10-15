@@ -353,9 +353,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'renderUserAction'])
   },
   watch: {
+    renderUserAction: {
+      handler: function () {
+        const { id } = this.$route.params
+
+        this.fetchLikeTweets(id)
+      },
+      deep: true
+    },
     $route: {
       handler: function () {
         const { id } = this.$route.params

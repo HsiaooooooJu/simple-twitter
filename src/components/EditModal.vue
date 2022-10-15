@@ -214,6 +214,8 @@ export default {
           title: '已更新個人資料'
         })
 
+        this.$store.commit('triggerPopularUsersRender')
+        this.$store.commit('triggerUserActionRender')
         this.$store.dispatch('fetchCurrentUser')
         this.$emit('close')
         this.$parent.$parent.fetchUsers(this.profile.id)
