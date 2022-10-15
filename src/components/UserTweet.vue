@@ -337,6 +337,15 @@ export default {
     renderTweet: {
       handler: function () {
         const { id } = this.$route.params
+
+        this.fetchUserTweets(id)
+      },
+      deep: true
+    },
+    $route: {
+      handler: function () {
+        const { id } = this.$route.params
+
         this.fetchUserTweets(id)
       },
       deep: true

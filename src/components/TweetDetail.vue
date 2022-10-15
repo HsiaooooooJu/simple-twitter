@@ -12,143 +12,143 @@
       />
       <h4>推文</h4>
     </div>
-
-    <div class="home-tweet__container__tweet d-flex flex-column">
-      <div class="home-tweet__container__tweet__title d-flex">
-        <router-link :to="{ name: 'tweets', params: { id: tweet.user.id } }"
-          ><img
-            :src="tweet.user.avatar | emptyImage"
-            alt=""
-            class="home-tweet__container__tweet__title__img"
-          />
-        </router-link>
-        <div class="home-tweet__container__tweet__title__box">
-          <router-link
-            :to="{ name: 'profile', params: { id: tweet.user.id } }"
-            class="home-tweet__container__tweet__title__box__name none"
-          >
-            {{ tweet.user.name }}
+    <div class="scrollbar">
+      <div class="home-tweet__container__tweet d-flex flex-column">
+        <div class="home-tweet__container__tweet__title d-flex">
+          <router-link :to="{ name: 'tweets', params: { id: tweet.user.id } }"
+            ><img
+              :src="tweet.user.avatar | emptyImage"
+              alt=""
+              class="home-tweet__container__tweet__title__img"
+            />
           </router-link>
-          <div class="home-tweet__container__tweet__title__box__account">
-            {{ tweet.user.account | atAccount }}
+          <div class="home-tweet__container__tweet__title__box">
+            <router-link
+              :to="{ name: 'profile', params: { id: tweet.user.id } }"
+              class="home-tweet__container__tweet__title__box__name none"
+            >
+              {{ tweet.user.name }}
+            </router-link>
+            <div class="home-tweet__container__tweet__title__box__account">
+              {{ tweet.user.account | atAccount }}
+            </div>
           </div>
         </div>
+        <div class="home-tweet__container__tweet__description">
+          {{ tweet.description }}
+        </div>
+        <div class="home-tweet__container__tweet__createdAt">
+          {{ tweet.createdAt | time }}・{{ tweet.createdAt | date }}
+        </div>
       </div>
-      <div class="home-tweet__container__tweet__description">
-        {{ tweet.description }}
+      <div class="home-tweet__container__tweet__num d-flex">
+        <div class="home-tweet__container__tweet__num__box">
+          <span
+            class="home-tweet__container__tweet__num__box__count num-font"
+            >{{ tweet.replyCount }}</span
+          >
+          <span class="home-tweet__container__tweet__num__box__unit">回覆</span>
+        </div>
+        <div class="home-tweet__container__tweet__num__box">
+          <span
+            class="home-tweet__container__tweet__num__box__count num-font"
+            >{{ tweet.likeCount }}</span
+          >
+          <span class="home-tweet__container__tweet__num__box__unit"
+            >喜歡次數</span
+          >
+        </div>
       </div>
-      <div class="home-tweet__container__tweet__createdAt">
-        {{ tweet.createdAt | time }}・{{ tweet.createdAt | date }}
-      </div>
-    </div>
-    <div class="home-tweet__container__tweet__num d-flex">
-      <div class="home-tweet__container__tweet__num__box">
-        <span class="home-tweet__container__tweet__num__box__count num-font">{{
-          tweet.replyCount
-        }}</span>
-        <span class="home-tweet__container__tweet__num__box__unit">回覆</span>
-      </div>
-      <div class="home-tweet__container__tweet__num__box">
-        <span class="home-tweet__container__tweet__num__box__count num-font">{{
-          tweet.likeCount
-        }}</span>
-        <span class="home-tweet__container__tweet__num__box__unit"
-          >喜歡次數</span
-        >
-      </div>
-    </div>
-
-    <div class="home-tweet__container__tweet d-flex">
-      <button class="home-tweet__container__tweet__icon">
-        <img
-          src="../assets/images/reply.svg"
-          alt=""
-          @click="fetchTweet(tweet.id)"
-        />
-      </button>
-      <button
-        v-if="!tweet.isLiked"
-        :disabled="isProcessing"
-        @click.prevent.stop="like(tweet.id)"
-        class="home-tweet__container__tweet__icon"
-      >
-        <img src="../assets/images/unlike.svg" alt="" />
-      </button>
-      <button
-        v-else
-        :disabled="isProcessing"
-        @click.prevent.stop="unlike(tweet.id)"
-        class="home-tweet__container__tweet__icon"
-      >
-        <img src="../assets/images/like.svg" alt="" />
-      </button>
-    </div>
-
-    <div class="home-tweet__container__reply-list scrollbar">
-      <div
-        v-if="!replies.length"
-        class="home-tweet__container__tweet-list__blank"
-      >
-        目前沒有回覆
-      </div>
-      <div
-        v-else
-        v-for="reply in replies"
-        :key="reply.id"
-        class="home-tweet__container__tweet-list__tweet d-flex"
-      >
-        <router-link :to="{ name: 'profile', params: { id: reply.User.id } }">
+      <div class="home-tweet__container__tweet d-flex">
+        <button class="home-tweet__container__tweet__icon">
           <img
-            :src="reply.User.avatar | emptyImage"
-            class="home-tweet__container__tweet-list__tweet__avatar"
+            src="../assets/images/reply.svg"
             alt=""
+            @click="fetchTweet(tweet.id)"
           />
-        </router-link>
-        <div
-          class="home-tweet__container__tweet-list__tweet__text d-flex flex-column"
+        </button>
+        <button
+          v-if="!tweet.isLiked"
+          :disabled="isProcessing"
+          @click.prevent.stop="like(tweet.id)"
+          class="home-tweet__container__tweet__icon"
         >
-          <div class="d-flex justify-content-between">
-            <div class="tweet-list__tweet__title d-flex">
-              <router-link
-                :to="{ name: 'profile', params: { id: reply.User.id } }"
-                class="tweet-list__tweet__title__name none"
+          <img src="../assets/images/unlike.svg" alt="" />
+        </button>
+        <button
+          v-else
+          :disabled="isProcessing"
+          @click.prevent.stop="unlike(tweet.id)"
+          class="home-tweet__container__tweet__icon"
+        >
+          <img src="../assets/images/like.svg" alt="" />
+        </button>
+      </div>
+      <div class="home-tweet__container__reply-list">
+        <div
+          v-if="!replies.length"
+          class="home-tweet__container__tweet-list__blank"
+        >
+          目前沒有回覆
+        </div>
+        <div
+          v-else
+          v-for="reply in replies"
+          :key="reply.id"
+          class="home-tweet__container__tweet-list__tweet d-flex"
+        >
+          <router-link :to="{ name: 'profile', params: { id: reply.User.id } }">
+            <img
+              :src="reply.User.avatar | emptyImage"
+              class="home-tweet__container__tweet-list__tweet__avatar"
+              alt=""
+            />
+          </router-link>
+          <div
+            class="home-tweet__container__tweet-list__tweet__text d-flex flex-column"
+          >
+            <div class="d-flex justify-content-between">
+              <div class="tweet-list__tweet__title d-flex">
+                <router-link
+                  :to="{ name: 'profile', params: { id: reply.User.id } }"
+                  class="tweet-list__tweet__title__name none"
+                >
+                  {{ reply.User.name }}
+                </router-link>
+                <div class="tweet-list__tweet__title__account">
+                  {{ reply.User.account | atAccount }}
+                </div>
+                <span class="tweet-list__tweet__title__separator">・</span>
+                <div class="tweet-list__tweet__title__createdAt">
+                  {{ reply.createdAt | fromNow }}
+                </div>
+              </div>
+              <button
+                v-show="currentUser.id === reply.User.id"
+                class="home-tweet__container__tweet-list__tweet__delete__reply"
+                :disabled="isProcessing"
+                @click="deleteReply(tweet.id, reply.id)"
               >
-                {{ reply.User.name }}
-              </router-link>
-              <div class="tweet-list__tweet__title__account">
-                {{ reply.Tweet.User.account | atAccount }}
-              </div>
-              <span class="tweet-list__tweet__title__separator">・</span>
-              <div class="tweet-list__tweet__title__createdAt">
-                {{ reply.createdAt | fromNow }}
-              </div>
+                ×
+              </button>
             </div>
-            <button
-              v-show="currentUser.id === reply.User.id"
-              class="home-tweet__container__tweet-list__tweet__delete__reply"
-              :disabled="isProcessing"
-              @click="deleteReply(tweet.id, reply.id)"
+            <div
+              class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
             >
-              ×
-            </button>
-          </div>
-          <div
-            class="home-tweet__container__tweet-list__tweet__text__reply d-flex"
-          >
-            <span class="tweet-list__tweet__reply">回覆</span>
-            <router-link
-              :to="{ name: 'profile', params: { id: reply.Tweet.User.id } }"
+              <span class="tweet-list__tweet__reply">回覆</span>
+              <router-link
+                :to="{ name: 'profile', params: { id: reply.Tweet.User.id } }"
+              >
+                <span class="tweet-list__tweet__reply-to">{{
+                  reply.Tweet.User.account | atAccount
+                }}</span>
+              </router-link>
+            </div>
+            <div
+              class="home-tweet__container__tweet-list__tweet__text__reply__description"
             >
-              <span class="tweet-list__tweet__reply-to">{{
-                reply.Tweet.User.account | atAccount
-              }}</span>
-            </router-link>
-          </div>
-
-          <div
-            class="home-tweet__container__tweet-list__tweet__text__description"
-          >
-            {{ reply.comment }}
+              {{ reply.comment }}
+            </div>
           </div>
         </div>
       </div>

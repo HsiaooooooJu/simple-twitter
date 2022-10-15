@@ -14,7 +14,13 @@
     border-bottom: 1px solid var(--border);
 
     &__description {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
       width: 100%;
+      max-height: 14vh;
+      overflow: hidden;
+      white-space: pre-line;
 
       &__name {
         margin-right: 8px;
