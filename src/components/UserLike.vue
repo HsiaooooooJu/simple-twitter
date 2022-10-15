@@ -148,6 +148,7 @@ export default {
   },
   created() {
     const { id } = this.$route.params
+
     this.fetchLikeTweets(id)
   },
   methods: {
@@ -353,6 +354,16 @@ export default {
   },
   computed: {
     ...mapState(['currentUser'])
+  },
+  watch: {
+    $route: {
+      handler: function () {
+        const { id } = this.$route.params
+
+        this.fetchLikeTweets(id)
+      },
+      deep: true
+    }
   }
 }
 </script>

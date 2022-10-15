@@ -179,6 +179,16 @@ export default {
   },
   computed: {
     ...mapState(['currentUser'])
+  },
+  watch: {
+    $route: {
+      handler: function () {
+        const { id } = this.$route.params
+
+        this.fetchRepliedTweets(id)
+      },
+      deep: true
+    }
   }
 }
 </script>

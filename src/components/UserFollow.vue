@@ -195,23 +195,6 @@ export default {
     this.fetchUserName(id)
     this.fetchUserTweets(id)
   },
-  beforeRouteUpdate(to, from, next) {
-    const { id } = to.params
-
-    if (
-      this.$route.query.followType !== '1' &&
-      this.$route.query.followType !== '2'
-    ) {
-      this.$router.push({ name: 'not-found' })
-    }
-
-    this.fetchFollowers(id)
-    this.fetchFollowings(id)
-    this.fetchUserName(id)
-    this.fetchUserTweets(id)
-
-    next()
-  },
   methods: {
     async fetchUserTweets(id) {
       try {
@@ -457,6 +440,14 @@ export default {
         this.fetchFollowings(id)
       },
       deep: true
+    },
+    $route: {
+      handler: function () {
+        const { id } = this.$route.params
+
+        this.fetchFollowers(id)
+        this.fetchFollowings(id)
+      }
     }
   }
 }

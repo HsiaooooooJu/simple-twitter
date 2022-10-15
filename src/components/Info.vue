@@ -242,8 +242,8 @@ export default {
     ...mapState(['currentUser', 'renderUserTweets'])
   },
   watch: {
-    initialIsFollowed(isFollowed) {
-      this.isFollowed = isFollowed
+    initialIsFollowed(newValue) {
+      this.isFollowed = newValue
     },
     renderUserTweets: {
       handler: function () {
