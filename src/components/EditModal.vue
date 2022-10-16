@@ -142,34 +142,23 @@ import { Toast } from '../utils/helpers'
 export default {
   name: 'EditModal',
   mixins: [emptyImageFilter],
-  props: {
-    user: {
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     return {
-      profile: {
-        id: this.user.id,
-        name: this.user.name,
-        avatar: this.user.avatar,
-        cover: this.user.cover,
-        introduction: this.user.introduction || ''
-      },
+      profile: {},
       isProcessing: false
     }
   },
   created() {
-    const { id } = this.$route.params
-
-    this.getProfile(id)
+    this.getProfile()
   },
   methods: {
     getProfile() {
       this.profile = {
-        ...this.user,
-        ...this.profile
+        id: this.currentUser.id,
+        name: this.currentUser.name,
+        avatar: this.currentUser.avatar || '',
+        cover: this.currentUser.cover || '',
+        introduction: this.currentUser.introduction || ''
       }
     },
     handleCoverChange(e) {
@@ -247,7 +236,7 @@ export default {
     },
     initializeCover() {
       document.querySelector('#cover-input').value = ''
-      this.profile.cover = this.user.cover
+      this.profile.cover = this.currentUser.cover
     }
   },
   computed: {

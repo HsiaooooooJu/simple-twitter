@@ -102,13 +102,15 @@ export default {
     ...mapState(['currentUser', 'renderProfile'])
   },
   watch: {
-    renderProfile: function () {
-      const { id } = this.$route.params
+    renderProfile: {
+      handler: function () {
+        const { id } = this.$route.params
 
-      this.fetchFollowers(id)
-      this.fetchUsers(id)
-    },
-    deep: true
+        this.fetchFollowers(id)
+        this.fetchUsers(id)
+      },
+      deep: true
+    }
   }
 }
 </script>
