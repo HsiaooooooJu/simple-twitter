@@ -109,9 +109,9 @@
 <script>
 import usersAPI from '../apis/users'
 import tweetsAPI from '../apis/tweets'
+import { mapState } from 'vuex'
 import Spinner from './Spinner.vue'
 import ReplyModal from './ReplyModal.vue'
-import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
 import {
   emptyImageFilter,
@@ -184,7 +184,7 @@ export default {
 
         Toast.fire({
           icon: 'error',
-          title: '無法載入喜歡的推文，請稍後在試'
+          title: '無法載入喜歡的推文，請稍後再試'
         })
       }
     },

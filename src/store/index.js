@@ -13,6 +13,8 @@ export default new Vuex.Store({
       account: '',
       email: '',
       avatar: '',
+      cover: '',
+      introduction: '',
       role: ''
     },
     isAuthenticated: false,
@@ -62,8 +64,8 @@ export default new Vuex.Store({
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await usersAPI.currentUser()
-
-        const { id, name, account, email, avatar, role } = data
+        const { id, name, account, email, avatar, cover, introduction, role } =
+          data
 
         commit('setCurrentUser', {
           id,
@@ -71,13 +73,17 @@ export default new Vuex.Store({
           account,
           email,
           avatar,
+          cover,
+          introduction,
           role
         })
 
         return true
       } catch (error) {
         console.log(error)
+
         commit('revokeAuthentication')
+
         return false
       }
     }

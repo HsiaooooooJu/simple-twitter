@@ -7,18 +7,21 @@
             class="edit-modal__container__top__close cursor-pointer"
             @click="$emit('close')"
           >
-            <img src="../assets/images/close.svg" alt="" />
+            <img
+              class="edit-modal__container__top__close__img"
+              src="../assets/images/close.svg"
+              alt=""
+            />
           </div>
           <h5 class="edit-modal__container__top__title">編輯個人資料</h5>
           <button
-            :disabled="isProcessing"
             type="submit"
             class="edit-modal__container__top__save"
+            :disabled="isProcessing"
           >
             {{ isProcessing ? '處理中' : '儲存' }}
           </button>
         </div>
-
         <!-- cover file input -->
         <div class="edit-modal__container__cover">
           <input
@@ -52,7 +55,6 @@
               <img src="../assets/images/close.svg" alt="" />
             </div>
           </div>
-
           <!-- avatar file input -->
           <div class="edit-modal__container__avatar">
             <label for="avatar-input">
@@ -76,7 +78,6 @@
               @change="handleAvatarChange"
             />
           </div>
-
           <div class="edit-modal__container__form">
             <div class="edit-modal__container__form__name d-flex flex-column">
               <label for="name">名稱</label>
@@ -88,7 +89,6 @@
                 name="name"
               />
             </div>
-
             <div class="d-flex">
               <span
                 v-show="!profile.name"
@@ -104,7 +104,6 @@
                 >{{ profile.name.length }}/50</span
               >
             </div>
-
             <div
               class="edit-modal__container__form__textarea d-flex flex-column"
             >
@@ -117,7 +116,6 @@
                 name="introduction"
               ></textarea>
             </div>
-
             <div class="d-flex">
               <span
                 v-show="profile.introduction.length > 160"
@@ -137,52 +135,48 @@
 
 <script>
 import usersAPI from '../apis/users'
-import { emptyImageFilter } from '../utils/mixins'
 import { mapState } from 'vuex'
+import { emptyImageFilter } from '../utils/mixins'
 import { Toast } from '../utils/helpers'
 
 export default {
   name: 'EditModal',
   mixins: [emptyImageFilter],
-  props: {
-    user: {
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     return {
-      profile: {
-        id: this.user.id,
-        name: this.user.name,
-        avatar: this.user.avatar,
-        cover: this.user.cover,
-        introduction: this.user.introduction || ''
-      },
+      profile: {},
       isProcessing: false
     }
   },
   created() {
-    const { id } = this.$route.params
-    this.getProfile(id)
+    this.getProfile()
   },
   methods: {
     getProfile() {
       this.profile = {
-        ...this.user,
-        ...this.profile
+        id: this.currentUser.id,
+        name: this.currentUser.name,
+        avatar: this.currentUser.avatar || '',
+        cover: this.currentUser.cover || '',
+        introduction: this.currentUser.introduction || ''
       }
     },
     handleCoverChange(e) {
       const { files } = e.target
+
       if (!files.length) return this.profile.cover
+
       const imageURL = window.URL.createObjectURL(files[0])
+
       this.profile.cover = imageURL
     },
     handleAvatarChange(e) {
       const { files } = e.target
+
       if (!files.length) return this.profile.avatar
+
       const imageURL = window.URL.createObjectURL(files[0])
+
       this.profile.avatar = imageURL
     },
     async updateProfile(e) {
@@ -222,8 +216,11 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         const e = error.response.data.message
+
         if (e === 'Please upload an image.') {
           Toast.fire({
             icon: 'error',
@@ -239,7 +236,7 @@ export default {
     },
     initializeCover() {
       document.querySelector('#cover-input').value = ''
-      this.profile.cover = this.user.cover
+      this.profile.cover = this.currentUser.cover
     }
   },
   computed: {

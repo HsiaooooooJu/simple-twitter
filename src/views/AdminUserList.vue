@@ -10,7 +10,7 @@
 import AdminUserCard from '../components/AdminUserCard.vue'
 
 export default {
-  name: 'AdminTweetList',
+  name: 'AdminUserList',
   components: {
     AdminUserCard
   }

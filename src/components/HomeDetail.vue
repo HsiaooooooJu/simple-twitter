@@ -25,7 +25,6 @@
             {{ tweet.createdAt | fromNow }}
           </div>
         </div>
-
         <button
           v-show="currentUser.id === tweet.User.id"
           class="home-tweet__container__tweet-list__tweet__delete"
@@ -57,7 +56,7 @@
           <button
             v-if="!tweet.isLiked"
             :disabled="isProcessing"
-            @click.prevent.stop="like(tweet.id)"
+            @click.stop.prevent="like(tweet.id)"
           >
             <img
               src="../assets/images/unlike.svg"
@@ -68,7 +67,7 @@
           <button
             v-else
             :disabled="isProcessing"
-            @click.prevent.stop="unlike(tweet.id)"
+            @click.stop.prevent="unlike(tweet.id)"
           >
             <img
               src="../assets/images/like.svg"
@@ -76,7 +75,6 @@
               class="tweet-list__tweet__action__like__icon cursor-pointer"
             />
           </button>
-
           <div class="tweet-list__tweet__action__like__count num-font">
             {{ tweet.likeCount }}
           </div>
@@ -90,17 +88,18 @@
     />
   </div>
 </template>
+
 <script>
 import tweetsAPI from '../apis/tweets'
 import usersAPI from '../apis/users'
-import ReplyModal from './ReplyModal.vue'
 import { mapState } from 'vuex'
-import { Toast } from '../utils/helpers'
+import ReplyModal from './ReplyModal.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
+import { Toast } from '../utils/helpers'
 import Swal from 'sweetalert2'
 
 export default {
@@ -147,9 +146,9 @@ export default {
 
         this.isProcessing = false
       } catch (error) {
-        console.log(error)
-
         this.isProcessing = false
+
+        console.log(error)
 
         Toast.fire({
           icon: 'error',
@@ -183,7 +182,7 @@ export default {
 
         Toast.fire({
           icon: 'error',
-          title: '無法取消喜歡，請稍後再試'
+          title: '無法取消讚，請稍後再試'
         })
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="admin__tweet__container">
     <div class="admin__tweet__container__title">推文清單</div>
-    <spinner v-if="isLoading" />
+    <Spinner v-if="isLoading" />
     <div v-else class="scrollbar">
       <div
         v-for="tweet in tweets"
@@ -52,13 +52,13 @@
 
 <script>
 import adminAPI from '../apis/admin'
-import { Toast } from '../utils/helpers'
 import Spinner from '../components/Spinner.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
+import { Toast } from '../utils/helpers'
 import Swal from 'sweetalert2'
 
 export default {
@@ -92,7 +92,13 @@ export default {
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
-        console.error
+
+        console.log(error)
+
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文資料，請稍後再試'
+        })
       }
     },
     async deleteTweet(tweetId) {
@@ -143,9 +149,11 @@ export default {
   filters: {
     setEllipsis(value) {
       const len = 50
+
       if (value.length > len) {
         return value.slice(0, len) + '...'
       }
+
       return value
     }
   }

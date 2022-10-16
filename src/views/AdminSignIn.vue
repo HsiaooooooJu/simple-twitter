@@ -5,8 +5,7 @@
         <img src="../assets/images/ac-logo.svg" alt="" />
       </div>
       <h3 class="sign__container__title">後台登入</h3>
-
-      <form @submit.prevent.stop="adminSignIn">
+      <form @submit.stop.prevent="adminSignIn">
         <div class="sign__container__form-row d-flex flex-column">
           <label for="account">帳號</label>
           <input
@@ -27,11 +26,10 @@
             required
           />
         </div>
-        <button :disabled="isProcessing" class="sign__container__btn">
+        <button class="sign__container__btn" :disabled="isProcessing">
           登入
         </button>
       </form>
-
       <div class="sign__container__link">
         <div class="sign__container__link__wrapper">
           <router-link to="/users/signin"> 前台登入 </router-link>
@@ -60,10 +58,11 @@ export default {
         if (!this.account || !this.password) {
           Toast.fire({
             icon: 'warning',
-            title: '請填入帳號和密碼'
+            title: '請輸入帳號和密碼'
           })
           return
         }
+
         this.isProcessing = true
 
         const { data } = await authorizationAPI.adminSignIn({
@@ -78,12 +77,14 @@ export default {
         localStorage.setItem('token', data.token)
 
         this.$store.commit('setCurrentUser', data.user)
-
         this.$router.push('/admin/tweets')
         this.isProcessing = false
       } catch (error) {
         this.password = ''
         this.isProcessing = false
+
+        console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '帳號或密碼錯誤'

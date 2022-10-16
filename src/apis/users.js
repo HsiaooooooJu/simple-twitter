@@ -1,6 +1,7 @@
 import { apiHelper } from '../utils/helpers'
 
 export default {
+  // 取得現在使用者的資料
   currentUser() {
     return apiHelper.get('/current_user')
   },
@@ -31,7 +32,7 @@ export default {
     return apiHelper.post(`/tweets/${id}/like`)
   },
 
-  // 對指定推文按 like
+  // 對指定推文按 unlike
   unlike({ id }) {
     return apiHelper.post(`/tweets/${id}/unlike`)
   },

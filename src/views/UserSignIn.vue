@@ -5,8 +5,7 @@
         <img src="../assets/images/ac-logo.svg" alt="" />
       </div>
       <h3 class="sign__container__title">登入 Alphitter</h3>
-
-      <form @submit.prevent.stop="userSignIn">
+      <form @submit.stop.prevent="userSignIn">
         <div
           class="sign__container__form-row d-flex flex-column form-row-margin"
         >
@@ -29,11 +28,10 @@
             required
           />
         </div>
-        <button :disabled="isProcessing" class="sign__container__btn">
+        <button class="sign__container__btn" :disabled="isProcessing">
           登入
         </button>
       </form>
-
       <div class="sign__container__link">
         <div class="sign__container__link__wrapper">
           <router-link to="/users/signup"> 註冊 </router-link>
@@ -64,10 +62,11 @@ export default {
         if (!this.account || !this.password) {
           Toast.fire({
             icon: 'warning',
-            title: '請填入帳號和密碼'
+            title: '請輸入帳號和密碼'
           })
           return
         }
+
         this.isProcessing = true
 
         const { data } = await authorizationAPI.userSignIn({
@@ -80,17 +79,17 @@ export default {
         }
 
         localStorage.setItem('token', data.token)
-
-        this.$store.commit('setCurrentUser', data.user)
-
         localStorage.removeItem('account')
 
+        this.$store.commit('setCurrentUser', data.user)
         this.$router.push('/home')
-
         this.isProcessing = false
       } catch (error) {
         this.password = ''
         this.isProcessing = false
+
+        console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '帳號或密碼錯誤'

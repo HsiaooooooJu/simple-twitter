@@ -8,7 +8,7 @@
         <label for="account">帳號</label>
         <input
           v-model="user.account"
-          :class="[{ error: !user.account }]"
+          :class="{ error: !user.account }"
           id="account"
           placeholder="請輸入帳號"
           type="text"
@@ -19,14 +19,13 @@
       <span v-show="!user.account" class="settings__container__form__error">{{
         !user.account ? '帳號不可為空白' : ''
       }}</span>
-
       <div
         class="settings__container__form__form-row d-flex flex-column hover focus"
       >
         <label for="name">名稱</label>
         <input
           v-model="user.name"
-          :class="[{ error: !user.name || user.name.length > 50 }]"
+          :class="{ error: !user.name || user.name.length > 50 }"
           id="name"
           placeholder="請輸入名稱"
           type="text"
@@ -34,30 +33,26 @@
           @keydown.space.prevent
         />
       </div>
-
       <div class="d-flex">
         <span v-show="!user.name" class="settings__container__form__error"
           >名稱不可為空白</span
         >
-
         <span
           v-show="user.name.length > 50"
           class="settings__container__form__error"
           >名稱不可超過 50 字</span
         >
-
         <span class="settings__container__form__letter-count"
           >{{ user.name.length }}/50</span
         >
       </div>
-
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="email">Email</label>
         <input
           v-model="user.email"
-          :class="[
-            { error: !user.email.length || !user.email.includes('@' && '.') }
-          ]"
+          :class="{
+            error: !user.email.length || !user.email.includes('@' && '.')
+          }"
           id="email"
           placeholder="請輸入 Email"
           type="email"
@@ -73,7 +68,6 @@
         class="settings__container__form__error"
         >Email 格式錯誤</span
       >
-
       <div class="settings__container__form__form-row d-flex flex-column">
         <label for="password">密碼</label>
         <input
@@ -95,8 +89,8 @@
         />
       </div>
       <button
-        :disabled="isProcessing"
         class="settings__container__form__btn"
+        :disabled="isProcessing"
         type="submit"
       >
         {{ isProcessing ? '處理中...' : '儲存' }}
@@ -106,9 +100,9 @@
 </template>
 
 <script>
-import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
 import usersAPI from '../apis/users'
+import { mapState } from 'vuex'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: 'SettingForm',
@@ -129,7 +123,9 @@ export default {
     if (this.currentUser.id === 0) {
       return
     }
+
     const { id } = this.$route.params
+
     this.setUser(id)
   },
   methods: {
@@ -151,14 +147,17 @@ export default {
             icon: 'warning',
             title: '帳號、名稱、Email 不可為空白'
           })
+
           this.isProcessing = false
           return
         }
+
         if (this.user.name.length > 50) {
           Toast.fire({
             icon: 'warning',
             title: '名稱不可超過 50 字'
           })
+
           this.isProcessing = false
           return
         }
@@ -168,6 +167,7 @@ export default {
             icon: 'warning',
             title: 'Email 格式錯誤'
           })
+
           this.isProcessing = false
           return
         }
@@ -177,6 +177,7 @@ export default {
             icon: 'warning',
             title: '兩次輸入密碼不同'
           })
+
           this.isProcessing = false
           return
         }
@@ -193,7 +194,7 @@ export default {
         this.user.password = ''
         this.user.checkPassword = ''
 
-        if (data.status !== 'success') {
+        if (data.status === 'error') {
           throw new Error(data.message)
         }
 
@@ -201,13 +202,13 @@ export default {
           icon: 'success',
           title: '儲存成功'
         })
-        this.isProcessing = false
 
-        const { id } = this.$route.params
-        this.$router.push(`/settings/${id}`)
+        this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         const e = error.response.data.message
 
         if (e === 'Account already exists.') {
@@ -223,7 +224,7 @@ export default {
         } else {
           Toast.fire({
             icon: 'error',
-            title: '發生錯誤，請稍後再試'
+            title: '無法更改帳號設定，請稍後再試'
           })
         }
       }

@@ -41,7 +41,7 @@
                 v-if="currentUser.id === repliedTweet.User.id"
                 class="user-tweet__container__tweet-list__tweet__delete"
                 :disabled="isProcessing"
-                @click.prevent.stop="
+                @click.stop.prevent="
                   deleteReply(repliedTweet.Tweet.id, repliedTweet.id)
                 "
               >
@@ -63,7 +63,6 @@
                 }}</span>
               </router-link>
             </div>
-
             <div
               class="user-reply__container__reply-list__tweet__text__description"
             >
@@ -80,13 +79,13 @@
 import usersAPI from '../apis/users'
 import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
-import { Toast } from '../utils/helpers'
+import Spinner from '../components/Spinner.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-import Spinner from '../components/Spinner.vue'
+import { Toast } from '../utils/helpers'
 import Swal from 'sweetalert2'
 
 export default {
@@ -102,6 +101,7 @@ export default {
   },
   created() {
     const { id } = this.$route.params
+
     this.fetchRepliedTweets(id)
   },
   methods: {
@@ -110,11 +110,14 @@ export default {
         this.isLoading = true
 
         const { data } = await usersAPI.get.replied({ id })
+
         this.repliedTweets = data
         this.isLoading = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取得回覆資料'

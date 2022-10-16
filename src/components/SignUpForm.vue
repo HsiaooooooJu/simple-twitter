@@ -13,12 +13,11 @@
       />
     </div>
     <span v-show="!account" class="sign__container__error">帳號不可為空白</span>
-
     <div class="sign__container__form-row d-flex flex-column">
       <label for="name">名稱</label>
       <input
         v-model="name"
-        :class="[{ error: name.length > 50 || !name.length }]"
+        :class="{ error: name.length > 50 || !name.length }"
         id="name"
         placeholder="請輸入名稱"
         type="text"
@@ -33,15 +32,13 @@
       <span v-show="name.length > 50" class="sign__container__error"
         >名稱不可超過 50 字</span
       >
-
       <span class="sign__container__letter-count">{{ name.length }}/50</span>
     </div>
-
     <div class="sign__container__form-row d-flex flex-column">
       <label for="email">Email</label>
       <input
         v-model="email"
-        :class="[{ error: !email.length || !email.includes('@' && '.') }]"
+        :class="{ error: !email.length || !email.includes('@' && '.') }"
         id="email"
         placeholder="請輸入 Email"
         type="email"
@@ -49,7 +46,6 @@
         @keydown.space.prevent
       />
     </div>
-
     <span v-show="!email.length" class="sign__container__error"
       >Email 不可為空白</span
     >
@@ -58,7 +54,6 @@
       class="sign__container__error"
       >Email 格式錯誤</span
     >
-
     <div class="sign__container__form-row d-flex flex-column">
       <label for="password">密碼</label>
       <input
@@ -70,7 +65,6 @@
         @keydown.space.prevent
       />
     </div>
-
     <div class="sign__container__form-row d-flex flex-column">
       <label for="checkPassword">密碼確認</label>
       <input
@@ -82,7 +76,7 @@
         @keydown.space.prevent
       />
     </div>
-    <button :disabled="isProcessing" class="sign__container__btn" type="submit">
+    <button type="submit" class="sign__container__btn" :disabled="isProcessing">
       {{ isProcessing ? '處理中' : '註冊' }}
     </button>
   </form>
@@ -120,6 +114,7 @@ export default {
             icon: 'warning',
             title: '請填寫所有欄位'
           })
+
           this.isProcessing = false
           return
         }
@@ -129,12 +124,17 @@ export default {
             icon: 'warning',
             title: '名稱不可超過 50 字'
           })
+
           this.isProcessing = false
           return
         }
 
         if (!this.email.includes('@') || !this.email.includes('.')) {
-          this.emailError = 'Email 格式錯誤'
+          Toast.fire({
+            icon: 'warning',
+            title: 'Email 格式錯誤'
+          })
+
           this.isProcessing = false
           return
         }
@@ -144,6 +144,7 @@ export default {
             icon: 'warning',
             title: '兩次輸入的密碼不同'
           })
+
           this.isProcessing = false
           this.checkPassword = ''
           return
@@ -167,17 +168,22 @@ export default {
           icon: 'success',
           title: '註冊成功'
         })
+
         this.$router.push('/users/signin')
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         const e = error.response.data.message
+
         if (e === 'Account already exists.') {
           Toast.fire({
             icon: 'error',
             title: 'Account 已重複註冊！'
           })
         }
+
         if (e === 'Email already exists.') {
           Toast.fire({
             icon: 'error',

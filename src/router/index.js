@@ -63,7 +63,8 @@ const routes = [
   {
     path: '/users/:id/follow',
     name: 'follow',
-    component: () => import('../views/Follow')
+    component: () => import('../views/Follow'),
+    beforeEnter: authorizeIsUser
   },
   {
     path: '/users/:id',
@@ -85,7 +86,8 @@ const routes = [
   {
     path: '/admin/users',
     name: 'admin-users',
-    component: () => import('../views/AdminUserList')
+    component: () => import('../views/AdminUserList'),
+    beforeEnter: authorizeIsAdmin
   },
   {
     path: '*',
