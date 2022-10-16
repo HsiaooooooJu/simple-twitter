@@ -58,11 +58,13 @@
         font-size: 18px;
         font-weight: 700;
       }
+      
       &__length {
         margin-right: 24px;
         margin-bottom: 5px;
         color: var(--dark-80);
       }
+
       &__notice {
         margin-right: 24px;
         margin-bottom: 5px;
@@ -150,6 +152,7 @@
           overflow-wrap: break-word;
           white-space: pre-line;
         }
+
         &__reply__description {
           margin: 0 0 10px;
           color: var(dark-100);
@@ -239,6 +242,7 @@
 
       &__box {
         margin-right: 24px;
+
         &__count {
           margin-right: 5px;
           color: var(dark-100);
@@ -264,6 +268,7 @@
       width: 120px;
     }
   }
+
   &__reply-list {
     border-top: 1px solid var(--border);
   }

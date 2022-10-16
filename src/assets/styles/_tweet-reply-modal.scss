@@ -33,6 +33,7 @@
       }
     }
   }
+  
   &__content {
     position: relative;
     height: 245px;
@@ -61,6 +62,7 @@
         font-size: 18px;
       }
     }
+
     &__button {
       position: absolute;
       right: 0;
@@ -111,6 +113,7 @@
     left: 0;
     background: rgba(0, 0, 0, 0.5);
   }
+
   &__close {
     height: 55px;
     padding: 20px;
@@ -119,12 +122,14 @@
     &__button {
       padding: 0;
       vertical-align: top;
+
       &__img {
         width: 15px;
         height: 15px;
       }
     }
   }
+
   &__container {
     position: relative;
     height: 445px;
@@ -168,6 +173,7 @@
         color: var(--brand-color);
         font-size: 14px;
       }
+
       &__description {
         height: 120px;
         width: 525px;
