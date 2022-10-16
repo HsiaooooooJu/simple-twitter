@@ -18,7 +18,7 @@
       <div class="info__container__user__cover-img">
         <img :src="user.cover | emptyCover" alt="" />
       </div>
-      <EditModal v-if="user.id" v-show="showModal" @close="showModal = false" />
+      <EditModal v-show="showModal" @close="showModal = false" />
       <div
         class="info__container__user__btn-panel d-flex justify-content-between"
       >
