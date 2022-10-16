@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import TweetDetail from '../components/TweetDetail.vue'
 import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
+import TweetDetail from '../components/TweetDetail.vue'
 import { Toast } from '../utils/helpers'
 
 export default {
@@ -34,7 +34,6 @@ export default {
         user: {}
       },
       replies: [],
-      isProcessing: false,
       isLoading: false
     }
   },
@@ -45,10 +44,11 @@ export default {
     this.fetchTweetReplies(id)
   },
   beforeRouteUpdate(to, from, next) {
-    const { id } = this.$route.params
+    const { id } = to.params
 
     this.fetchTweet(id)
     this.fetchTweetReplies(id)
+
     next()
   },
   methods: {

@@ -17,11 +17,11 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users'
+import { mapState } from 'vuex'
 import Info from '../components/Info.vue'
 import UserAction from '../components/UserAction.vue'
 import Spinner from '../components/Spinner.vue'
-import usersAPI from '../apis/users'
-import { mapState } from 'vuex'
 import { Toast } from '../utils/helpers'
 
 export default {
@@ -39,7 +39,6 @@ export default {
         followerCount: '',
         followingCount: ''
       },
-      currentTab: 1,
       isFollowed: false,
       isLoading: true
     }
@@ -55,6 +54,7 @@ export default {
 
     this.fetchUsers(id)
     this.fetchFollowers(id)
+
     next()
   },
   methods: {
