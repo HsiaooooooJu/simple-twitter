@@ -1,110 +1,101 @@
 <template>
   <div class="info__container">
-    <div class="info__container">
-      <div class="info__container__title d-flex">
-        <img
-          src="../assets/images/back.svg"
-          alt=""
-          class="info__container__title__img cursor-pointer"
-          @click="$router.back()"
-        />
-        <div class="info__container__title__box d-flex flex-column">
-          <h5>{{ user.name }}</h5>
-          <div class="info__container__title__box__content">
-            {{ userTweetCount }} 推文
-          </div>
+    <div class="info__container__title d-flex">
+      <img
+        src="../assets/images/back.svg"
+        alt=""
+        class="info__container__title__img cursor-pointer"
+        @click="$router.back()"
+      />
+      <div class="info__container__title__box d-flex flex-column">
+        <h5>{{ user.name }}</h5>
+        <div class="info__container__title__box__content">
+          {{ userTweetCount }} 推文
         </div>
       </div>
-
-      <div class="info__container__user d-flex flex-column">
-        <div class="info__container__user__cover-img">
-          <img :src="user.cover | emptyCover" alt="" />
+    </div>
+    <div class="info__container__user d-flex flex-column">
+      <div class="info__container__user__cover-img">
+        <img :src="user.cover | emptyCover" alt="" />
+      </div>
+      <EditModal
+        v-if="user.id"
+        v-show="showModal"
+        :user="user"
+        @close="showModal = false"
+      />
+      <div
+        class="info__container__user__btn-panel d-flex justify-content-between"
+      >
+        <div class="info__container__user__btn-panel__img">
+          <img :src="user.avatar | emptyImage" alt="" />
         </div>
-
-        <EditModal
-          v-if="user.id"
-          v-show="showModal"
-          :user="user"
-          @close="showModal = false"
-        />
-
-        <div
-          class="info__container__user__btn-panel d-flex justify-content-between"
-        >
-          <div class="info__container__user__btn-panel__img">
-            <img :src="user.avatar | emptyImage" alt="" />
-          </div>
-          <div
-            v-if="isCurrentUser"
-            class="info__container__user__btn-panel__btn"
+        <div v-if="isCurrentUser" class="info__container__user__btn-panel__btn">
+          <button
+            class="info__container__user__btn-panel__btn__self"
+            @click="showModal = true"
           >
-            <button
-              class="info__container__user__btn-panel__btn__self"
-              @click="showModal = true"
-            >
-              編輯個人資料
-            </button>
-          </div>
-          <div v-else class="info__container__user__btn-panel__btn d-flex">
-            <button class="info__container__user__btn-panel__btn__other-icon">
-              <img src="../assets/images/message.svg" alt="" />
-            </button>
-            <button class="info__container__user__btn-panel__btn__other-icon">
-              <img src="../assets/images/noti.svg" alt="" />
-            </button>
-            <button
-              :disabled="isProcessing"
-              v-if="isFollowed"
-              class="info__container__user__btn-panel__btn__other-following"
-              @click.prevent.stop="deleteFollowing(user.id)"
-            >
-              正在跟隨
-            </button>
-            <button
-              :disabled="isProcessing"
-              v-else
-              class="info__container__user__btn-panel__btn__other-follow"
-              @click.prevent.stop="addFollowing(user.id)"
-            >
-              跟隨
-            </button>
-          </div>
+            編輯個人資料
+          </button>
         </div>
-
-        <div class="info__container__user__profile d-flex flex-column">
-          <h5 class="info__container__user__profile__name">{{ user.name }}</h5>
-          <div class="info__container__user__profile__account">
-            {{ user.account | atAccount }}
-          </div>
-          <div class="info__container__user__profile__introduction">
-            {{ user.introduction }}
-          </div>
-          <div class="info__container__user__profile__follow">
-            <router-link
-              :to="{
-                name: 'follow',
-                params: { id: user.id },
-                query: { followType: '2' }
-              }"
-              class="info__container__user__profile__follow__num none"
-              >{{ user.followingCount }} 個</router-link
-            >
-            <span class="info__container__user__profile__follow__unit">
-              跟隨中</span
-            >
-            <router-link
-              :to="{
-                name: 'follow',
-                params: { id: user.id },
-                query: { followType: '1' }
-              }"
-              class="info__container__user__profile__follow__num none"
-              >{{ user.followerCount }} 位</router-link
-            >
-            <span class="info__container__user__profile__follow__unit">
-              跟隨者</span
-            >
-          </div>
+        <div v-else class="info__container__user__btn-panel__btn d-flex">
+          <button class="info__container__user__btn-panel__btn__other-icon">
+            <img src="../assets/images/message.svg" alt="" />
+          </button>
+          <button class="info__container__user__btn-panel__btn__other-icon">
+            <img src="../assets/images/noti.svg" alt="" />
+          </button>
+          <button
+            v-if="isFollowed"
+            class="info__container__user__btn-panel__btn__other-following"
+            :disabled="isProcessing"
+            @click.stop.prevent="deleteFollowing(user.id)"
+          >
+            正在跟隨
+          </button>
+          <button
+            v-else
+            class="info__container__user__btn-panel__btn__other-follow"
+            :disabled="isProcessing"
+            @click.stop.prevent="addFollowing(user.id)"
+          >
+            跟隨
+          </button>
+        </div>
+      </div>
+      <div class="info__container__user__profile d-flex flex-column">
+        <h5 class="info__container__user__profile__name">{{ user.name }}</h5>
+        <div class="info__container__user__profile__account">
+          {{ user.account | atAccount }}
+        </div>
+        <div class="info__container__user__profile__introduction">
+          {{ user.introduction }}
+        </div>
+        <div class="info__container__user__profile__follow">
+          <router-link
+            :to="{
+              name: 'follow',
+              params: { id: user.id },
+              query: { followType: '2' }
+            }"
+            class="info__container__user__profile__follow__num none"
+            >{{ user.followingCount }} 個</router-link
+          >
+          <span class="info__container__user__profile__follow__unit">
+            跟隨中</span
+          >
+          <router-link
+            :to="{
+              name: 'follow',
+              params: { id: user.id },
+              query: { followType: '1' }
+            }"
+            class="info__container__user__profile__follow__num none"
+            >{{ user.followerCount }} 位</router-link
+          >
+          <span class="info__container__user__profile__follow__unit">
+            跟隨者</span
+          >
         </div>
       </div>
     </div>
@@ -112,16 +103,16 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users'
+import followshipsAPI from '../apis/followships'
+import { mapState } from 'vuex'
+import EditModal from './EditModal.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-import { mapState } from 'vuex'
-import usersAPI from '../apis/users'
-import followshipsAPI from '../apis/followships'
 import { Toast } from '../utils/helpers'
-import EditModal from './EditModal.vue'
 
 export default {
   name: 'Info',
@@ -153,13 +144,12 @@ export default {
   },
   created() {
     const { id } = this.$route.params
+
     this.fetchUserTweets(id)
   },
   methods: {
     async fetchUserTweets(id) {
       try {
-        this.isLoading = true
-
         const { data } = await usersAPI.get.tweets({ id })
 
         if (data.status === 'error') {
@@ -167,10 +157,7 @@ export default {
         }
 
         this.userTweetCount = data.length
-        this.isLoading = false
       } catch (error) {
-        this.isLoading = false
-
         console.log(error)
 
         Toast.fire({
@@ -188,6 +175,7 @@ export default {
         if (data.status === 'error') {
           throw new Error(data.message)
         }
+
         this.isFollowed = true
         this.user.followerCount += 1
 
@@ -200,7 +188,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法追蹤，請稍後再試'
@@ -216,6 +206,7 @@ export default {
         if (data.status === 'error') {
           throw new Error(data.message)
         }
+
         this.isFollowed = false
         this.user.followerCount -= 1
 
@@ -228,7 +219,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取消追蹤，請稍後再試'
@@ -243,9 +236,13 @@ export default {
     initialIsFollowed(newValue) {
       this.isFollowed = newValue
     },
+    user(newValue) {
+      this.user = newValue
+    },
     renderUserTweets: {
       handler: function () {
         const { id } = this.$route.params
+
         this.fetchUserTweets(id)
       },
       deep: true

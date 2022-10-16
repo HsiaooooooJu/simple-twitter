@@ -48,13 +48,7 @@ export default {
   },
   methods: {
     toggleTab(tabId) {
-      if (tabId === 1) {
-        this.currentTab = 1
-      } else if (tabId === 2) {
-        this.currentTab = 2
-      } else if (tabId === 3) {
-        this.currentTab = 3
-      }
+      this.currentTab = tabId
     }
   }
 }

@@ -26,6 +26,10 @@
       height: 15px;
       margin-right: 36px;
       padding: 0;
+      
+      &__img {
+        vertical-align: top;
+      }
     }
 
     &__title {
@@ -77,7 +81,6 @@
 
       &__close > img {
         width: 15px;
-        padding: 0 0 2px 0;
         filter: brightness(100);
       }
     }

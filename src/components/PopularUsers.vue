@@ -60,10 +60,10 @@
 <script>
 import usersAPI from '../apis/users'
 import followshipsAPI from '../apis/followships'
-import { emptyImageFilter, atAccountFilter } from '../utils/mixins'
-import { Toast } from '../utils/helpers'
 import { mapState } from 'vuex'
 import Spinner from '../components/Spinner.vue'
+import { emptyImageFilter, atAccountFilter } from '../utils/mixins'
+import { Toast } from '../utils/helpers'
 
 export default {
   name: 'PopularUsers',
@@ -104,6 +104,7 @@ export default {
     async addFollowing(id) {
       try {
         this.isProcessing = true
+
         const { data } = await followshipsAPI.addFollowing({ id })
 
         if (data.status === 'error') {
@@ -171,7 +172,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取消追蹤，請稍後再試'

@@ -1,21 +1,19 @@
 <template>
   <Spinner v-if="isLoading" />
   <div v-else class="home-tweet__container d-flex flex-column">
-    <div
-      class="home-tweet__container__title d-flex cursor-pointer"
-      @click="$router.push('/home')"
-    >
+    <div class="home-tweet__container__title d-flex">
       <img
         src="../assets/images/back.svg"
         alt=""
-        class="home-tweet__container__title__img"
+        class="home-tweet__container__title__img cursor-pointer"
+        @click="$router.push('/home')"
       />
       <h4>推文</h4>
     </div>
     <div class="scrollbar">
       <div class="home-tweet__container__tweet d-flex flex-column">
         <div class="home-tweet__container__tweet__title d-flex">
-          <router-link :to="{ name: 'tweets', params: { id: tweet.user.id } }"
+          <router-link :to="{ name: 'profile', params: { id: tweet.user.id } }"
             ><img
               :src="tweet.user.avatar | emptyImage"
               alt=""
@@ -69,17 +67,17 @@
         </button>
         <button
           v-if="!tweet.isLiked"
+          class="home-tweet__container__tweet__icon"
           :disabled="isProcessing"
           @click.prevent.stop="like(tweet.id)"
-          class="home-tweet__container__tweet__icon"
         >
           <img src="../assets/images/unlike.svg" alt="" />
         </button>
         <button
           v-else
+          class="home-tweet__container__tweet__icon"
           :disabled="isProcessing"
           @click.prevent.stop="unlike(tweet.id)"
-          class="home-tweet__container__tweet__icon"
         >
           <img src="../assets/images/like.svg" alt="" />
         </button>
@@ -167,13 +165,13 @@
 import usersAPI from '../apis/users'
 import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
+import Spinner from '../components/Spinner.vue'
+import ReplyModal from '../components/ReplyModal.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
-import Spinner from '../components/Spinner.vue'
-import ReplyModal from '../components/ReplyModal.vue'
 import { Toast } from '../utils/helpers'
 import Swal from 'sweetalert2'
 
@@ -263,6 +261,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
+        console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法按讚，請稍後再試'
@@ -290,7 +291,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
         console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法取消喜歡，請稍後再試'

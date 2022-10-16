@@ -71,7 +71,7 @@
               <button
                 v-if="!tweet.isLiked"
                 :disabled="isProcessing"
-                @click.prevent.stop="like(tweet.id)"
+                @click.stop.prevent="like(tweet.id)"
               >
                 <img
                   src="../assets/images/unlike.svg"
@@ -82,7 +82,7 @@
               <button
                 v-else
                 :disabled="isProcessing"
-                @click.prevent.stop="unlike(tweet.id)"
+                @click.stop.prevent="unlike(tweet.id)"
               >
                 <img
                   src="../assets/images/like.svg"
@@ -112,15 +112,15 @@
 <script>
 import tweetsAPI from '../apis/tweets'
 import usersAPI from '../apis/users'
+import { mapState } from 'vuex'
+import Spinner from '../components/Spinner.vue'
+import ReplyModal from '../components/ReplyModal.vue'
 import {
   emptyImageFilter,
   fromNowFilter,
   atAccountFilter
 } from '../utils/mixins'
 import { Toast } from '../utils/helpers'
-import ReplyModal from '../components/ReplyModal.vue'
-import { mapState } from 'vuex'
-import Spinner from '../components/Spinner.vue'
 import Swal from 'sweetalert2'
 
 export default {
@@ -146,12 +146,12 @@ export default {
       },
       showModal: false,
       isLoading: false,
-      description: '',
       isProcessing: false
     }
   },
   created() {
     const { id } = this.$route.params
+
     this.fetchUserTweets(id)
   },
   methods: {
@@ -172,7 +172,6 @@ export default {
         }
 
         this.tweets = data
-
         this.isLoading = false
       } catch (error) {
         this.isLoading = false
@@ -239,6 +238,9 @@ export default {
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false
+
+        console.log(error)
+
         Toast.fire({
           icon: 'error',
           title: '無法按讚，請稍後再試'

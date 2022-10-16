@@ -31,7 +31,6 @@
         </button>
       </div>
     </form>
-
     <div class="home-tweet__container__tweet-list scrollbar">
       <Spinner v-if="isLoading" />
       <HomeDetail
@@ -47,11 +46,11 @@
 
 <script>
 import tweetsAPI from '../apis/tweets'
+import { mapState } from 'vuex'
 import HomeDetail from './HomeDetail.vue'
+import Spinner from '../components/Spinner.vue'
 import { emptyImageFilter } from '../utils/mixins'
 import { Toast } from '../utils/helpers'
-import { mapState } from 'vuex'
-import Spinner from '../components/Spinner.vue'
 
 export default {
   name: 'HomeTweet',
@@ -133,7 +132,6 @@ export default {
         })
 
         this.fetchTweets()
-        this.$store.commit('triggerRender')
         this.isProcessing = false
       } catch (error) {
         this.isProcessing = false

@@ -93,10 +93,10 @@
 </template>
 
 <script>
+import adminAPI from '../apis/admin'
+import Spinner from '../components/Spinner.vue'
 import { emptyImageFilter, atAccountFilter } from '../utils/mixins'
 import { Toast } from '../utils/helpers'
-import Spinner from '../components/Spinner.vue'
-import adminAPI from '../apis/admin'
 
 export default {
   name: 'AdminUserCard',

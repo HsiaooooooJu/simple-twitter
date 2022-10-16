@@ -161,10 +161,10 @@
 <script>
 import usersAPI from '../apis/users'
 import followshipsAPI from '../apis/followships'
-import Spinner from '../components/Spinner.vue'
 import { mapState } from 'vuex'
-import { Toast } from '../utils/helpers'
+import Spinner from '../components/Spinner.vue'
 import { emptyImageFilter } from '../utils/mixins'
+import { Toast } from '../utils/helpers'
 
 export default {
   name: 'UserFollow',

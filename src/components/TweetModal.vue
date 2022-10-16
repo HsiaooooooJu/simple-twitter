@@ -73,6 +73,7 @@ export default {
             icon: 'warning',
             title: '請檢查內容是否填寫正確'
           })
+
           this.isProcessing = false
           return
         }
