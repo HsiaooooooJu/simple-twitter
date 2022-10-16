@@ -1,14 +1,12 @@
 <template>
   <div class="info__container">
     <div class="info__container">
-      <div
-        class="info__container__title d-flex cursor-pointer"
-        @click="$router.back()"
-      >
+      <div class="info__container__title d-flex">
         <img
           src="../assets/images/back.svg"
           alt=""
-          class="info__container__title__img"
+          class="info__container__title__img cursor-pointer"
+          @click="$router.back()"
         />
         <div class="info__container__title__box d-flex flex-column">
           <h5>{{ user.name }}</h5>
