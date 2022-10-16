@@ -62,7 +62,6 @@ export default new Vuex.Store({
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await usersAPI.currentUser()
-
         const { id, name, account, email, avatar, role } = data
 
         commit('setCurrentUser', {
@@ -77,7 +76,9 @@ export default new Vuex.Store({
         return true
       } catch (error) {
         console.log(error)
+
         commit('revokeAuthentication')
+
         return false
       }
     }

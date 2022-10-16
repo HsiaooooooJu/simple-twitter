@@ -93,18 +93,14 @@
 </template>
 
 <script>
-import {
-  emptyImageFilter,
-  emptyCoverFilter,
-  atAccountFilter
-} from '../utils/mixins'
+import { emptyImageFilter, atAccountFilter } from '../utils/mixins'
 import { Toast } from '../utils/helpers'
 import Spinner from '../components/Spinner.vue'
 import adminAPI from '../apis/admin'
 
 export default {
   name: 'AdminUserCard',
-  mixins: [emptyImageFilter, emptyCoverFilter, atAccountFilter],
+  mixins: [emptyImageFilter, atAccountFilter],
   components: {
     Spinner
   },
